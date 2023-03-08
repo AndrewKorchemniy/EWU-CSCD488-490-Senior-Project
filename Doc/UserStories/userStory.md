@@ -104,7 +104,7 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Purpose:**         | Making it possible to view prior submissions                 |
 | **Description:**     | Student can view prior submissions via weekly report schedule |
 | **Pre-conditions:**  | Student exists, student is enrolled in class, student is in a team, and student has completed a report |
-| **Task Sequence:**   | 1. Student needs to view the weekly schedule<br />2. Student needs to click view on a report from a previous or current week<br />3. Student will be presented with the submitted form |
+| **Task Sequence:**   | 1. Student opens Shelby in browser<br />2.R1: Student logs in<br />3.R2: Student gets sent to student page<br />4.R3: get page request<br />5.R4: generate page<br />6.R5: query database <br />7. Student enters the old Team report<br /> |
 | **Alternate Flow:**  | N/A                                                          |
 | **Post-conditions:** | N/A                                                          |
 
@@ -134,7 +134,7 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Purpose:**         | To create a class                                            |
 | **Description:**     | Creating a class with a form                                 |
 | **Pre-conditions:**  | Instructor should exist, admin should give instructor required permissions |
-| **Task Sequence:**   | 1. Instructor needs to click on create class button<br />2. Instructor needs to fill out a form<br />3. Instructor needs to click submit, and will be presented with a new class according to specified form details |
+| **Task Sequence:**   | R1: Instructor logs in <br />R14: Instructor gets sent to Admin page<br />R15: get page request<br />R16: generate page<br />R5: query database <br />R17. upload csv of the student rooster and converts it<br />R18. submit the update student rooster to the server<br />R19. submit the student rooster to the Database |
 | **Alternate Flow:**  | 1. Instructor hits cancel <br />2. Instructor does not correctly complete form and has to retry |
 | **Post-conditions:** | 1. The form needs to be parsed and class needs to be created<br />2. The class needs to be displayed to the instructor in organized fashion |
 
@@ -150,7 +150,7 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Purpose:**         | To add student to class                                      |
 | **Description:**     | Using a CSV file to add students to class                    |
 | **Pre-conditions:**  | Instructor should exist, admin should give instructor required permissions, instructor should have CSV file of student list |
-| **Task Sequence:**   | 1. Instructor needs to click on add students button<br />2. Instructor needs to upload CSV file of student list4. Instructor needs to click submit |
+| **Task Sequence:**   | R1: Instructor logs in <br />R14: Instructor gets sent to Admin page<br />R15: get page request<br />R16: generate page<br />R5: query database <br />R17. upload csv of teams and converts it<br />R20. submit the update teams to the server<br />R21. submit the teams to the Database |
 | **Alternate Flow:**  | Instructor hits cancel button                                |
 | **Post-conditions:** | 1. CSV file needs to be parsed<br />2. Class creation form should decide relevant details about a class such as class name, class duration, etc |
 
@@ -166,30 +166,11 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Purpose:**         | To organize the students into teams                          |
 | **Description:**     | Uploading a CSV file to create the class teams               |
 | **Pre-conditions:**  | Instructor should exist, admin should give instructor required permissions, instructor should have CSV file of student teams |
-| **Task Sequence:**   | 1. Instructor needs to click on create teams button<br />2. Instructor needs to upload CSV file of student teams<br />3. Instructor needs to click submit and will be presented with new teams |
+| **Task Sequence:**   | R11: the deadline set on the server passes<br/>R5: the server queries the database for the individual and team reports<br/>R12: the server generates the emails with that individual and team reports<br/>R13: sends email to an email servers |
 | **Alternate Flow:**  | Instructor hits cancel button                                |
-| **Post-conditions:** | 1. CSV file needs to be parsed<br />2. Teams should be created according to CSV |
+| **Post-conditions:** | Instructor gets reports                                      |
 
-> Instructor #3, NEED
-> Use Case
-> Title:
-> gets reports
-> Actors: Instructor, admin
-> Purpose: sends an email at deadline of the progress and detail report of all teams
-> **Description: Instructor receives emails on class progress
-> Preconditions:
-> Instructor is the teach of class, Instructor profile has been completed
-> Task
-> Sequence:
-> R11: the deadline set on the server passes
-> R5: the server queries the database for the individual and team reports
-> R12: the server generates the emails with that individual and team reports
-> R13: sends email to an email servers
-> Alternate
-> Flow:
-> N/A
-> Postconditions:
-> Instructor gets reports
+
 
 ---
 
@@ -203,7 +184,7 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Purpose:**         | To gain access to the site                                   |
 | **Description:**     | enter into the site and gain access                          |
 | **Pre-conditions:**  | ADMIN should have access to everything to the site           |
-| **Task Sequence:**   | 1: ADMIN needs to enter their password and click the submit button or enter.<br />2: the ADMIN will be granted access to System Reports as ADMIN. |
+| **Task Sequence:**   | R1. Admin needs to login.<br />R24. makes the release build<br />R25. setup <br />R26. docs for software use |
 | **Alternate Flow:**  | The ADMIN changes mind and hits cancel                       |
 | **Post-conditions:** | 1: login credentials are verified <br />2: login error will show if not verified<br />3: the admin will be given administration rights to the System Reports |
 
@@ -219,35 +200,11 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Purpose:**         | Be able to view the reports                                  |
 | **Description:**     | The ADMIN to be able to see the report on the screen         |
 | **Pre-conditions:**  | The ADMIN should be able to see the reports on the site      |
-| **Task Sequence:**   | 1: ADMIN login into the site and then click on which reports he wants to view<br />2: the ADMIN viewing the report |
+| **Task Sequence:**   | R1: authorized user login.<br/>R14: view authorized users page.<br/>R15: get the users page from the server.<br/>R16: Generates the users page at the server.<br/> R5: queries the database <br/>R17: uploads and converts a CSV file for the course<br/>R22: submits the courses updates to the server<br/>R23: server submits changes to the database. |
 | **Alternate Flow:**  | N/A                                                          |
-| **Post-conditions:** | 1: clicks and sees the team report<br />2: clicks and sees the individual report |
+| **Post-conditions:** | 1: the course is now ready to be filled by the teacher with students and teams. |
 
-> Admin #2, NEED
-> Use Case
-> Title:
-> Makes course
-> Actors: Admin
-> Purpose: allows the admin to create a 
-> Description:
-> the purpose of this is so that the teacher may populate a course with the class to do so the admin must first set up the course
-> Preconditions:
-> The is that there is no course for class that is going to be taken.
-> Task
-> Sequence:
-> R1: authorized user login.
-> R14: view authorized users page.
-> R15: get the users page from the server.
-> R16: Generates the users page at the server.
->     R5: queries the database 
-> R17: uploads and converts a CSV file for the course
-> R22: submits the courses updates to the server
-> R23: server submits changes to the database.
-> Alternate
-> Flow:
-> N/A
-> Postconditions:
-> the course is now ready to be filled by the teacher with students and teams.
+
 
 ## **ADMIN #3, NEED**
 
@@ -259,25 +216,7 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Purpose:**         | To change reports                                            |
 | **Description:**     | To be able to change the reports and even answers to the report |
 | **Pre-conditions:**  | The ADMIN should be able to edit reports                     |
-| **Task Sequence:**   | 1: ADMIN clicks edit report and edit the report<br />2: edits report and saves it |
+| **Task Sequence:**   | R27: An error is registered/detected on the server. <br />R28: A log of the error is created and stored within the log <br />R29: an e-mail is generated by the server detailing the error <br />R30: an error query is sent to the database. |
 | **Alternate Flow:**  | 1: ADMIN edits the report but doesn't click save<br />2: If they leave, ask ADMIN if they want to save. |
 | **Post-conditions:** | ADMIN changed the report                                     |
 
-> Admin #3, NEED
-Use Case
-Title:
-Emails regarding server errors
-Actors: Admin
-Purpose: To get an email regarding any server errors
-Description:
-If a severe server error occurs, the admin should receive an email describing
-the error
-Preconditions:
-The admin superuser account should exist, superuser account should add
-an email to the emailing list for server errors
-Task
-Sequence:
-R27: An error is registered/detected on the server.
-R28: A log of the error is created and stored within the log
-R29: an e-mail is generated by the server detailing the error
-R30: an error query is sent to the database.
