@@ -126,7 +126,7 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Alternate Flow:**  | 1. Instructor hits cancel <br />2. Instructor does not correctly complete form and has to retry |
 | **Post-conditions:** | 1. The form needs to be parsed and class needs to be created<br />2. The class needs to be displayed to the instructor in organized fashion |
 
-> TODO: fix
+
 
 ## **Instructor #2,**  **NEED**
 
@@ -136,13 +136,13 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | -------------------- | ------------------------------------------------------------ |
 | **Actors:**          | Instructor                                                   |
 | **Purpose:**         | To add student to teams                                      |
-| **Description:**     | Using a CSV file to add students to teams                    |
+| **Description:**     | Using a CSV file to add Teams and students to teams          |
 | **Pre-conditions:**  | Instructor should exist, admin should give instructor required permissions, instructor should have CSV file of team list |
 | **Task Sequence:**   | R1: Instructor logs in <br />R14: Instructor gets sent to Admin page<br />R15: get page request<br />R16: generate page<br />R5: query database <br />R17. upload csv of teams and converts it<br />R20. submit the update teams to the server<br />R21. submit the teams to the Database |
 | **Alternate Flow:**  | Instructor hits cancel button                                |
 | **Post-conditions:** | 1. CSV file needs to be parsed<br />2. Class creation form should decide relevant details about a class such as class name, class duration, etc |
 
-> TODO: fix
+
 
 ## **Instructor #3,**  **NEED**
 
@@ -176,7 +176,7 @@ The existing Status Reporting System of the Shelby website is out-of-date and re
 | **Alternate Flow:**  | n/a                                                          |
 | **Post-conditions:** | 1: web server is setup                                       |
 
-> MISSING
+
 
 ## **Admin #2, NEED**
 
