@@ -1,32 +1,61 @@
-mod IndividualReport;
-
+use yew_router::prelude::*;
 use yew::prelude::*;
 
-pub struct Model {
-    pub value: i64
+mod components;
+use components::navbar::Navbar;
+use components::footer::Footer;
+mod pages;
+use pages::home::Home;
+use pages::calendar::Calendar;
+use pages::individual_report::IndividualReport;
+use pages::team_report::TeamReport;
+use pages::requirements::Requirements;
+use pages::page_not_found::PageNotFound;
+
+#[derive(Clone, Routable, PartialEq)]
+enum Route {
+    #[at("/")]
+    Home,
+    #[at("/calendar")]
+    Calendar,
+    #[at("/requirements")]
+    Requirements,
+    #[at("/individual-report")]
+    IndividualReport,
+    #[at("/team-report")]
+    TeamReport,
+    #[not_found]
+    #[at("/404")]
+    NotFound,
 }
 
-#[function_component]
-fn App() -> Html {
-    let state = use_state(|| Model {
-        value: 100
-    });
-
-    let onclick = {
-        let state = state.clone();
-
-        Callback::from(move |_| {
-            state.set(Model {
-                value: state.value - 1
-            })
-        })
-    };
-
+#[function_component(App)]
+fn app() -> Html {
     html! {
-        <div>
-            <button {onclick}>{ "+1" }</button>
-            <p>{ state.value }</p>
-        </div>
+        <BrowserRouter>
+            <div class="container-fluid">
+                <div class="row"> 
+                    <div class="col"> <Navbar /> </div> 
+                </div>
+                <div class="row"> 
+                    <div class="col"> <Switch<Route> render={switch} /> </div> 
+                </div>
+                <div class="row"> 
+                    <div class="col"> <Footer /> </div> 
+                </div>
+            </div>
+        </BrowserRouter>
+    }
+}
+
+fn switch(routes: Route) -> Html {
+    match routes {
+        Route::Home => html! { <Home /> },
+        Route::Calendar => html! { <Calendar /> },
+        Route::IndividualReport => html! { <IndividualReport /> },
+        Route::TeamReport => html! { <TeamReport /> },
+        Route::Requirements => html! { <Requirements /> },
+        Route::NotFound => html! { <PageNotFound /> },
     }
 }
 
