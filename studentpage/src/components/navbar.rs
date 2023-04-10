@@ -1,4 +1,7 @@
 use yew::prelude::*;
+use yew_router::prelude::*;
+
+use crate::Route;
 
 pub struct Navbar;
 impl Component for Navbar {
@@ -11,22 +14,18 @@ impl Component for Navbar {
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
-            <nav class="navbar navbar-light navbar-expand-md py-3" style="width: 95%;margin-right: auto;margin-left: auto;">
-                <div class="container">
-                    <a class="nav-link active" href="/"><span class="navbar-brand d-flex align-items-center"> { "Status Reports" } </span></a>
-                    <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-                        <span class="visually-hidden"> { "Toggle navigation" } </span>
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navcol-1">
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item"><a class="nav-link active" href="/calendar"> { "Calendar" } </a></li>
-                            <li class="nav-item"><a class="nav-link" href="#"> { "Requirements" } </a></li>
-                            <li class="nav-item"><a class="nav-link" href="#"> { "Third Item" } </a></li>
-                        </ul>
-                        <button class="btn btn-primary" type="button"> { "Logout" } </button>
-                    </div>
-                </div>
+            <nav class="navbar py-2 px-2">
+                <span style="text-decoration: none!">
+                    <Link<Route> to={Route::Home}>
+                        <h2 style="text-decoration: none"> { "Status Reports" } </h2>
+                    </Link<Route>>
+                </span>
+                <span> 
+                    <Link<Route> to={Route::Requirements}>
+                        <button class="btn btn-info mx-2" type="button" href="/requirements"> { "Requirements" } </button>
+                    </Link<Route>>
+                    <button class="btn btn-warning" type="button"> { "Logout" } </button>
+                </span>
             </nav>
         }
     }

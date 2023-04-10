@@ -13,6 +13,7 @@ impl Component for TeamReport {
         html! {
             <div class="col">
                 // team reports page ...
+                <p> { "Team Report" } </p>
             </div>
         }
     }

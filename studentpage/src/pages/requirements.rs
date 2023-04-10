@@ -13,6 +13,7 @@ impl Component for Requirements {
         html! {
             <div class="col">
                 // requirements update page ...
+                <p> { "Requirements" } </p>
             </div>
         }
     }

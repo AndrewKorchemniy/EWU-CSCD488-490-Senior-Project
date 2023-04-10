@@ -11,7 +11,9 @@ impl Component for Footer {
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
-            <p class="text-muted my-2 d-flex p-2"> { "© 2023 Dan Tappan" } </p>
+            <footer class="text-left text-muted mt-2 px-2">
+                <p> { "© 2023 Dan Tappan" } </p>
+            </footer>   
         }
     }
 }

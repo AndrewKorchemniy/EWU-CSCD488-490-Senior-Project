@@ -6,7 +6,6 @@ use components::navbar::Navbar;
 use components::footer::Footer;
 mod pages;
 use pages::home::Home;
-use pages::calendar::Calendar;
 use pages::individual_report::IndividualReport;
 use pages::team_report::TeamReport;
 use pages::requirements::Requirements;
@@ -16,8 +15,6 @@ use pages::page_not_found::PageNotFound;
 enum Route {
     #[at("/")]
     Home,
-    #[at("/calendar")]
-    Calendar,
     #[at("/requirements")]
     Requirements,
     #[at("/individual-report")]
@@ -33,7 +30,7 @@ enum Route {
 fn app() -> Html {
     html! {
         <BrowserRouter>
-            <div class="container-fluid">
+            <div class="container-fluid" style="width: 95%">
                 <div class="row"> 
                     <div class="col"> <Navbar /> </div> 
                 </div>
@@ -51,7 +48,6 @@ fn app() -> Html {
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { <Home /> },
-        Route::Calendar => html! { <Calendar /> },
         Route::IndividualReport => html! { <IndividualReport /> },
         Route::TeamReport => html! { <TeamReport /> },
         Route::Requirements => html! { <Requirements /> },

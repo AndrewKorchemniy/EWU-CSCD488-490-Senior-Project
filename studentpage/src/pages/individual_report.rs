@@ -13,6 +13,7 @@ impl Component for IndividualReport {
         html! {
             <div class="col">
                 // individual reports page ...
+                <p> { "Individual Report" } </p>
             </div>
         }
     }
