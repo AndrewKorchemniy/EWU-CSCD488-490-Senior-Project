@@ -11,8 +11,8 @@ use pages::team_report::TeamReport;
 use pages::requirements::Requirements;
 use pages::page_not_found::PageNotFound;
 
-#[derive(Clone, Routable, PartialEq)]
-enum Route {
+#[derive(Clone, Copy, Routable, PartialEq)]
+pub enum Route {
     #[at("/")]
     Home,
     #[at("/requirements")]
