@@ -6,17 +6,17 @@ use crate::Route;
 #[function_component]
 pub fn Navbar() -> Html {
     html! {
-        <nav class="navbar py-2 px-2">
-            <span style="text-decoration: none!">
-                <Link<Route> to={Route::Home}>
-                    <h2 style="text-decoration: none"> { "Status Reports" } </h2>
+        <nav class="navbar rounded ps-3 pe-2 py-1 shadow-sm my-3 font-weight-bold">
+            <span>
+                <Link<Route> to={Route::Home} classes="link-dark link-underline-opacity-0 link-underline-opacity-10-hover">
+                    <h2> { "Status Reports" } </h2>
                 </Link<Route>>
             </span>
-            <span> 
+            <span>
                 <Link<Route> to={Route::Requirements}>
-                    <button class="btn btn-info mx-2" type="button" href="/requirements"> { "Requirements" } </button>
+                    <button class="btn btn-info mx-2 shadow"> { "Requirements" } </button>
                 </Link<Route>>
-                <button class="btn btn-warning" type="button"> { "Logout" } </button>
+                <button class="btn btn-outline btn-warning shadow"> { "Logout" } </button>
             </span>
         </nav>
     }

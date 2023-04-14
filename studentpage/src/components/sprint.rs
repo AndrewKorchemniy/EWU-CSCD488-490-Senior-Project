@@ -14,7 +14,7 @@ pub enum ReportStatus {
 // Properties for [Sprint]
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
-    pub sprint: u8,
+    pub sprint_number: u8,
     pub due_date: String,
     pub team_report_status: ReportStatus,
     pub individual_report_status: ReportStatus,
@@ -56,10 +56,10 @@ pub fn Sprint(props: &Props) -> Html {
 
     html! {
         <tr>
-            <td class="text-center" style="width: 0%;">{ props.sprint }</td>
-            <td class="text-left" style="width: 0%;">{ props.due_date.clone() }</td>
-            { get_status(props.team_report_status) }
+            <td class="text-center">{ props.sprint_number }</td>
+            <td class="text-left">{ props.due_date.clone() }</td>
             { get_status(props.individual_report_status) }
+            { get_status(props.team_report_status) }
             <td></td>
         </tr>
     }
