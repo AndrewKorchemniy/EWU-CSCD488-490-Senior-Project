@@ -3,8 +3,8 @@ use yew_router::prelude::*;
 
 use crate::Route;
 
-#[function_component]
-pub fn Navbar() -> Html {
+#[function_component(Navbar)]
+pub fn navbar() -> Html {
     html! {
         <nav class="navbar rounded ps-3 pe-2 py-1 shadow-sm my-3 font-weight-bold">
             <span>

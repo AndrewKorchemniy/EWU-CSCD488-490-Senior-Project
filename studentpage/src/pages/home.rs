@@ -1,8 +1,7 @@
 use yew::prelude::*;
 
 use crate::components::calendar::Calendar;
-use crate::components::sprint::Sprint;
-use crate::components::sprint::ReportStatus;
+use crate::components::sprint::{ReportStatus, Sprint};
 use crate::Route;
 
 #[function_component]
