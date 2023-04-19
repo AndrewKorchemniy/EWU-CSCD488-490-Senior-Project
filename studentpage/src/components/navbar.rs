@@ -1,3 +1,4 @@
+use crate::components::button::Button;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -14,9 +15,9 @@ pub fn navbar() -> Html {
             </span>
             <span>
                 <Link<Route> to={Route::Requirements}>
-                    <button class="btn btn-info mx-2 shadow"> { "Requirements" } </button>
+                    <Button variant="info" class="mx-2" label="Requirements"/>
                 </Link<Route>>
-                <button class="btn btn-outline btn-warning shadow"> { "Logout" } </button>
+                <Button variant="warning" label="Logout"/>
             </span>
         </nav>
     }

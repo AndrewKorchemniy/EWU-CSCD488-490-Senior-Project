@@ -1,3 +1,4 @@
+pub mod button;
 pub mod calendar;
 pub mod footer;
 pub mod navbar;

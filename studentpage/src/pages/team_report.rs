@@ -1,3 +1,4 @@
+use crate::components::button::Button;
 use yew::prelude::*;
 
 #[function_component]
@@ -33,8 +34,8 @@ pub fn TeamReport() -> Html {
                     </div>
                     <div class="row text-nowrap g-3">
                         <div class="col mb-3">
-                             <label class="form-label"> { "Which aspects of the current work are the "} <b> {"easiest to solve?"} </b></label>
-                             <textarea class="form-control"></textarea>
+                            <label class="form-label"> { "Which aspects of the current work are the "} <b> {"easiest to solve?"} </b></label>
+                            <textarea class="form-control"></textarea>
                         </div>
                         <div class="col mb-3">
                            <label class="form-label"> { "Which aspects of the current work are the "} <b> {"hardest to solve?"} </b></label>
@@ -47,7 +48,7 @@ pub fn TeamReport() -> Html {
                             <textarea class="form-control"></textarea>
                         </div>
                         <div class="col mb-3">
-                            <label class="form-label"> { "Which aspects of the current work are the "} <b> {"hardest to eavluate?"} </b></label>
+                            <label class="form-label"> { "Which aspects of the current work are the "} <b> {"hardest to evaluate?"} </b></label>
                             <textarea class="form-control"></textarea>
                         </div>
                     </div>
@@ -71,7 +72,7 @@ pub fn TeamReport() -> Html {
                     </div>
                     <div class="row text-nowrap">
                         <div class="col">
-                            <button class="btn btn-primary" type="submit"> {"Submit"} </button>
+                            <Button variant="primary" label="Submit"/>
                         </div>
                     </div>
                 </form>
