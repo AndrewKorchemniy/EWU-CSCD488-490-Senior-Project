@@ -1,3 +1,4 @@
+// todo: place the tab bar on top when the screen is small / on a phone
 use yew::prelude::*;
 
 #[function_component]

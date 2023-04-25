@@ -2,16 +2,15 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 mod components;
-mod pages;
 
-use components::footer::Footer;
-use components::navbar::Navbar;
+use components::molecules::footer::Footer;
+use components::molecules::navbar::Navbar;
 
-use pages::home::Home;
-use pages::individual_report::IndividualReport;
-use pages::page_not_found::PageNotFound;
-use pages::requirements::Requirements;
-use pages::team_report::TeamReport;
+use components::pages::home::Home;
+use components::pages::individual_report::IndividualReport;
+use components::pages::page_not_found::PageNotFound;
+use components::pages::requirements::Requirements;
+use components::pages::team_report::TeamReport;
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {

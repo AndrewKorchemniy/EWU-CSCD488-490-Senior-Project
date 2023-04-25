@@ -13,13 +13,13 @@ pub struct Props {
 pub fn calendar(props: &Props) -> Html {
     html! {
         <div class="border rounded shadow mx-auto">
-            <table class="table table-striped text-nowrap mb-0">
+            <table class="table table-striped mb-0">
                 <thead>
                     <tr>
-                        <th class="table-warning text-center text-secondary" style="width: 1%"> {"Sprint"} </th>
-                        <th class="table-warning text-left text-secondary" style="width: 1%"> {"Due"} </th>
-                        <th class="table-warning text-center text-secondary" style="width: 1%"> {"Individual"} </th>
-                        <th class="table-warning text-center text-secondary" style="width: 1%"> {"Team"} </th>
+                        <th class="table-warning text-center text-secondary text-nowrap" style="width: 1%"> {"Sprint"} </th>
+                        <th class="table-warning text-left text-secondary text-nowrap" style="width: 1%"> {"Due"} </th>
+                        <th class="table-warning text-center text-secondary text-nowrap" style="width: 1%"> {"Individual"} </th>
+                        <th class="table-warning text-center text-secondary text-nowrap" style="width: 1%"> {"Team"} </th>
                         <th class="table-warning text-secondary"></th>
                     </tr>
                 </thead>

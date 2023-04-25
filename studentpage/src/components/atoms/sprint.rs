@@ -56,8 +56,8 @@ pub fn sprint(props: &Props) -> Html {
 
     html! {
         <tr>
-            <td class="text-center">{ props.sprint_number }</td>
-            <td class="text-left">{ props.due_date.clone() }</td>
+            <td class="text-center text-nowrap">{ &props.sprint_number }</td>
+            <td class="text-left text-nowrap">{ &props.due_date }</td>
             { get_status(&props.individual_report_status) }
             { get_status(&props.team_report_status) }
             <td></td>

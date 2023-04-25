@@ -1,4 +1,4 @@
-use crate::components::button::Button;
+use crate::components::atoms::button::Button;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -21,4 +21,4 @@ pub fn navbar() -> Html {
             </span>
         </nav>
     }
-}
+}   
