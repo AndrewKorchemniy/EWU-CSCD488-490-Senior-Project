@@ -21,4 +21,4 @@ pub fn navbar() -> Html {
             </span>
         </nav>
     }
-}   
+}

@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
-#[function_component]
-pub fn PageNotFound() -> Html {
+#[function_component(PageNotFound)]
+pub fn page_not_found() -> Html {
     html! {
         <div class="card shadow text-danger border-danger">
             <div class="card-body">

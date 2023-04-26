@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
-#[function_component]
-pub fn Requirements() -> Html {
+#[function_component(Requirements)]
+pub fn requirements() -> Html {
     html! {
         <div class="card shadow border-0">
             <div class="card-body">

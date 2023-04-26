@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
-#[function_component]
-pub fn Login() -> Html {
+#[function_component(Login)]
+pub fn login() -> Html {
     html! {
         // Login page ...
         <p> { "Login" } </p>

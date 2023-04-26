@@ -1,11 +1,11 @@
 use yew::prelude::*;
 
-use crate::components::molecules::calendar::Calendar;
 use crate::components::atoms::sprint::{ReportStatus, Sprint};
+use crate::components::molecules::calendar::Calendar;
 use crate::Route;
 
-#[function_component]
-pub fn Home() -> Html {
+#[function_component(Home)]
+pub fn home() -> Html {
     html! {
         <Calendar>
             // a few dummy sprints for demonstration purposes
