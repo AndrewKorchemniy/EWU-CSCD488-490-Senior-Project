@@ -8,10 +8,10 @@ use crate::components::atoms::range::Range;
 #[function_component(TeamReport)]
 pub fn team_report() -> Html {
 
-    let range_state = use_state(|| "??".to_owned());
+    let range_state = use_state(|| "".to_owned());
     let cloned_range_state = range_state.clone();
     let range_changed = Callback::from(move |value: String| {
-        cloned_range_state.set(value);
+        cloned_range_state.set(format!("{}%", value));
     });
 
     html! {
@@ -55,9 +55,9 @@ pub fn team_report() -> Html {
                 id="evaluate-hard"
                 variant={ TextAreaVariant::Split }/>
             <Range 
-                label={format!("How far along (as a percent) do you feel you are toward the final goal? %{}", &*range_state)}
+                label={format!("How far along (as a percent) do you feel you are toward the final goal? {}", &*range_state)}
                 id="completion-percent"
-                handle_onchange={range_changed}/>
+                handle_oninput={range_changed}/>
             <TextArea 
                 label="Does this pace seem likely to succeed?"
                 id="pace-succeed"

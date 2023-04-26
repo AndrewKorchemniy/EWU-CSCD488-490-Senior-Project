@@ -8,13 +8,15 @@ pub struct Props {
     pub children: Children,
 }
 
+/// The [TeamForm] component provides a styled form for the [TeamReports] page.
 #[function_component(TeamForm)]
 pub fn team_form(props: &Props) -> Html {
     html! {
         <div class="card shadow border-0">
             <div class="card-body">
-                <form>
+                <form class="mt-3">
                     <div class="row g-3">
+                        <br/>
                         { for props.children.iter() }
                         <div class="row text-nowrap">
                             <div class="col">
