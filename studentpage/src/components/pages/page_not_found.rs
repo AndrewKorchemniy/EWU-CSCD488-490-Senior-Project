@@ -1,13 +1,20 @@
 use yew::prelude::*;
+use yew_router::prelude::*;
+
+use crate::components::atoms::button::{Button, ButtonVariant};
+use crate::components::molecules::msgbox::{MsgBox, MsgBoxVariant};
+use crate::Route;
 
 #[function_component(PageNotFound)]
 pub fn page_not_found() -> Html {
     html! {
-        <div class="card shadow text-danger border-danger">
-            <div class="card-body">
-                <h5 class="card-title"> {"Page not found! "} </h5>
-                <p class="card-text"> { "Page does not exist." } </p>
-            </div>
-        </div>
+        <MsgBox
+            variant={ MsgBoxVariant::Danger }
+            title="Page not found!"
+            text="Page does not exist.">
+            <Link<Route> to={ Route::Home }>
+                <Button variant={ ButtonVariant::Primary } label="Go Home" />
+            </Link<Route>>
+        </MsgBox>
     }
 }

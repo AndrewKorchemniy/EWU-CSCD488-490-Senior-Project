@@ -56,20 +56,19 @@ pub fn team_report() -> Html {
             <Range
                 label={format!("How far along (as a percent) do you feel you are toward the final goal? {}", &*range_state)}
                 id="completion-percent"
+                required={ true }
                 handle_oninput={range_changed}/>
             <TextArea
                 label="Does this pace seem likely to succeed?"
                 id="pace-succeed"
-                rows={"2"}
-                variant={ TextAreaVariant::Wide }/>
+                rows={"2"}/>
             <TextArea
                 label="Did you meet with your client this week? If not, when was the last time?"
-                id="client-meeting"
-                variant={ TextAreaVariant::Wide }/>
+                id="client-meeting"/>
             <TextArea
                 label="Are there any issues, concern, or comments about the project?"
                 id="issues-concerns-comments"
-                variant={ TextAreaVariant::Wide }/>
+                required={ false }/>
         </TeamForm>
     }
 }

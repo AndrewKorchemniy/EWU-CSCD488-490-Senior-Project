@@ -1,10 +1,11 @@
 use yew::prelude::*;
 
 /// Variants of the [Button]
-#[derive(Clone, PartialEq)]
+#[derive(PartialEq)]
 pub enum ButtonVariant {
     Primary,
     Warning,
+    Danger,
     Info,
     Light,
 }
@@ -24,6 +25,7 @@ pub fn button(props: &Props) -> Html {
     let get_variant = |variant: &ButtonVariant| match variant {
         ButtonVariant::Primary => "btn-primary",
         ButtonVariant::Warning => "btn-warning",
+        ButtonVariant::Danger => "btn-danger",
         ButtonVariant::Info => "btn-info",
         ButtonVariant::Light => "btn-light",
     };

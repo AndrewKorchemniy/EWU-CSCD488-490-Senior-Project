@@ -14,12 +14,9 @@ pub fn team_form(props: &Props) -> Html {
     html! {
         <div class="card shadow border-0">
             <div class="card-body">
-                <form class="mt-3">
-                    <div class="row g-3">
-                        <br />
-                        { for props.children.iter() }
-                        <Button variant={ ButtonVariant::Primary } label="Submit" class="mt-2" />
-                    </div>
+                <form class="mt-3 row g-3">
+                    { for props.children.iter() }
+                    <Button variant={ ButtonVariant::Danger } label="Submit" class="mt-2 col-auto ms-2" />
                 </form>
             </div>
         </div>

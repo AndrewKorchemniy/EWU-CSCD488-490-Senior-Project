@@ -32,12 +32,12 @@ pub fn range(props: &Props) -> Html {
             <input
                 type="range"
                 class="form-range"
+                required={ true }
                 id={ props.id.clone() }
                 min={"0"}
                 max={"100"}
                 step={"5"}
-                oninput={ oninput }
-                required={ props.required }/>
+                oninput={ oninput }/>
         </div>
     }
 }
