@@ -1,14 +1,16 @@
-use yew::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 /// Properties for [Range]
 #[derive(PartialEq, Properties)]
 pub struct Props {
     pub label: String,
     pub id: String,
+    #[prop_or(true)]
+    pub required: bool,
     #[prop_or_default]
-    pub handle_oninput: Callback<String>
+    pub handle_oninput: Callback<String>,
 }
 
 /// The [Range] component provides a styled range input.
@@ -27,14 +29,15 @@ pub fn range(props: &Props) -> Html {
     html! {
         <div class="col-12 col-xl-6 mb-2">
             <label for={ props.id.clone() } class="form-label"> { &props.label } </label>
-            <input 
-                type="range" 
-                class="form-range" 
-                id={ props.id.clone() } 
-                min={"0"} 
+            <input
+                type="range"
+                class="form-range"
+                id={ props.id.clone() }
+                min={"0"}
                 max={"100"}
-                step={"5"} 
-                oninput={ oninput } />
+                step={"5"}
+                oninput={ oninput }
+                required={ props.required }/>
         </div>
     }
 }

@@ -3,7 +3,6 @@ use yew::prelude::*;
 /// Properties for [Instructions] component.
 #[derive(PartialEq, Properties)]
 pub struct Props {
-    /// The instructions to display.
     pub children: Children,
 }
 

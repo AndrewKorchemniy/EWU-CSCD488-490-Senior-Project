@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-use crate::components::atoms::button::Button;
+use crate::components::atoms::button::{Button, ButtonVariant};
 
 /// Properties for [TeamForm]
 #[derive(PartialEq, Properties)]
@@ -16,13 +16,9 @@ pub fn team_form(props: &Props) -> Html {
             <div class="card-body">
                 <form class="mt-3">
                     <div class="row g-3">
-                        <br/>
+                        <br />
                         { for props.children.iter() }
-                        <div class="row text-nowrap">
-                            <div class="col">
-                                <Button variant="primary" label="Submit"/>
-                            </div>
-                        </div>
+                        <Button variant={ ButtonVariant::Primary } label="Submit" class="mt-2" />
                     </div>
                 </form>
             </div>
