@@ -22,52 +22,52 @@ pub fn team_report() -> Html {
                 </p>
             </Instructions>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>easiest to understand</b>?</div>"
+                label="Which aspects of the current work are the <b>easiest to understand</b>?"
                 id="understand-easy"
                 variant={ TextAreaVariant::Split }/>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>hardest to understand</b>?</div>"
+                label="Which aspects of the current work are the <b>hardest to understand</b>?"
                 id="understand-hard"
                 variant={ TextAreaVariant::Split }/>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>easiest to approach</b>?</div>"
+                label="Which aspects of the current work are the <b>easiest to approach</b>?"
                 id="approach-easy"
                 variant={ TextAreaVariant::Split }/>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>hardest to approach</b>?</div>"
+                label="Which aspects of the current work are the <b>hardest to approach</b>?"
                 id="approach-hard"
                 variant={ TextAreaVariant::Split }/>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>easiest to solve</b>?</div>"
+                label="Which aspects of the current work are the <b>easiest to solve</b>?"
                 id="solve-easy"
                 variant={ TextAreaVariant::Split }/>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>hardest to solve</b>?</div>"
+                label="Which aspects of the current work are the <b>hardest to solve</b>?"
                 id="solve-hard"
                 variant={ TextAreaVariant::Split }/>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>easiest to evaluate</b>?</div>"
+                label="Which aspects of the current work are the <b>easiest to evaluate</b>?"
                 id="evaluate-easy"
                 variant={ TextAreaVariant::Split }/>
             <TextArea
-                label="<div>Which aspects of the current work are the <b>hardest to evaluate</b>?</div>"
+                label="Which aspects of the current work are the <b>hardest to evaluate</b>?"
                 id="evaluate-hard"
                 variant={ TextAreaVariant::Split }/>
             <Range
                 label={format!(
-                    "<div>How far along (as a percent) do you feel you are toward the final goal? <b>{}</b></div>", 
+                    "How far along (as a percent) do you feel you are toward the final goal? <b>{}</b>", 
                     &*range_state)}
                 id="completion-percent"
                 handle_oninput={range_changed}/>
             <TextArea
-                label="<div>Does this pace seem likely to succeed?</div>"
+                label="Does this pace seem likely to succeed?"
                 id="pace-succeed"
                 rows={"2"}/>
             <TextArea
-                label="<div>Did you meet with your client this week? If not, when was the last time?</div>"
+                label="Did you meet with your client this week? If not, when was the last time?"
                 id="client-meeting"/>
             <TextArea
-                label="<div>Are there any issues, concern, or comments about the project?</div>"
+                label="Are there any issues, concern, or comments about the project?"
                 id="issues-concerns-comments"
                 required={ false }/>
         </TeamForm>
