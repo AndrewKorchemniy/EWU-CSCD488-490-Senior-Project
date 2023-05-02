@@ -28,7 +28,9 @@ pub fn range(props: &Props) -> Html {
 
     html! {
         <div class="col-12 col-xl-6 mb-2">
-            <label for={ props.id.clone() } class="form-label"> { &props.label } </label>
+            <label for={ props.id.clone() } class="form-label">
+                 { Html::from_html_unchecked(AttrValue::from(props.label.clone())) } 
+            </label>
             <input
                 type="range"
                 class="form-range"

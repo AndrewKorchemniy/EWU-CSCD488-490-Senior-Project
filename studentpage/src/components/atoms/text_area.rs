@@ -39,7 +39,9 @@ pub fn text_area(props: &Props) -> Html {
 
     html! {
         <div class={ get_classes(&props.variant) }>
-            <label for={ props.id.clone() } class="form-label"> { props.label.clone() } </label>
+            <label for={ props.id.clone() } class="form-label"> 
+                { Html::from_html_unchecked(AttrValue::from(props.label.clone())) } 
+            </label>
             <textarea
                 class="form-control"
                 rows={ props.rows.clone() }
