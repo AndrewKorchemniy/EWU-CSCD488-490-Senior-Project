@@ -58,7 +58,6 @@ pub fn team_report() -> Html {
                     "<div>How far along (as a percent) do you feel you are toward the final goal? <b>{}</b></div>", 
                     &*range_state)}
                 id="completion-percent"
-                required={ true }
                 handle_oninput={range_changed}/>
             <TextArea
                 label="<div>Does this pace seem likely to succeed?</div>"

@@ -7,8 +7,6 @@ use yew::prelude::*;
 pub struct Props {
     pub label: String,
     pub id: String,
-    #[prop_or(true)]
-    pub required: bool,
     #[prop_or_default]
     pub handle_oninput: Callback<String>,
 }
@@ -34,7 +32,6 @@ pub fn range(props: &Props) -> Html {
             <input
                 type="range"
                 class="form-range"
-                required={ true }
                 id={ props.id.clone() }
                 min={"0"}
                 max={"100"}
