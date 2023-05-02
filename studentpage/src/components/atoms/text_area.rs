@@ -46,9 +46,6 @@ pub fn text_area(props: &Props) -> Html {
                 placeholder={ props.placeholder.clone() }
                 id={ props.id.clone() }
                 required={ props.required }/>
-            <div class="valid-feedback">
-                { "Looks good!" }
-            </div>
         </div>
     }
 }

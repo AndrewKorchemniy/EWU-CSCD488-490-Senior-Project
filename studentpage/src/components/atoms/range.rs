@@ -36,7 +36,7 @@ pub fn range(props: &Props) -> Html {
                 id={ props.id.clone() }
                 min={"0"}
                 max={"100"}
-                step={"5"}
+                step={"1"}
                 oninput={ oninput }/>
         </div>
     }

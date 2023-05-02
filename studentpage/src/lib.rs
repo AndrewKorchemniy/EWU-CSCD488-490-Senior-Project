@@ -29,7 +29,7 @@ pub enum Route {
 pub fn app() -> Html {
     html! {
         <BrowserRouter>
-            <div class="container-fluid mx-auto px-4">
+            <div class="container-fluid mx-auto px-4" style="min-width: 480px;">
                 <div class="row">
                     <div class="col"> <Navbar /> </div>
                 </div>

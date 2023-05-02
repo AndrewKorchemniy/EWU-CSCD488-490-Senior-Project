@@ -12,15 +12,15 @@ pub struct Props {
 #[function_component(Calendar)]
 pub fn calendar(props: &Props) -> Html {
     html! {
-        <div class="border rounded shadow mx-auto">
+        <div class="border rounded shadow mx-auto table-responsive">
             <table class="table table-striped mb-0">
                 <thead>
                     <tr>
-                        <th class="table-warning text-center text-secondary text-nowrap" style="width: 1%"> {"Sprint"} </th>
-                        <th class="table-warning text-left text-secondary text-nowrap" style="width: 1%"> {"Due"} </th>
-                        <th class="table-warning text-center text-secondary text-nowrap" style="width: 1%"> {"Individual"} </th>
-                        <th class="table-warning text-center text-secondary text-nowrap" style="width: 1%"> {"Team"} </th>
-                        <th class="table-warning text-secondary"></th>
+                        <th class="table-warning text-center text-secondary text-nowrap"> {"Sprint"} </th>
+                        <th class="table-warning text-left text-secondary text-nowrap"> {"Due"} </th>
+                        <th class="table-warning text-center text-secondary text-nowrap"> {"Individual"} </th>
+                        <th class="table-warning text-center text-secondary text-nowrap"> {"Team"} </th>
+                        <th class="table-warning text-secondary w-100"></th>
                     </tr>
                 </thead>
                 <tbody>
