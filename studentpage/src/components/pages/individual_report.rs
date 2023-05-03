@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
-use crate::components::molecules::individual_form::IndividualForm;
 use crate::components::atoms::collapse::{Collapse, CollapseVariant};
+use crate::components::molecules::individual_form::IndividualForm;
 
 #[function_component(IndividualReport)]
 pub fn individual_report() -> Html {

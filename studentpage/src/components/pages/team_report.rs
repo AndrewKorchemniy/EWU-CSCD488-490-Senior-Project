@@ -55,7 +55,7 @@ pub fn team_report() -> Html {
                 variant={ TextAreaVariant::Split }/>
             <Range
                 label={format!(
-                    "How far along (as a percent) do you feel you are toward the final goal? <b>{}</b>", 
+                    "How far along (as a percent) do you feel you are toward the final goal? <b>{}</b>",
                     &*range_state)}
                 id="completion-percent"
                 handle_oninput={range_changed}/>

@@ -34,9 +34,9 @@ pub fn collapse(props: &Props) -> Html {
 
     html! {
         <div class="col-12 mt-3">
-            <button 
+            <button
                 type="button"
-                class={ format!("btn shadow text-start col-auto {}", get_btn_variant(&props.variant)) } 
+                class={ format!("btn shadow text-start col-auto {}", get_btn_variant(&props.variant)) }
                 data-bs-toggle="collapse"
                 data-bs-target={ props.target.clone() }>
             { get_icon_variant(&props.variant) }
