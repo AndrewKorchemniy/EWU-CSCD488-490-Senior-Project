@@ -39,7 +39,7 @@ pub fn collapse(props: &Props) -> Html {
                 class={ format!("btn shadow text-start btn-gradient col-auto {}", get_btn_variant(&props.variant)) }
                 data-bs-toggle="collapse"
                 data-bs-target={ props.target.clone() }
-                style="background-image: linear-gradient(225deg, #FFFFFF30, #00000020)">
+                style="background-image: linear-gradient(135deg, #FFFFFF20, #00000020)">
             { get_icon_variant(&props.variant) }
             { &*props.label }
             </button>

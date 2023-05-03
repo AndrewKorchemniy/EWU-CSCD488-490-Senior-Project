@@ -32,7 +32,7 @@ pub fn button(props: &Props) -> Html {
 
     html! {
         <button class={format!("btn shadow {} {}", get_variant(&props.variant), props.class)}
-            style="background-image: linear-gradient(225deg, #FFFFFF30, #00000020)">
+            style="background-image: linear-gradient(135deg, #FFFFFF20, #00000020)">
             { &*props.label }
         </button>
     }
