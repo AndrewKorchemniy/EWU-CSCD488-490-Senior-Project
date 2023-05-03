@@ -29,16 +29,16 @@ pub struct Props {
 /// The Split variant spans half the width of the screen or the full screen depending on the viewport size.
 #[function_component(TextArea)]
 pub fn text_area(props: &Props) -> Html {
-    let get_classes = |variant: &TextAreaVariant| -> String {
+    let get_variant = |variant: &TextAreaVariant| -> String {
         match variant {
             TextAreaVariant::Wide => "col-12 mb-2",
             TextAreaVariant::Split => "col-12 col-xl-6 mb-2",
         }
-        .into()
+        .to_string()
     };
 
     html! {
-        <div class={ get_classes(&props.variant) }>
+        <div class={ get_variant(&props.variant) }>
             <label for={ props.id.clone() } class="form-label">
                 { Html::from_html_unchecked(AttrValue::from(format!("<div>{}</div>", props.label.clone()))) }
             </label>
