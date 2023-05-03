@@ -13,7 +13,7 @@ pub fn page_not_found() -> Html {
             title="Page not found!"
             text="Page does not exist.">
             <Link<Route> to={ Route::Home }>
-                <Button variant={ ButtonVariant::Primary } label="Go Home" />
+                <Button variant={ ButtonVariant::Danger } label="Go Home" />
             </Link<Route>>
         </MsgBox>
     }
