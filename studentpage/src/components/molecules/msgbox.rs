@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
 /// Variants of the [Message]
-#[allow(dead_code)] // currently unused variants will be used later in development
+#[allow(dead_code)] // TODO: remove if some variants never get used
 #[derive(PartialEq, Clone)]
 pub enum MsgBoxVariant {
     Success,

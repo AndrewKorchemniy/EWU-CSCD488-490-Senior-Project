@@ -1,6 +1,7 @@
 use yew::prelude::*;
 
 /// Variants of the [Button]
+#[allow(dead_code)] // TODO: remove if some variants never get used
 #[derive(PartialEq)]
 pub enum ButtonVariant {
     Primary,
