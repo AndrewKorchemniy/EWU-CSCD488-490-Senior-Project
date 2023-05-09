@@ -6,9 +6,9 @@ pub struct Props {
     pub children: Children,
 }
 
-/// The [Calendar] component provides a table of sprints.
+/// The [Calendar] component provides a styled table.
+/// This component serves as a wrapper for the [Sprint] component.
 /// Each sprint has an associated due date, team report, and individual report.
-/// This cwomponent mostly serves as a styled container for the [Sprint] component.
 #[function_component(Calendar)]
 pub fn calendar(props: &Props) -> Html {
     html! {

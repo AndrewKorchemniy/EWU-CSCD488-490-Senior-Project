@@ -14,6 +14,7 @@ pub struct Props {
 }
 
 /// The [Range] component provides a styled range input.
+/// The value of the range input is emitted to the [handle_oninput] callback as a string.
 #[function_component(Range)]
 pub fn range(props: &Props) -> Html {
     let handle_oninput = props.handle_oninput.clone();
@@ -31,14 +32,14 @@ pub fn range(props: &Props) -> Html {
             <label for={ props.id.clone() } class="form-label">
                 { Html::from_html_unchecked(AttrValue::from(format!("<div>{}</div>", props.label.clone()))) }
             </label>
-                <input
-                    type="range"
-                    class="form-range"
-                    id={ props.id.clone() }
-                    min={"0"}
-                    max={"100"}
-                    step={"5"}
-                    oninput={ oninput }/>
+            <input
+                type="range"
+                class="form-range"
+                id={ props.id.clone() }
+                min={"0"}
+                max={"100"}
+                step={"5"}
+                oninput={ oninput }/>
         </div>
     }
 }

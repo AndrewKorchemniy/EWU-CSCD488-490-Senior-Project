@@ -1,10 +1,11 @@
 use crate::components::atoms::button::{Button, ButtonVariant};
 use yew::prelude::*;
-use yew_router::{prelude::*};
+use yew_router::prelude::*;
 
 use crate::Route;
 
 /// The [Navbar] component provides a styled navbar for the application.
+/// The requirements button is conditionally rendered based on the current route.
 #[function_component(Navbar)]
 pub fn navbar() -> Html {
     let route: Option<Route> = use_route::<Route>();

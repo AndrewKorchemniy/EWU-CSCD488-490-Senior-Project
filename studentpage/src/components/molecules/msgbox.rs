@@ -21,6 +21,7 @@ pub struct Props {
     pub children: Children,
 }
 
+/// The [Message] component provides a styled message box with four variants.
 #[function_component(MsgBox)]
 pub fn msg(props: &Props) -> Html {
     let get_variant = |variant: &MsgBoxVariant| match variant {

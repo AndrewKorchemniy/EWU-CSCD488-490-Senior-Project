@@ -7,10 +7,10 @@ use crate::components::molecules::team_form::TeamForm;
 
 #[function_component(TeamReport)]
 pub fn team_report() -> Html {
-    let range_state = use_state(|| "".to_owned());
-    let cloned_range_state = range_state.clone();
+    let _range_state = use_state(|| "".to_owned());
+    let range_state = _range_state.clone();
     let range_changed = Callback::from(move |value: String| {
-        cloned_range_state.set(format!("{}%", value));
+        _range_state.set(format!("{}%", value));
     });
 
     html! {
