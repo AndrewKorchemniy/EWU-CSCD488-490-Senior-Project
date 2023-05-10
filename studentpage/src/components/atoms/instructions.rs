@@ -3,7 +3,8 @@ use yew::prelude::*;
 /// Properties for [Instructions] component.
 #[derive(PartialEq, Properties)]
 pub struct Props {
-    pub children: Children,
+    /// The text to display as HTML - wrapped in a div.
+    pub text: AttrValue,
 }
 
 /// The [Instructions] component provides a styled wrapper for instructions in forms.
@@ -11,8 +12,7 @@ pub struct Props {
 pub fn instructions(props: &Props) -> Html {
     html! {
         <div class="card-subtitle">
-            { for props.children.iter() }
-            <hr/>
+            { Html::from_html_unchecked(AttrValue::from(format!("<div>{}</div>", props.text))) }
         </div>
     }
 }

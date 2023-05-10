@@ -29,7 +29,7 @@ pub struct Props {
 }
 
 /// The [TextArea] component provides a styled text area with two variants.
-/// The Wide variant is a single text area that spans the entire width of the 
+/// The Wide variant is a single text area that spans the entire width of the
 /// screen. The Split variant scales depending on the viewport size.
 #[function_component(TextArea)]
 pub fn text_area(props: &Props) -> Html {

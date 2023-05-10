@@ -14,7 +14,7 @@ pub fn individual_form(props: &Props) -> Html {
     html! {
         <div class="card shadow border-0">
             <div class="card-body">
-                <form class="row g-3">
+                <form class="mt-1 row g-3">
                     { for props.children.iter() }
                     <Button variant={ ButtonVariant::Danger } label="Submit" class="mt-3 col-auto ms-2" />
                 </form>
