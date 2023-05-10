@@ -4,3 +4,5 @@ pub mod individual_form;
 pub mod msgbox;
 pub mod navbar;
 pub mod team_form;
+pub mod time_accounting;
+pub mod activity_accounting;
