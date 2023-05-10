@@ -5,9 +5,9 @@ use yew_router::prelude::*;
 use crate::Route;
 
 /// The [Navbar] component provides a styled navbar for the application.
-/// The requirements button is conditionally rendered based on the current route.
 #[function_component(Navbar)]
 pub fn navbar() -> Html {
+    // The requirements button is conditionally rendered based on the current route.
     let route: Option<Route> = use_route::<Route>();
     let is_route_home = || matches!(route.unwrap(), Route::Home);
 

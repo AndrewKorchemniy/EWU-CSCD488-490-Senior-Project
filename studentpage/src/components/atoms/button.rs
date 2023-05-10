@@ -6,6 +6,7 @@ use yew::prelude::*;
 pub enum ButtonVariant {
     Primary,
     Warning,
+    Success,
     Danger,
     Info,
     Light,
@@ -14,9 +15,12 @@ pub enum ButtonVariant {
 /// Properties for [Button]
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub label: String,
+    /// The text to display on the button.
+    pub label: AttrValue,
+    /// Any additional classes to apply to the button.
     #[prop_or_default]
-    pub class: String,
+    pub class: AttrValue,
+    /// The variant of the button.
     #[prop_or(ButtonVariant::Light)]
     pub variant: ButtonVariant,
 }
@@ -26,6 +30,7 @@ pub fn button(props: &Props) -> Html {
     let get_variant = |variant: &ButtonVariant| match variant {
         ButtonVariant::Primary => "btn-primary",
         ButtonVariant::Warning => "btn-warning",
+        ButtonVariant::Success => "btn-success",
         ButtonVariant::Danger => "btn-danger",
         ButtonVariant::Info => "btn-info",
         ButtonVariant::Light => "btn-light",

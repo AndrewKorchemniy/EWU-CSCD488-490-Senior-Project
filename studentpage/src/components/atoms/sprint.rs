@@ -14,18 +14,22 @@ pub enum ReportStatus {
 /// Properties for [Sprint]
 #[derive(Properties, PartialEq)]
 pub struct Props {
+    /// The sprint number.
     pub sprint_number: u8,
-    pub due_date: String,
+    /// The due date of the sprint.
+    pub due_date: AttrValue,
+    /// The status of the team report.
     pub team_report_status: ReportStatus,
+    /// The status of the individual report.
     pub individual_report_status: ReportStatus,
 }
 
-/// The [Sprint] component provides a row for the table within the [Calendar] component.
+/// The [Sprint] component provides a row for the Calendar table.
 /// It takes in the sprint number, due date, and status of the team and individual reports.
 /// Each row within the calendar represents a sprint.
 #[function_component(Sprint)]
 pub fn sprint(props: &Props) -> Html {
-    // render the corresponding element for the status of the report
+    /// Renders the appropriate icon given the report status.
     fn get_status(status: &ReportStatus) -> Html {
         match status {
             ReportStatus::Submitted => html! {
@@ -44,7 +48,7 @@ pub fn sprint(props: &Props) -> Html {
                 </td>
             },
             ReportStatus::Active(route) => html! {
-                // if the report is active, render a link to the report page
+                // If the report is active, render a link to the report page.
                 <td class="text-center" style="color: dodgerblue">
                     <Link<Route> to={*route}>
                         <i class="fas fa-arrow-right fa-xl"></i>

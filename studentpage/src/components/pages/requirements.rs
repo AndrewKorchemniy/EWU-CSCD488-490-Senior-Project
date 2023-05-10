@@ -9,11 +9,11 @@ use crate::Route;
 pub fn requirements() -> Html {
     html! {
         <MsgBox
-            variant={ MsgBoxVariant::Info }
+            variant={ MsgBoxVariant::Warning }
             title="Requirements"
             text="This page has yet to be implemented.">
             <Link<Route> to={ Route::Home }>
-                <Button variant={ ButtonVariant::Primary } label="Go Home" />
+                <Button variant={ ButtonVariant::Warning } label="Go Home" />
             </Link<Route>>
         </MsgBox>
     }

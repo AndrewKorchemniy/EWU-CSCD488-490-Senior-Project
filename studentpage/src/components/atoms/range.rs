@@ -5,16 +5,17 @@ use yew::prelude::*;
 /// Properties for [Range]
 #[derive(PartialEq, Properties)]
 pub struct Props {
-    pub label: String,
-    pub id: String,
+    /// The label text as HTML - wrapped in a div.
+    pub label: AttrValue,
+    /// The id of the range input.
+    pub id: AttrValue,
+    /// An optional callback to handle the input event.
     #[prop_or_default]
-    pub handle_oninput: Callback<String>,
-    #[prop_or(true)]
-    pub required: bool,
+    pub handle_oninput: Callback<AttrValue>,
 }
 
 /// The [Range] component provides a styled range input.
-/// The value of the range input is emitted to the [handle_oninput] callback as a string.
+/// The value of the range input is emitted to the callback as a string.
 #[function_component(Range)]
 pub fn range(props: &Props) -> Html {
     let handle_oninput = props.handle_oninput.clone();
@@ -24,7 +25,7 @@ pub fn range(props: &Props) -> Html {
             .unwrap()
             .unchecked_into::<HtmlInputElement>()
             .value();
-        handle_oninput.emit(value);
+        handle_oninput.emit(AttrValue::from(value));
     });
 
     html! {

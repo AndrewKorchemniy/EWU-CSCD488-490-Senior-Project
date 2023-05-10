@@ -11,13 +11,17 @@ pub enum CollapseVariant {
 /// Properties for [Collapse]   
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub label: String,
-    pub target: String,
+    /// The text to display on the button.
+    pub label: AttrValue,
+    /// The id of the element to collapse.
+    pub target: AttrValue,
+    /// The variant of the button.
     #[prop_or(CollapseVariant::Incomplete)]
     pub variant: CollapseVariant,
 }
 
-/// The [Collapse] component provides a styled collapse button for the [InvidualForm] component.
+/// The [Collapse] component provides a styled collapse button.
+/// Collapses the element with the given id when clicked.
 #[function_component(Collapse)]
 pub fn collapse(props: &Props) -> Html {
     let get_btn_variant = |variant: &CollapseVariant| match variant {

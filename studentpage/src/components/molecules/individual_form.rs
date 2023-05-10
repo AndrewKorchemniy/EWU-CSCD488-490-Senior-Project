@@ -8,7 +8,7 @@ pub struct Props {
     pub children: Children,
 }
 
-/// The [IndividualForm] component provides a styled form for the [IndividualReport] page.
+/// The [IndividualForm] component provides a styled form wrapper.
 #[function_component(IndividualForm)]
 pub fn individual_form(props: &Props) -> Html {
     html! {

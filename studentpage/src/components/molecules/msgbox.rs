@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-/// Variants of the [Message]
+/// Variants of the [MsgBox]
 #[allow(dead_code)] // TODO: remove if some variants never get used
 #[derive(PartialEq, Clone)]
 pub enum MsgBoxVariant {
@@ -10,18 +10,21 @@ pub enum MsgBoxVariant {
     Danger,
 }
 
-/// Properties for [Message]
+/// Properties for [MsgBox]
 #[derive(Properties, PartialEq)]
 pub struct Props {
+    /// The variant of the message box.
     pub variant: MsgBoxVariant,
-    pub title: String,
+    /// The title of the message box.
+    pub title: AttrValue,
+    /// The text of the message box. Defaults to an empty string.
     #[prop_or_default]
-    pub text: String,
+    pub text: AttrValue,
     #[prop_or_default]
     pub children: Children,
 }
 
-/// The [Message] component provides a styled message box with four variants.
+/// The [MsgBox] component provides a styled message box with four variants.
 #[function_component(MsgBox)]
 pub fn msg(props: &Props) -> Html {
     let get_variant = |variant: &MsgBoxVariant| match variant {
