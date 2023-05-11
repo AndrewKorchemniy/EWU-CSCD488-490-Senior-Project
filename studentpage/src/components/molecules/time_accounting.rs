@@ -13,80 +13,80 @@ pub fn time_accounting() -> Html {
                 <tbody>
                     <tr>
                         <td class="text-left"> { "Saturday" } </td>
-                        <td> 
-                            <input 
-                                class="form-control form-control-sm" 
-                                type="number" 
-                                id="staturday" 
+                        <td>
+                            <input
+                                class="form-control form-control-sm"
+                                type="number"
+                                id="staturday"
                                 value="0"
-                                style="width: 4rem" /> 
-                        </td>                    
+                                style="width: 4rem" />
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "Sunday" } </td>
-                        <td> 
-                            <input 
-                                class="form-control form-control-sm" 
-                                type="number" 
-                                id="sunday" 
+                        <td>
+                            <input
+                                class="form-control form-control-sm"
+                                type="number"
+                                id="sunday"
                                 value="0"
-                                style="width: 4rem" /> 
+                                style="width: 4rem" />
                         </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "Monday" } </td>
-                        <td> 
-                            <input 
-                                class="form-control form-control-sm" 
-                                type="number" 
-                                id="monday" 
+                        <td>
+                            <input
+                                class="form-control form-control-sm"
+                                type="number"
+                                id="monday"
                                 value="0"
-                                style="width: 4rem" /> 
-                        </td>                   
+                                style="width: 4rem" />
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "Tuesday" } </td>
-                        <td> 
-                            <input 
-                                class="form-control form-control-sm" 
-                                type="number" 
-                                id="tuesday" 
+                        <td>
+                            <input
+                                class="form-control form-control-sm"
+                                type="number"
+                                id="tuesday"
                                 value="0"
-                                style="width: 4rem" /> 
-                        </td>                    
+                                style="width: 4rem" />
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "Wednesday" } </td>
-                        <td> 
-                            <input 
-                                class="form-control form-control-sm" 
-                                type="number" 
-                                id="wednesday" 
+                        <td>
+                            <input
+                                class="form-control form-control-sm"
+                                type="number"
+                                id="wednesday"
                                 value="0"
-                                style="width: 4rem" /> 
-                        </td>                    
+                                style="width: 4rem" />
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "Thursday" } </td>
-                        <td> 
-                            <input 
-                                class="form-control form-control-sm" 
-                                type="number" 
-                                id="thursday" 
+                        <td>
+                            <input
+                                class="form-control form-control-sm"
+                                type="number"
+                                id="thursday"
                                 value="0"
-                                style="width: 4rem" /> 
-                        </td>                    
+                                style="width: 4rem" />
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "Friday" } </td>
-                        <td> 
-                            <input 
-                                class="form-control form-control-sm" 
-                                type="number" 
-                                id="friday" 
+                        <td>
+                            <input
+                                class="form-control form-control-sm"
+                                type="number"
+                                id="friday"
                                 value="0"
-                                style="width: 4rem" /> 
-                        </td>                    
+                                style="width: 4rem" />
+                        </td>
                     </tr>
                 </tbody>
             </table>

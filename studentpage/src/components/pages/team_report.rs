@@ -59,10 +59,11 @@ pub fn team_report() -> Html {
             <TextArea
                 label="Does this pace seem likely to succeed?"
                 id="pace-succeed"
-                rows={"2"}/>
+                variant={ TextAreaVariant::Split }/>
             <TextArea
                 label="Did you meet with your client this week? If not, when was the last time?"
-                id="client-meeting"/>
+                id="client-meeting"
+                variant={ TextAreaVariant::Split }/>
             <TextArea
                 label="Are there any issues, concern, or comments about the project?"
                 id="issues-concerns-comments"

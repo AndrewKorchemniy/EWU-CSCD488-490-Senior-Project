@@ -7,7 +7,7 @@ pub struct Props {
     pub id: AttrValue,
     /// Whether or not the element is shown by default. Defaults to false.
     #[prop_or(false)]
-    pub show: bool,
+    pub is_open: bool,
     #[prop_or_default]
     pub children: Children,
 }
@@ -15,16 +15,9 @@ pub struct Props {
 /// The [Collapsible] component provides a styled wrapper for the content to collapse.
 #[function_component(Collapsible)]
 pub fn collapsible(props: &Props) -> Html {
-    let get_show = |show: &bool| -> &str {
-        match show {
-            true => "show",
-            false => "",
-        }
-    };
-
     html! {
-        <div 
-            class={format!("collapse mt-0 {}", get_show(&props.show))} 
+        <div
+            class={format!("collapse mt-0 {}", if props.is_open { "show" } else { "" })}
             id={ &props.id }>
             <div class="card card-body border-0">
                 { for props.children.iter() }

@@ -15,39 +15,39 @@ pub fn acitvity_accounting() -> Html {
                 <tbody>
                     <tr>
                         <td class="text-left"> { "A1" } </td>
-                        <td> 
+                        <td>
                             <input class="form-control form-control-sm" type="text" rows="1" />
                         </td>
-                        <td> 
+                        <td>
                             <input class="form-control form-control-sm" type="text" rows="1" cols="20" />
                         </td>
-                        <td> 
-                            <input class="form-control form-control-sm" type="number" value="0" style="width: 4rem"/> 
-                        </td>                    
+                        <td>
+                            <input class="form-control form-control-sm" type="number" value="0" style="width: 4rem"/>
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "A2" } </td>
-                        <td> 
+                        <td>
                             <input class="form-control form-control-sm" type="text" rows="1" />
                         </td>
-                        <td> 
+                        <td>
                             <input class="form-control form-control-sm" type="text" rows="1" cols="20" />
                         </td>
-                        <td> 
-                            <input class="form-control form-control-sm" type="number" value="0" style="width: 4rem"/> 
-                        </td>                    
+                        <td>
+                            <input class="form-control form-control-sm" type="number" value="0" style="width: 4rem"/>
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-left"> { "A3" } </td>
-                        <td> 
+                        <td>
                             <input class="form-control form-control-sm" type="text" rows="1" />
                         </td>
-                        <td> 
+                        <td>
                             <input class="form-control form-control-sm" type="text" rows="1" cols="20" />
                         </td>
-                        <td> 
-                            <input class="form-control form-control-sm" type="number" value="0" style="width: 4rem"/> 
-                        </td>                    
+                        <td>
+                            <input class="form-control form-control-sm" type="number" value="0" style="width: 4rem"/>
+                        </td>
                     </tr>
                 </tbody>
             </table>

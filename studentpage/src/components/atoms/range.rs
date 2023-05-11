@@ -29,18 +29,20 @@ pub fn range(props: &Props) -> Html {
     });
 
     html! {
-        <div class="col-12 col-xl-6 mb-2">
-            <label for={ props.id.clone() } class="form-label">
-                { Html::from_html_unchecked(AttrValue::from(format!("<div>{}</div>", props.label.clone()))) }
-            </label>
-            <input
-                type="range"
-                class="form-range"
-                id={ props.id.clone() }
-                min={"0"}
-                max={"100"}
-                step={"5"}
-                oninput={ oninput }/>
+        <div class="col-12">
+            <div class="col-12 col-xl-6 mb-2">
+                <label for={ props.id.clone() } class="form-label">
+                    { Html::from_html_unchecked(AttrValue::from(format!("<div>{}</div>", props.label.clone()))) }
+                </label>
+                <input
+                    type="range"
+                    class="form-range"
+                    id={ props.id.clone() }
+                    min={"0"}
+                    max={"100"}
+                    step={"5"}
+                    oninput={ oninput }/>
+            </div>
         </div>
     }
 }
