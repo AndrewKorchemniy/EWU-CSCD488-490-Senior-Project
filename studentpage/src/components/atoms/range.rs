@@ -1,4 +1,3 @@
-use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -18,13 +17,18 @@ pub struct Props {
 /// The value of the range input is emitted to the callback as a string.
 #[function_component(Range)]
 pub fn range(props: &Props) -> Html {
+    // Local state for the range input since Yew's rendering engine handles HTML values.
+    // This would normally be handled by the browser.
+    let _range_state = use_state(|| -1);
+    let range_state = _range_state.clone().to_string();
+    let range_changed = Callback::from(move |value| {
+        _range_state.set(value);
+    });
+
     let handle_oninput = props.handle_oninput.clone();
     let oninput = Callback::from(move |event: InputEvent| {
-        let value = event
-            .target()
-            .unwrap()
-            .unchecked_into::<HtmlInputElement>()
-            .value();
+        let value = event.target_unchecked_into::<HtmlInputElement>().value();
+        range_changed.emit(value.parse().unwrap());
         handle_oninput.emit(AttrValue::from(value));
     });
 
@@ -38,9 +42,10 @@ pub fn range(props: &Props) -> Html {
                     type="range"
                     class="form-range"
                     id={ props.id.clone() }
-                    min={"0"}
-                    max={"100"}
-                    step={"5"}
+                    min="0"
+                    max="100"
+                    value={ range_state } // Must use state here to use a default value.
+                    step="5"
                     oninput={ oninput }/>
             </div>
         </div>
