@@ -10,6 +10,8 @@ use components::pages::page_not_found::PageNotFound;
 use components::pages::requirements::Requirements;
 use components::pages::team_report::TeamReport;
 
+mod stores;
+
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]

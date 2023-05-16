@@ -8,6 +8,12 @@ pub struct Props {
     pub label: AttrValue,
     /// The id of the range input.
     pub id: AttrValue,
+    /// The onchange callback.
+    #[prop_or_default]
+    /// The initial value.
+    #[prop_or_default]
+    pub initial_value: AttrValue,
+    pub onchange: Callback<Event>,
     /// An optional callback to handle the input event.
     #[prop_or_default]
     pub handle_oninput: Callback<AttrValue>,
@@ -18,17 +24,18 @@ pub struct Props {
 #[function_component(Range)]
 pub fn range(props: &Props) -> Html {
     // Local state for the range input since Yew's rendering engine handles HTML values.
-    // This would normally be handled by the browser.
-    let _range_state = use_state(|| -1);
-    let range_state = _range_state.clone().to_string();
-    let range_changed = Callback::from(move |value| {
+    // This would normally be handled by the browser. However, it also allows for
+    // a default value to be set (-1) in the event it is not set.
+    let _range_state = use_state(|| props.initial_value.clone());
+    let range_state = _range_state.clone();
+    let range_changed = Callback::from(move |value: AttrValue| {
         _range_state.set(value);
     });
 
     let handle_oninput = props.handle_oninput.clone();
     let oninput = Callback::from(move |event: InputEvent| {
         let value = event.target_unchecked_into::<HtmlInputElement>().value();
-        range_changed.emit(value.parse().unwrap());
+        range_changed.emit(AttrValue::from(value.clone()));
         handle_oninput.emit(AttrValue::from(value));
     });
 
@@ -44,9 +51,11 @@ pub fn range(props: &Props) -> Html {
                     id={ props.id.clone() }
                     min="0"
                     max="100"
-                    value={ range_state } // Must use state here to use a default value.
+                    value= { &*range_state } // Must use state here to use a default value.
                     step="5"
-                    oninput={ oninput }/>
+                    draggable={ "false" }
+                    oninput={ oninput }
+                    onchange={ &props.onchange }/>
             </div>
         </div>
     }
