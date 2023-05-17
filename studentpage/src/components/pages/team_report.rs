@@ -1,4 +1,4 @@
-use web_sys::{HtmlInputElement, HtmlTextAreaElement};
+use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
 use yewdux::prelude::*;
 
@@ -13,199 +13,8 @@ use crate::stores::team_store::TeamStore;
 
 #[function_component(TeamReport)]
 pub fn team_report() -> Html {
-    // States for validation.
-    let _understand_easy_validation = use_state(|| TextAreaValidation::None);
-    let understand_easy_validation = _understand_easy_validation.clone();
-    let understand_easy_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _understand_easy_validation.set(value);
-    });
-    let _understand_hard_validation = use_state(|| TextAreaValidation::None);
-    let understand_hard_validation = _understand_hard_validation.clone();
-    let understand_hard_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _understand_hard_validation.set(value);
-    });
-    let _approach_easy_validation = use_state(|| TextAreaValidation::None);
-    let approach_easy_validation = _approach_easy_validation.clone();
-    let approach_easy_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _approach_easy_validation.set(value);
-    });
-    let _approach_hard_validation = use_state(|| TextAreaValidation::None);
-    let approach_hard_validation = _approach_hard_validation.clone();
-    let approach_hard_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _approach_hard_validation.set(value);
-    });
-    let _solve_easy_validation = use_state(|| TextAreaValidation::None);
-    let solve_easy_validation = _solve_easy_validation.clone();
-    let solve_easy_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _solve_easy_validation.set(value);
-    });
-    let _solve_hard_validation = use_state(|| TextAreaValidation::None);
-    let solve_hard_validation = _solve_hard_validation.clone();
-    let solve_hard_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _solve_hard_validation.set(value);
-    });
-    let _evaluate_easy_validation = use_state(|| TextAreaValidation::None);
-    let evaluate_easy_validation = _evaluate_easy_validation.clone();
-    let evaluate_easy_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _evaluate_easy_validation.set(value);
-    });
-    let _evaluate_hard_validation = use_state(|| TextAreaValidation::None);
-    let evaluate_hard_validation = _evaluate_hard_validation.clone();
-    let evaluate_hard_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _evaluate_hard_validation.set(value);
-    });
-    let _pace_succeed_validation = use_state(|| TextAreaValidation::None);
-    let pace_succeed_validation = _pace_succeed_validation.clone();
-    let pace_succeed_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _pace_succeed_validation.set(value);
-    });
-    let _client_meeting_validation = use_state(|| TextAreaValidation::None);
-    let client_meeting_validation = _client_meeting_validation.clone();
-    let client_meeting_validation_changes = Callback::from(move |value: TextAreaValidation| {
-        _client_meeting_validation.set(value);
-    });
-    let _issues_comments_concerns_validation = use_state(|| TextAreaValidation::None);
-    let issues_comments_concerns_validation = _issues_comments_concerns_validation.clone();
-    let issues_comments_concerns_validation_changes =
-        Callback::from(move |value: TextAreaValidation| {
-            _issues_comments_concerns_validation.set(value);
-        });
-
-    // Callbacks for updating the store.
+    // Local session store.
     let (store, dispatch) = use_store::<TeamStore>();
-
-    let onchange_understand_easy = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.understand_easy = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_understand_hard = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.understand_hard = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_approach_easy = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.approach_easy = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_approach_hard = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.approach_hard = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_solve_easy = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.solve_easy = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_solve_hard = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.solve_hard = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_evaluate_easy = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.evaluate_easy = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_evaluate_hard = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.evaluate_hard = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_completion_percent = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlInputElement>().value();
-        store.completion_percent = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_pace_succeed = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.pace_succeed = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_client_meeting = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.client_meeting = if value.is_empty() { None } else { Some(value) };
-    });
-    let onchange_issues_comments_concerns =
-        dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let value: String = event.target_unchecked_into::<HtmlTextAreaElement>().value();
-        store.issues_comments_concerns = if value.is_empty() { None } else { Some(value) };
-    });
-
-    // Client-side validation.
-    let validate = move |store: &mut TeamStore| {
-        let mut valid = true;
-        match store.understand_easy {
-            Some(_) => understand_easy_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                understand_easy_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.understand_hard {
-            Some(_) => understand_hard_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                understand_hard_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.approach_easy {
-            Some(_) => approach_easy_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                approach_easy_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.approach_hard {
-            Some(_) => approach_hard_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                approach_hard_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.solve_easy {
-            Some(_) => solve_easy_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                solve_easy_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.solve_hard {
-            Some(_) => solve_hard_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                solve_hard_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.evaluate_easy {
-            Some(_) => evaluate_easy_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                evaluate_easy_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.evaluate_hard {
-            Some(_) => evaluate_hard_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                evaluate_hard_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.pace_succeed {
-            Some(_) => pace_succeed_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                pace_succeed_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.client_meeting {
-            Some(_) => client_meeting_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                client_meeting_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        match store.issues_comments_concerns {
-            Some(_) => issues_comments_concerns_validation_changes.emit(TextAreaValidation::Valid),
-            None => {
-                issues_comments_concerns_validation_changes.emit(TextAreaValidation::Invalid);
-                valid = false;
-            }
-        }
-        valid
-    };
 
     // State for displaying range value.
     let _range_state = use_state(|| {
@@ -219,6 +28,123 @@ pub fn team_report() -> Html {
     let range_changed = Callback::from(move |value: AttrValue| {
         _range_state.set(AttrValue::from(format!("{}%", value)));
     });
+
+    // Validation state for each textarea.
+    let _understand_easy_state = use_state(|| TextAreaValidation::None);
+    let understand_easy_state = _understand_easy_state.clone();
+    let understand_easy_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _understand_easy_state.set(value);
+    });
+    let _understand_hard_state = use_state(|| TextAreaValidation::None);
+    let understand_hard_state = _understand_hard_state.clone();
+    let understand_hard_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _understand_hard_state.set(value);
+    });
+    let _approach_easy_state = use_state(|| TextAreaValidation::None);
+    let approach_easy_state = _approach_easy_state.clone();
+    let approach_easy_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _approach_easy_state.set(value);
+    });
+    let _approach_hard_state = use_state(|| TextAreaValidation::None);
+    let approach_hard_state = _approach_hard_state.clone();
+    let approach_hard_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _approach_hard_state.set(value);
+    });
+    let _solve_easy_state = use_state(|| TextAreaValidation::None);
+    let solve_easy_state = _solve_easy_state.clone();
+    let solve_easy_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _solve_easy_state.set(value);
+    });
+    let _solve_hard_state = use_state(|| TextAreaValidation::None);
+    let solve_hard_state = _solve_hard_state.clone();
+    let solve_hard_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _solve_hard_state.set(value);
+    });
+    let _evaluate_easy_state = use_state(|| TextAreaValidation::None);
+    let evaluate_easy_state = _evaluate_easy_state.clone();
+    let evaluate_easy_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _evaluate_easy_state.set(value);
+    });
+    let _evaluate_hard_state = use_state(|| TextAreaValidation::None);
+    let evaluate_hard_state = _evaluate_hard_state.clone();
+    let evaluate_hard_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _evaluate_hard_state.set(value);
+    });
+    let _pace_succeed_state = use_state(|| TextAreaValidation::None);
+    let pace_succeed_state = _pace_succeed_state.clone();
+    let pace_succeed_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _pace_succeed_state.set(value);
+    });
+    let _client_meeting_state = use_state(|| TextAreaValidation::None);
+    let client_meeting_state = _client_meeting_state.clone();
+    let client_meeting_state_changes = Callback::from(move |value: TextAreaValidation| {
+        _client_meeting_state.set(value);
+    });
+
+    // Callback to store changes in session storage.
+    let store_onchange = dispatch.reduce_mut_callback_with(|store, event: Event| {
+        let target = event.target_unchecked_into::<HtmlTextAreaElement>();
+        let id = target.id();
+        let value = target.value().trim().to_string(); // Trim whitespace before storing.
+
+        let as_option = |value: String| -> Option<String> {
+            if value.is_empty() {
+                None
+            } else {
+                Some(value)
+            }
+        };
+
+        match id.as_str() {
+            "understand-easy" => store.understand_easy = as_option(value),
+            "understand-hard" => store.understand_hard = as_option(value),
+            "approach-easy" => store.approach_easy = as_option(value),
+            "approach-hard" => store.approach_hard = as_option(value),
+            "solve-easy" => store.solve_easy = as_option(value),
+            "solve-hard" => store.solve_hard = as_option(value),
+            "evaluate-easy" => store.evaluate_easy = as_option(value),
+            "evaluate-hard" => store.evaluate_hard = as_option(value),
+            "completion-percent" => store.completion_percent = as_option(value),
+            "pace-succeed" => store.pace_succeed = as_option(value),
+            "client-meeting" => store.client_meeting = as_option(value),
+            "issues-comments" => store.issues_comments = as_option(value),
+            _ => (),
+        }
+    });
+
+    // Client-side validation.
+    let validate = |text: &Option<String>, state: &Callback<TextAreaValidation>| -> bool {
+        match text {
+            Some(text) => {
+                if text.len() < 3 {
+                    state.emit(TextAreaValidation::Invalid);
+                    false
+                } else {
+                    state.emit(TextAreaValidation::Valid);
+                    true
+                }
+            }
+            None => {
+                state.emit(TextAreaValidation::Invalid);
+                false
+            }
+        }
+    };
+
+    let validate = move |store: &mut TeamStore| {
+        let mut valid = true;
+        valid = validate(&store.understand_easy, &understand_easy_state_changes) && valid;
+        valid = validate(&store.understand_hard, &understand_hard_state_changes) && valid;
+        valid = validate(&store.approach_easy, &approach_easy_state_changes) && valid;
+        valid = validate(&store.approach_hard, &approach_hard_state_changes) && valid;
+        valid = validate(&store.solve_easy, &solve_easy_state_changes) && valid;
+        valid = validate(&store.solve_hard, &solve_hard_state_changes) && valid;
+        valid = validate(&store.evaluate_easy, &evaluate_easy_state_changes) && valid;
+        valid = validate(&store.evaluate_hard, &evaluate_hard_state_changes) && valid;
+        valid = validate(&store.pace_succeed, &pace_succeed_state_changes) && valid;
+        valid = validate(&store.client_meeting, &client_meeting_state_changes) && valid;
+        valid
+    };
 
     // Callback for submitting the form. Triggers client-side validation.
     let onsubmit = dispatch.reduce_mut_callback_with(move |store, event: SubmitEvent| {
@@ -236,58 +162,58 @@ pub fn team_report() -> Html {
                 label="Which aspects of the current work are the <b>easiest to understand</b>?"
                 id="understand-easy"
                 value={ store.understand_easy.as_deref().unwrap_or_default().to_string() }
-                validation={ understand_easy_validation }
+                is_valid={ understand_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_understand_easy }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to understand</b>?"
                 id="understand-hard"
                 value={ store.understand_hard.as_deref().unwrap_or_default().to_string() }
-                validation={ understand_hard_validation }
+                is_valid={ understand_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_understand_hard }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>easiest to approach</b>?"
                 id="approach-easy"
                 value={ store.approach_easy.as_deref().unwrap_or_default().to_string() }
-                validation={ approach_easy_validation }
+                is_valid={ approach_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_approach_easy }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to approach</b>?"
                 id="approach-hard"
                 value={ store.approach_hard.as_deref().unwrap_or_default().to_string() }
-                validation={ approach_hard_validation }
+                is_valid={ approach_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_approach_hard }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>easiest to solve</b>?"
                 id="solve-easy"
                 value={ store.solve_easy.as_deref().unwrap_or_default().to_string() }
-                validation={ solve_easy_validation }
+                is_valid={ solve_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_solve_easy }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to solve</b>?"
                 id="solve-hard"
                 value={ store.solve_hard.as_deref().unwrap_or_default().to_string() }
-                validation={ solve_hard_validation }
+                is_valid={ solve_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_solve_hard }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>easiest to evaluate</b>?"
                 id="evaluate-easy"
                 value={ store.evaluate_easy.as_deref().unwrap_or_default().to_string() }
-                validation={ evaluate_easy_validation }
+                is_valid={ evaluate_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_evaluate_easy }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to evaluate</b>?"
                 id="evaluate-hard"
                 value={ store.evaluate_hard.as_deref().unwrap_or_default().to_string() }
-                validation={ evaluate_hard_validation }
+                is_valid={ evaluate_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ onchange_evaluate_hard }/>
+                onchange={ &store_onchange }/>
             <Range
                 label={format!(
                     "How far along (as a percent) do you feel you are toward the final goal? <b>{}</b>",
@@ -295,32 +221,28 @@ pub fn team_report() -> Html {
                 id="completion-percent"
                 initial_value={ store.completion_percent.as_deref().unwrap_or("-1").to_string() }
                 handle_oninput={range_changed}
-                onchange={ onchange_completion_percent }/>
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Does this pace seem likely to succeed?"
                 id="pace-succeed"
                 value={ store.pace_succeed.as_deref().unwrap_or_default().to_string() }
-                validation={ pace_succeed_validation }
-                variant={ TextAreaVariant::Narrow }
-                onchange={ onchange_pace_succeed }/>
+                is_valid={ pace_succeed_state }
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Did you meet with your client this week? If not, when was the last time?"
                 id="client-meeting"
                 value={ store.client_meeting.as_deref().unwrap_or_default().to_string() }
-                validation={ client_meeting_validation }
-                variant={ TextAreaVariant::Narrow }
-                onchange={ onchange_client_meeting }/>
+                is_valid={ client_meeting_state }
+                onchange={ &store_onchange }/>
             <TextArea
                 label="Are there any issues, concern, or comments about the project?"
-                id="issues-concerns-comments"
-                value={ store.issues_comments_concerns.as_deref().unwrap_or_default().to_string() }
-                validation={ issues_comments_concerns_validation }
-                variant={ TextAreaVariant::Narrow }
-                onchange={ onchange_issues_comments_concerns }/>
+                id="issues-comments"
+                value={ store.issues_comments.as_deref().unwrap_or_default().to_string() }
+                onchange={ &store_onchange }/>
             <Button
                 variant={ ButtonVariant::Danger }
                 label="Submit"
-                class="mt-2 col-auto ms-2" />
+                class="mt-3 col-auto ms-2" />
         </TeamForm>
     }
 }
