@@ -16,5 +16,4 @@ pub struct TeamStore {
     pub pace_succeed: Option<String>,
     pub client_meeting: Option<String>,
     pub issues_comments: Option<String>,
-    pub timestamp: Option<String>,
 }

@@ -1,3 +1,4 @@
+use gloo::console::log;
 use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
 use yewdux::prelude::*;
@@ -149,7 +150,7 @@ pub fn team_report() -> Html {
     // Callback for submitting the form. Triggers client-side validation.
     let onsubmit = dispatch.reduce_mut_callback_with(move |store, event: SubmitEvent| {
         event.prevent_default();
-        validate(store);
+        log!(validate(store));
         // TODO: submit to server
     });
 

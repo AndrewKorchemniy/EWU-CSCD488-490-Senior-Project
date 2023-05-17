@@ -43,23 +43,17 @@ pub struct Props {
 /// screen. The Split variant scales depending on the viewport size.
 #[function_component(TextArea)]
 pub fn text_area(props: &Props) -> Html {
-    let get_border = |props: &Props| -> &str {
-        if props.is_valid.is_none() {
-            return "";
-        }
-        match &**props.is_valid.as_ref().unwrap() {
+    let get_validation_border = |is_valid: &TextAreaValidation| -> &str {
+        match is_valid {
             TextAreaValidation::None => "",
             TextAreaValidation::Valid => "is-valid",
             TextAreaValidation::Invalid => "is-invalid",
         }
     };
 
-    let render_validation_tooltip = |props: &Props| -> Html {
-        if props.is_valid.is_none() {
-            return html! {};
-        }
+    let render_validation_tooltip = |is_valid: &TextAreaValidation| -> Html {
         html! {
-            match &**props.is_valid.as_ref().unwrap() {
+            match is_valid {
                 TextAreaValidation::None => { html! {} },
                 TextAreaValidation::Valid => { html! {
                     <div class="valid-feedback ps-2" style="display: block">
@@ -82,13 +76,20 @@ pub fn text_area(props: &Props) -> Html {
                     { Html::from_html_unchecked(AttrValue::from(format!("<div>{}</div>", props.label.clone()))) }
                 </label>
                 <textarea
-                    class={ format!("form-control {}", get_border(props))}
+                    class={ format!("form-control {}",
+                        if props.is_valid.is_some() {
+                            get_validation_border(props.is_valid.as_ref().unwrap())
+                        } else {
+                            ""
+                        })}
                     rows="4"
                     placeholder={ props.placeholder.clone() }
                     id={ props.id.clone() }
                     value={ props.value.clone() }
                     onchange={ &props.onchange }/>
-                { render_validation_tooltip(props) }
+                if props.is_valid.is_some() {
+                    { render_validation_tooltip(props.is_valid.as_ref().unwrap()) }
+                }
             </div>
         </div>
     }
