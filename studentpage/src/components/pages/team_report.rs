@@ -1,5 +1,5 @@
 use gloo::console::log;
-use web_sys::HtmlTextAreaElement;
+use web_sys::{HtmlInputElement, HtmlTextAreaElement};
 use yew::prelude::*;
 use yewdux::prelude::*;
 
@@ -10,7 +10,7 @@ use crate::components::atoms::text_area::TextAreaValidation;
 use crate::components::atoms::text_area::{TextArea, TextAreaVariant};
 use crate::components::molecules::team_form::TeamForm;
 
-use crate::stores::team_store::TeamStore;
+use crate::stores::team_store::{validate, TeamStore};
 
 #[function_component(TeamReport)]
 pub fn team_report() -> Html {
@@ -82,57 +82,90 @@ pub fn team_report() -> Html {
         _client_meeting_state.set(value);
     });
 
-    // Callback to store changes in session storage.
-    let store_onchange = dispatch.reduce_mut_callback_with(|store, event: Event| {
-        let target = event.target_unchecked_into::<HtmlTextAreaElement>();
-        let id = target.id();
-        let value = target.value().trim().to_string(); // Trim whitespace before storing.
-
-        let as_option = |value: String| -> Option<String> {
-            if value.is_empty() {
-                None
-            } else {
-                Some(value)
-            }
-        };
-
-        match id.as_str() {
-            "understand-easy" => store.understand_easy = as_option(value),
-            "understand-hard" => store.understand_hard = as_option(value),
-            "approach-easy" => store.approach_easy = as_option(value),
-            "approach-hard" => store.approach_hard = as_option(value),
-            "solve-easy" => store.solve_easy = as_option(value),
-            "solve-hard" => store.solve_hard = as_option(value),
-            "evaluate-easy" => store.evaluate_easy = as_option(value),
-            "evaluate-hard" => store.evaluate_hard = as_option(value),
-            "completion-percent" => store.completion_percent = as_option(value),
-            "pace-succeed" => store.pace_succeed = as_option(value),
-            "client-meeting" => store.client_meeting = as_option(value),
-            "issues-comments" => store.issues_comments = as_option(value),
-            _ => (),
-        }
+    // Callbacks to store changes and perform proactive validation.
+    let cloned_understand_easy = understand_easy_state_changes.clone();
+    let understand_easy_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.understand_easy = Some(value);
+        validate(&store.understand_easy, &cloned_understand_easy);
+    });
+    let cloned_understand_hard = understand_hard_state_changes.clone();
+    let understand_hard_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.understand_hard = Some(value);
+        validate(&store.understand_hard, &cloned_understand_hard);
+    });
+    let cloned_approach_easy = approach_easy_state_changes.clone();
+    let approach_easy_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.approach_easy = Some(value);
+        validate(&store.approach_easy, &cloned_approach_easy);
+    });
+    let cloned_approach_hard = approach_hard_state_changes.clone();
+    let approach_hard_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.approach_hard = Some(value);
+        validate(&store.approach_hard, &cloned_approach_hard);
+    });
+    let cloned_solve_easy = solve_easy_state_changes.clone();
+    let solve_easy_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.solve_easy = Some(value);
+        validate(&store.solve_easy, &cloned_solve_easy);
+    });
+    let cloned_solve_hard = solve_hard_state_changes.clone();
+    let solve_hard_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.solve_hard = Some(value);
+        validate(&store.solve_hard, &cloned_solve_hard);
+    });
+    let cloned_evaluate_easy = evaluate_easy_state_changes.clone();
+    let evaluate_easy_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.evaluate_easy = Some(value);
+        validate(&store.evaluate_easy, &cloned_evaluate_easy);
+    });
+    let cloned_evaluate_hard = evaluate_hard_state_changes.clone();
+    let evaluate_hard_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.evaluate_hard = Some(value);
+        validate(&store.evaluate_hard, &cloned_evaluate_hard);
+    });
+    let completion_percent_onchange = dispatch.reduce_mut_callback_with(|store, event: Event| {
+        let target: HtmlInputElement = event.target_unchecked_into();
+        let value = target.value().trim().to_string();
+        store.completion_percent = Some(value);
+    });
+    let cloned_pace_succeed = pace_succeed_state_changes.clone();
+    let pace_succeed_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().trim().to_lowercase();
+        store.pace_succeed = Some(value);
+        validate(&store.pace_succeed, &cloned_pace_succeed);
+    });
+    let cloned_client_meeting = client_meeting_state_changes.clone();
+    let client_meeting_onchange = dispatch.reduce_mut_callback_with(move |store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().to_string();
+        store.client_meeting = Some(value);
+        validate(&store.client_meeting, &cloned_client_meeting);
+    });
+    let issues_comments_onchange = dispatch.reduce_mut_callback_with(|store, event: Event| {
+        let target: HtmlTextAreaElement = event.target_unchecked_into();
+        let value = target.value().to_string();
+        store.issues_comments = Some(value);
     });
 
-    // Client-side validation.
-    let validate = |text: &Option<String>, state: &Callback<TextAreaValidation>| -> bool {
-        match text {
-            Some(text) => {
-                if text.len() < 3 {
-                    state.emit(TextAreaValidation::Invalid);
-                    false
-                } else {
-                    state.emit(TextAreaValidation::Valid);
-                    true
-                }
-            }
-            None => {
-                state.emit(TextAreaValidation::Invalid);
-                false
-            }
-        }
-    };
-
-    let validate = move |store: &mut TeamStore| {
+    // Validate all fields on submit.
+    let validate_submit = move |store: &mut TeamStore| {
         let mut valid = true;
         valid = validate(&store.understand_easy, &understand_easy_state_changes) && valid;
         valid = validate(&store.understand_hard, &understand_hard_state_changes) && valid;
@@ -150,7 +183,7 @@ pub fn team_report() -> Html {
     // Callback for submitting the form. Triggers client-side validation.
     let onsubmit = dispatch.reduce_mut_callback_with(move |store, event: SubmitEvent| {
         event.prevent_default();
-        log!(validate(store));
+        log!(validate_submit(store));
         // TODO: submit to server
     });
 
@@ -165,56 +198,56 @@ pub fn team_report() -> Html {
                 value={ store.understand_easy.as_deref().unwrap_or_default().to_string() }
                 is_valid={ understand_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &understand_easy_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to understand</b>?"
                 id="understand-hard"
                 value={ store.understand_hard.as_deref().unwrap_or_default().to_string() }
                 is_valid={ understand_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &understand_hard_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>easiest to approach</b>?"
                 id="approach-easy"
                 value={ store.approach_easy.as_deref().unwrap_or_default().to_string() }
                 is_valid={ approach_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &approach_easy_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to approach</b>?"
                 id="approach-hard"
                 value={ store.approach_hard.as_deref().unwrap_or_default().to_string() }
                 is_valid={ approach_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &approach_hard_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>easiest to solve</b>?"
                 id="solve-easy"
                 value={ store.solve_easy.as_deref().unwrap_or_default().to_string() }
                 is_valid={ solve_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &solve_easy_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to solve</b>?"
                 id="solve-hard"
                 value={ store.solve_hard.as_deref().unwrap_or_default().to_string() }
                 is_valid={ solve_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &solve_hard_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>easiest to evaluate</b>?"
                 id="evaluate-easy"
                 value={ store.evaluate_easy.as_deref().unwrap_or_default().to_string() }
                 is_valid={ evaluate_easy_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &evaluate_easy_onchange }/>
             <TextArea
                 label="Which aspects of the current work are the <b>hardest to evaluate</b>?"
                 id="evaluate-hard"
                 value={ store.evaluate_hard.as_deref().unwrap_or_default().to_string() }
                 is_valid={ evaluate_hard_state }
                 variant={ TextAreaVariant::Split }
-                onchange={ &store_onchange }/>
+                onchange={ &evaluate_hard_onchange }/>
             <Range
                 label={format!(
                     "How far along (as a percent) do you feel you are toward the final goal? <b>{}</b>",
@@ -222,24 +255,24 @@ pub fn team_report() -> Html {
                 id="completion-percent"
                 initial_value={ store.completion_percent.as_deref().unwrap_or("-1").to_string() }
                 handle_oninput={range_changed}
-                onchange={ &store_onchange }/>
+                onchange={ &completion_percent_onchange }/>
             <TextArea
                 label="Does this pace seem likely to succeed?"
                 id="pace-succeed"
                 value={ store.pace_succeed.as_deref().unwrap_or_default().to_string() }
                 is_valid={ pace_succeed_state }
-                onchange={ &store_onchange }/>
+                onchange={ &pace_succeed_onchange }/>
             <TextArea
                 label="Did you meet with your client this week? If not, when was the last time?"
                 id="client-meeting"
                 value={ store.client_meeting.as_deref().unwrap_or_default().to_string() }
                 is_valid={ client_meeting_state }
-                onchange={ &store_onchange }/>
+                onchange={ &client_meeting_onchange }/>
             <TextArea
                 label="Are there any issues, concern, or comments about the project?"
                 id="issues-comments"
                 value={ store.issues_comments.as_deref().unwrap_or_default().to_string() }
-                onchange={ &store_onchange }/>
+                onchange={ &issues_comments_onchange }/>
             <Button
                 variant={ ButtonVariant::Danger }
                 label="Submit"

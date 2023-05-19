@@ -12,14 +12,14 @@ pub fn navbar() -> Html {
     let is_route_home = || matches!(route.unwrap(), Route::Home);
 
     html! {
-        <nav class="navbar rounded ps-3 pe-2 py-1 shadow-sm my-3 font-weight-bold">
+        <nav class="navbar rounded ps-3 pe-2 py-1 shadow my-3 font-weight-bold">
             <span class="navbar-link">
                 <Link<Route> to={ Route::Home } classes="link-dark link-underline-opacity-0
                     link-underline-opacity-10-hover">
-                    <h2> { "Status Reports" } </h2>
+                    <h2 class="mb-1"> { "Status Reports" } </h2>
                 </Link<Route>>
             </span>
-            <span>
+            <span class="my-1">
                 if is_route_home() {
                     <Link<Route> to={ Route::Requirements }>
                         <Button variant={ ButtonVariant::Primary } class="me-2" label="Requirements" />
@@ -30,3 +30,29 @@ pub fn navbar() -> Html {
         </nav>
     }
 }
+
+// use crate::components::atoms::button::{Button, ButtonVariant};
+// use yew::prelude::*;
+// use yew_router::prelude::*;
+
+// use crate::Route;
+
+// /// The [Navbar] component provides a styled navbar for the application.
+// #[function_component(Navbar)]
+// pub fn navbar() -> Html {
+//     html! {
+//         <nav class="border border-secondary-subtle rounded shadow
+//                     font-weight-bold text-light
+//                     navbar ps-3 pe-2 py-1 my-3">
+//             <span class="navbar-link">
+//                 <Link<Route> to={ Route::Home } classes="link-light link-underline-opacity-0
+//                     link-underline-opacity-50-hover">
+//                     <h2 class="mb-1"> { "Status Reports" } </h2>
+//                 </Link<Route>>
+//             </span>
+//             <span>
+//                 <Button variant={ ButtonVariant::Dark } class="my-1" label="Logout" />
+//             </span>
+//         </nav>
+//     }
+// }
