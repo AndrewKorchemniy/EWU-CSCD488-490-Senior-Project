@@ -11,10 +11,10 @@ mod stores;
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
-    #[at("/")]
+    #[at("/adminpage")]
     Home,
     #[not_found]
-    #[at("/404")]
+    #[at("/adminpage/404")]
     NotFound,
 }
 

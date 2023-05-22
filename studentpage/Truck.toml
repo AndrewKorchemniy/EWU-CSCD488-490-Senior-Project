@@ -1,2 +1,5 @@
+[build]
+public_url = "/adminpage/"
+
 [[proxy]]
-backend = "http://localhost:80/api"
+backend = "http://localhost:8443/api"

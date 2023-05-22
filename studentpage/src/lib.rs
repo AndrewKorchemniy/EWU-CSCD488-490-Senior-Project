@@ -14,16 +14,16 @@ mod stores;
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
-    #[at("/")]
+    #[at("/studentpage")]
     Home,
-    #[at("/requirements")]
+    #[at("/studentpage/requirements")]
     Requirements,
-    #[at("/individual-report")]
+    #[at("/studentpage/individual-report")]
     IndividualReport,
-    #[at("/team-report")]
+    #[at("/studentpage/team-report")]
     TeamReport,
     #[not_found]
-    #[at("/404")]
+    #[at("/studentpage/404")]
     NotFound,
 }
 
