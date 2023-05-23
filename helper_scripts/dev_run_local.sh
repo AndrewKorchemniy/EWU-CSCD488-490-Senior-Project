@@ -9,13 +9,13 @@ cd /home/tztz8/dev/EWU-CSCD488-490-Senior-Project
 
 echo -e "$Cyan Build... $Color_Off"
 cd backend
-cargo build --release
+cargo build
 cd ..
 cd adminpage
-trunk build --release
+trunk build
 cd ..
 cd studentpage
-trunk build --release
+trunk build
 cd ..
 mkdir -p res
 cp adminpage/dist/* res
