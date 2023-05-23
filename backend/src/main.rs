@@ -3,6 +3,8 @@
 // TODO: Team Report
 // TODO: Email
 
+use std::process;
+use std::process::Command;
 use actix_files::Files;
 use actix_web::{App, HttpResponse, HttpServer, Responder, Result, get, web};
 use serde::{Serialize};
@@ -25,10 +27,24 @@ async fn healthcheck() -> impl Responder {
 
 #[get("/shutdown")]
 async fn shutdown_server() -> impl Responder {
-    let response = Response {
-        message: "Shutdown everything".to_string(),
-    };
-    HttpResponse::Ok().json(response)
+    // TODO: check if admin
+    let kill_results = Command::new("kill")
+        .args(["-2".to_string(), process::id().to_string()])
+        .spawn();
+    match kill_results {
+        Ok(_) => {
+            let response = Response {
+                message: "Shutdown everything".to_string(),
+            };
+            HttpResponse::Ok().json(response)
+        }
+        Err(_) => {
+            let response = Response {
+                message: "Can't Shutdown everything".to_string(),
+            };
+            HttpResponse::InternalServerError().json(response)
+        }
+    }
 }
 
 
@@ -42,14 +58,6 @@ async fn not_found() -> Result<HttpResponse> {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    // TODO: config file
-        // TODO: add thread to watch config file
-    // TODO: logger
-    // TODO: database
-        // TODO: mySQL
-    // TODO: server
-        // TODO: api's
-        // TODO: load frontend
     // config file
     let server_config = Config::builder()
         .add_source(config::File::with_name("server.config.toml"))
@@ -110,6 +118,7 @@ async fn main() -> std::io::Result<()> {
     let server_builder = HttpServer::new(move || App::new()
         // .app_data(app_data.clone())
         .service(healthcheck)
+        .service(shutdown_server) // TODO: remove after dev or require to be admin
         .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html"))
         .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html"))
         .default_service(Files::new("/", "./res/"))
