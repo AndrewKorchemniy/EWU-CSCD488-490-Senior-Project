@@ -50,10 +50,12 @@ async fn main() -> std::io::Result<()> {
     // TODO: server
         // TODO: api's
         // TODO: load frontend
+    // config file
     let server_config = Config::builder()
         .add_source(config::File::with_name("server.config.toml"))
         .build().expect("Missing Config File");
 
+    // Logger
     if std::env::var_os("RUST_LOG").is_none() {
         //std::env::set_var("RUST_LOG", "actix_web=info");
         std::env::set_var("RUST_LOG", "info");
@@ -62,6 +64,7 @@ async fn main() -> std::io::Result<()> {
 
     info!("Start of web server");
 
+    // TODO: database
     // let todo_db = repository::database::Database::new();
     // let app_data = web::Data::new(todo_db);
 
@@ -70,17 +73,11 @@ async fn main() -> std::io::Result<()> {
 
     info!("Using port: {}", port);
 
-    // TODO: remove duplicate code
-    // let app = App::new()
-    //     .app_data(app_data.clone())
-    //     .configure(api::api::config)
-    //     .service(healthcheck)
-    //     .default_service(web::route().to(not_found))
-    //     .wrap(actix_web::middleware::Logger::default());
-
+    // SSL
     let mut use_ssl:bool = server_config.get("SSL_ENABLE")
         .expect("Missing \"SSL_ENABLE\" value");
-    let mut builder= SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+    let mut builder= SslAcceptor::mozilla_intermediate(SslMethod::tls())
+        .expect("Unable to setup ssl builder (NOTE: needed with and without ssl)");
     if use_ssl {
         let ssl_certificate_file_path:String = server_config.get("SSL_CERTIFICATE")
             .expect("Missing \"SSL_CERTIFICATE\" value");
@@ -91,45 +88,39 @@ async fn main() -> std::io::Result<()> {
             .set_private_key_file(ssl_key_file_path, SslFiletype::PEM);
         match key_results
         {
-            Ok(_) => {}
+            Ok(_) => {
+                let cert_results = builder.set_certificate_chain_file(ssl_certificate_file_path);
+                match cert_results
+                {
+                    Ok(_) => {}
+                    Err(_) => {
+                        error!("Can't read ssl certificate chain file");
+                        use_ssl = false;
+                    }
+                }
+            }
             Err(_) => {
                 error!("Can't read ssl key file");
                 use_ssl = false;
             }
         }
-        let cert_results = builder.set_certificate_chain_file(ssl_certificate_file_path);
-        match cert_results
-        {
-            Ok(_) => {}
-            Err(_) => {
-                error!("Can't read ssl certificate chain file");
-                use_ssl = false;
-            }
-        }
     }
+
+    // Http Server
+    let server_builder = HttpServer::new(move || App::new()
+        // .app_data(app_data.clone())
+        .service(healthcheck)
+        .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html"))
+        .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html"))
+        .default_service(Files::new("/", "./res/"))
+        .wrap(actix_web::middleware::Logger::default()));
+    let server;
     if use_ssl {
         info!("Running using ssl (https)");
-        HttpServer::new(move || App::new()
-            // .app_data(app_data.clone())
-            .service(healthcheck)
-            .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html"))
-            .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html"))
-            .default_service(Files::new("/", "./res/"))
-            .wrap(actix_web::middleware::Logger::default()))
-            .bind_openssl(format!("0.0.0.0:{}", port), builder)?
-            .run()
-            .await
+        server = server_builder.bind_openssl(format!("0.0.0.0:{}", port), builder)?;
     } else {
         info!("Running using no ssl (http)");
-        HttpServer::new(move || App::new()
-            // .app_data(app_data.clone())
-            .service(healthcheck)
-            .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html"))
-            .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html"))
-            .default_service(Files::new("/", "./res/"))
-            .wrap(actix_web::middleware::Logger::default()))
-            .bind(("0.0.0.0", port))?
-            .run()
-            .await
+        server = server_builder.bind(("0.0.0.0", port))?;
     }
+    server.run().await
 }
