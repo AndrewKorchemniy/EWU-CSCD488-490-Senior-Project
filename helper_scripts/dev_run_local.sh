@@ -22,7 +22,7 @@ cp adminpage/dist/* res
 cp studentpage/dist/* res
 rm res/index.html
 echo -e "$Cyan Stop old server... $Color_Off"
-sudo systemctl stop actix
+#sudo systemctl stop actix
 kill $(lsof -ti:8443)
 
 echo -e "$Cyan Start new server... $Color_Off"
