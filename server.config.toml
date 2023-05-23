@@ -1,6 +1,6 @@
 port=8443
+DOMAIN="aws.tftinker.tech"
 # TODO: log file
-# TODO: ssl config
 SSL_ENABLE=true
 SSL_CERTIFICATE="fullchain.pem"
 SSL_KEY="privkey.pem"

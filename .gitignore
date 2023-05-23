@@ -116,3 +116,5 @@ fabric.properties
 # already existing elements were commented out
 
 #/target
+
+secret.config.toml

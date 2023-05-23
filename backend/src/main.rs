@@ -11,6 +11,7 @@ use serde::{Serialize};
 use config::Config;
 use log::{error, info};
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+
 use database::repository;
 
 mod api;
@@ -64,7 +65,10 @@ async fn main() -> std::io::Result<()> {
     // config file
     let server_config = Config::builder()
         .add_source(config::File::with_name("server.config.toml"))
-        .build().expect("Missing Config File");
+        .build().expect("Missing Server Config File");
+    let secret_config = Config::builder()
+        .add_source(config::File::with_name("secret.config.toml"))
+        .build().expect("Missing Secret Config File");
 
     // Logger
     if std::env::var_os("RUST_LOG").is_none() {
@@ -77,7 +81,8 @@ async fn main() -> std::io::Result<()> {
 
     // TODO: database
     let todo_db = repository::database::Database::new();
-    let app_data = web::Data::new(todo_db);
+    let app_data = web::Data::new(
+        (todo_db, server_config.clone(), secret_config.clone()));
 
     let port = server_config.get("port")
         .expect("Missing Port in Server Config");

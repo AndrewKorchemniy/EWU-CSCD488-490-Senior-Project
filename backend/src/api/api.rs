@@ -5,11 +5,13 @@ use actix_web::{web::{
 }, post, get, put, delete, HttpResponse};
 use database::repository::database::Database;
 use common::models::todo::Todo;
+use config::Config;
+use crate::api::token::token;
 
 
 #[post("/todos")]
-pub async fn create_todo(db: Data<Database>, new_todo: Json<Todo>) -> HttpResponse {
-    let todo = db.create_todo(new_todo.into_inner());
+pub async fn create_todo(data: Data<(Database, Config, Config)>, new_todo: Json<Todo>) -> HttpResponse {
+    let todo = data.get_ref().0.create_todo(new_todo.into_inner());
     match todo {
         Ok(todo) => HttpResponse::Ok().json(todo),
         Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
@@ -17,14 +19,14 @@ pub async fn create_todo(db: Data<Database>, new_todo: Json<Todo>) -> HttpRespon
 }
 
 #[get("/todos")]
-pub async fn get_todos(db: web::Data<Database>) -> HttpResponse {
-    let todos = db.get_todos();
+pub async fn get_todos(data: Data<(Database, Config, Config)>) -> HttpResponse {
+    let todos = data.get_ref().0.get_todos();
     HttpResponse::Ok().json(todos)
 }
 
 #[get("/todos/{id}")]
-pub async fn get_todo_by_id(db: web::Data<Database>, id: web::Path<String>) -> HttpResponse {
-    let todo = db.get_todo_by_id(&id);
+pub async fn get_todo_by_id(data: Data<(Database, Config, Config)>, id: web::Path<String>) -> HttpResponse {
+    let todo = data.get_ref().0.get_todo_by_id(&id);
     match todo {
         Some(todo) => HttpResponse::Ok().json(todo),
         None => HttpResponse::NotFound().body("Todo not found"),
@@ -32,10 +34,10 @@ pub async fn get_todo_by_id(db: web::Data<Database>, id: web::Path<String>) -> H
 }
 
 #[put("/todos/{id}")]
-pub async fn update_todo_by_id(db: web::Data<Database>,
+pub async fn update_todo_by_id(data: Data<(Database, Config, Config)>,
                                id: web::Path<String>,
                                updated_todo: web::Json<Todo>) -> HttpResponse {
-    let todo = db.update_todo_by_id(&id, updated_todo.into_inner());
+    let todo = data.get_ref().0.update_todo_by_id(&id, updated_todo.into_inner());
     match todo {
         Some(todo) => HttpResponse::Ok().json(todo),
         None => HttpResponse::NotFound().body("Todo not found"),
@@ -43,8 +45,8 @@ pub async fn update_todo_by_id(db: web::Data<Database>,
 }
 
 #[delete("/todos/{id}")]
-pub async fn delete_todo_by_id(db: web::Data<Database>, id: web::Path<String>) -> HttpResponse {
-    let todo = db.delete_todo_by_id(&id);
+pub async fn delete_todo_by_id(data: Data<(Database, Config, Config)>, id: web::Path<String>) -> HttpResponse {
+    let todo = data.get_ref().0.delete_todo_by_id(&id);
     match todo {
         Some(todo) => HttpResponse::Ok().json(todo),
         None => HttpResponse::NotFound().body("Todo not found"),
@@ -55,6 +57,7 @@ pub async fn delete_todo_by_id(db: web::Data<Database>, id: web::Path<String>) -
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/api")
+            .service(token)
             .service(create_todo)
             .service(get_todos)
             .service(get_todo_by_id)

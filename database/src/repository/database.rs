@@ -5,17 +5,17 @@ use std::sync::{Arc, Mutex};
 use common::models::todo::Todo;
 
 pub struct Database {
-    pub todos: Arc<Mutex<Vec<Todo>>>,
+    pub sprints: Arc<Mutex<Vec<Todo>>>,
 }
 
 impl Database {
     pub fn new() -> Self {
         let todos = Arc::new(Mutex::new(vec![]));
-        Database { todos }
+        Database { sprints: todos }
     }
 
     pub fn create_todo(&self, todo: Todo) -> Result<Todo, Error> {
-        let mut todos = self.todos.lock().unwrap();
+        let mut todos = self.sprints.lock().unwrap();
         let id = uuid::Uuid::new_v4().to_string();
         let created_at = Utc::now();
         let updated_at = Utc::now();
@@ -30,17 +30,17 @@ impl Database {
     }
 
     pub fn get_todos(&self) -> Vec<Todo> {
-        let todos = self.todos.lock().unwrap();
+        let todos = self.sprints.lock().unwrap();
         todos.clone()
     }
 
     pub fn get_todo_by_id(&self, id: &str) -> Option<Todo> {
-        let todos = self.todos.lock().unwrap();
+        let todos = self.sprints.lock().unwrap();
         todos.iter().find(|todo| todo.id == Some(id.to_string())).cloned()
     }
 
     pub fn update_todo_by_id(&self, id: &str, todo: Todo) -> Option<Todo> {
-        let mut todos = self.todos.lock().unwrap();
+        let mut todos = self.sprints.lock().unwrap();
         let updated_at = Utc::now();
         let todo = Todo {
             id: Some(id.to_string()),
@@ -53,7 +53,7 @@ impl Database {
     }
 
     pub fn delete_todo_by_id(&self, id: &str) -> Option<Todo> {
-        let mut todos = self.todos.lock().unwrap();
+        let mut todos = self.sprints.lock().unwrap();
         let index = todos.iter().position(|todo| todo.id == Some(id.to_string()))?;
         Some(todos.remove(index))
     }
