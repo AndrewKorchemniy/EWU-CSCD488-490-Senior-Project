@@ -2,6 +2,8 @@
 //     pub value: i64
 // }
 
+pub mod models;
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }

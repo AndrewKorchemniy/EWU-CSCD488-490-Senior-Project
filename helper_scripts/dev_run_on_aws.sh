@@ -38,10 +38,11 @@ scp -r adminpage/dist/* ec2-user@aws.tftinker.tech:/home/ec2-user/server/res
 scp -r studentpage/dist/* ec2-user@aws.tftinker.tech:/home/ec2-user/server/res
 ssh ec2-user@aws.tftinker.tech 'rm /home/ec2-user/server/res/index.html'
 
-echo -e "$Cyan SSH to start new server... $Color_Off"
-echo -e "$Purple run ' cd /home/ec2-user/server && ./backend && exit '... $Color_Off"
-ssh ec2-user@aws.tftinker.tech
+#echo -e "$Cyan SSH to start new server... $Color_Off"
+#echo -e "$Purple run ' cd /home/ec2-user/server && ./backend && exit '... $Color_Off"
+#ssh ec2-user@aws.tftinker.tech
 #ssh ec2-user@aws.tftinker.tech '/usr/bin/sh /home/ec2-user/server/run.sh'
-#ssh ec2-user@aws.tftinker.tech 'sudo systemctl start actix'
-#ssh ec2-user@aws.tftinker.tech 'sudo systemctl status actix'
+echo -e "$Cyan Start server... $Color_Off"
+ssh ec2-user@aws.tftinker.tech 'sudo systemctl start actix'
+ssh ec2-user@aws.tftinker.tech 'sudo systemctl status actix'
 echo -e "$Purple Done... $Color_Off"

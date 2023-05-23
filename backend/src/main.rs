@@ -11,6 +11,9 @@ use serde::{Serialize};
 use config::Config;
 use log::{error, info};
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+use database::repository;
+
+mod api;
 
 #[derive(Serialize)]
 pub struct Response {
@@ -73,8 +76,8 @@ async fn main() -> std::io::Result<()> {
     info!("Start of web server");
 
     // TODO: database
-    // let todo_db = repository::database::Database::new();
-    // let app_data = web::Data::new(todo_db);
+    let todo_db = repository::database::Database::new();
+    let app_data = web::Data::new(todo_db);
 
     let port = server_config.get("port")
         .expect("Missing Port in Server Config");
@@ -116,12 +119,14 @@ async fn main() -> std::io::Result<()> {
 
     // Http Server
     let server_builder = HttpServer::new(move || App::new()
-        // .app_data(app_data.clone())
+        .app_data(app_data.clone())
+        .configure(api::api::config)
         .service(healthcheck)
         .service(shutdown_server) // TODO: remove after dev or require to be admin
         .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html"))
         .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html"))
-        .default_service(Files::new("/", "./res/"))
+        .default_service(Files::new("/", "./res/")
+            .default_handler(web::route().to(not_found)))
         .wrap(actix_web::middleware::Logger::default()));
     let server;
     if use_ssl {
