@@ -1,4 +1,4 @@
-use crate::api::token::token;
+use crate::api::token::{login, token};
 use actix_web::web;
 use actix_web::{
     delete, get, post, put,
@@ -73,6 +73,7 @@ pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/api")
             .service(token)
+            .service(login)
             .service(create_todo)
             .service(get_todos)
             .service(get_todo_by_id)
