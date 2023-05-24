@@ -1,3 +1,3 @@
 [workspace]
-members = ["adminpage", "studentpage", "backend", "database", "common"]
+members = ["adminpage", "studentpage", "backend", "database", "dbcli", "common"]
 default-members = ["backend"]

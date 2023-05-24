@@ -17,12 +17,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    # NOTE already has rust
+    # NOTE already has openssl
 
     steps:
       - uses: actions/checkout@v3
 
       # Takes around 8min's
-      - name: Update local toolchain
+      - name: Update local toolchain (takes around 8 mins)
         run: |
           rustup update
           rustup component add clippy
