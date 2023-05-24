@@ -3,14 +3,14 @@
 // TODO: Team Report
 // TODO: Email
 
-use std::process;
-use std::process::Command;
 use actix_files::Files;
-use actix_web::{App, HttpResponse, HttpServer, Responder, Result, get, web};
-use serde::{Serialize};
+use actix_web::{get, web, App, HttpResponse, HttpServer, Responder, Result};
 use config::Config;
 use log::{error, info};
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+use serde::Serialize;
+use std::process;
+use std::process::Command;
 
 use database::repository;
 
@@ -51,7 +51,6 @@ async fn shutdown_server() -> impl Responder {
     }
 }
 
-
 async fn not_found() -> Result<HttpResponse> {
     error!("Invalid page load");
     let response = Response {
@@ -65,10 +64,12 @@ async fn main() -> std::io::Result<()> {
     // config file
     let server_config = Config::builder()
         .add_source(config::File::with_name("server.config.toml"))
-        .build().expect("Missing Server Config File");
+        .build()
+        .expect("Missing Server Config File");
     let secret_config = Config::builder()
         .add_source(config::File::with_name("secret.config.toml"))
-        .build().expect("Missing Secret Config File");
+        .build()
+        .expect("Missing Secret Config File");
 
     // Logger
     if std::env::var_os("RUST_LOG").is_none() {
@@ -80,34 +81,34 @@ async fn main() -> std::io::Result<()> {
     info!("Start of web server");
 
     // TODO: database
-    let todo_db = repository::database::Database::new();
-    let app_data = web::Data::new(
-        (todo_db, server_config.clone(), secret_config.clone()));
+    let todo_db = repository::db_connector::Database::new();
+    let app_data = web::Data::new((todo_db, server_config.clone(), secret_config.clone()));
 
-    let port = server_config.get("port")
+    let port = server_config
+        .get("port")
         .expect("Missing Port in Server Config");
 
     info!("Using port: {}", port);
 
     // SSL
-    let mut use_ssl:bool = server_config.get("SSL_ENABLE")
+    let mut use_ssl: bool = server_config
+        .get("SSL_ENABLE")
         .expect("Missing \"SSL_ENABLE\" value");
-    let mut builder= SslAcceptor::mozilla_intermediate(SslMethod::tls())
+    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
         .expect("Unable to setup ssl builder (NOTE: needed with and without ssl)");
     if use_ssl {
-        let ssl_certificate_file_path:String = server_config.get("SSL_CERTIFICATE")
+        let ssl_certificate_file_path: String = server_config
+            .get("SSL_CERTIFICATE")
             .expect("Missing \"SSL_CERTIFICATE\" value");
-        let ssl_key_file_path:String = server_config.get("SSL_KEY")
+        let ssl_key_file_path: String = server_config
+            .get("SSL_KEY")
             .expect("Missing \"SSL_KEY\" value");
         info!("Getting SSL");
-        let key_results = builder
-            .set_private_key_file(ssl_key_file_path, SslFiletype::PEM);
-        match key_results
-        {
+        let key_results = builder.set_private_key_file(ssl_key_file_path, SslFiletype::PEM);
+        match key_results {
             Ok(_) => {
                 let cert_results = builder.set_certificate_chain_file(ssl_certificate_file_path);
-                match cert_results
-                {
+                match cert_results {
                     Ok(_) => {}
                     Err(_) => {
                         error!("Can't read ssl certificate chain file");
@@ -123,23 +124,23 @@ async fn main() -> std::io::Result<()> {
     }
 
     // Http Server
-    let server_builder = HttpServer::new(move || App::new()
-        .app_data(app_data.clone())
-        .configure(api::api::config)
-        .service(healthcheck)
-        .service(shutdown_server) // TODO: remove after dev or require to be admin
-        .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html"))
-        .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html"))
-        .default_service(Files::new("/", "./res/")
-            .default_handler(web::route().to(not_found)))
-        .wrap(actix_web::middleware::Logger::default()));
-    let server;
-    if use_ssl {
+    let server_builder = HttpServer::new(move || {
+        App::new()
+            .app_data(app_data.clone())
+            .configure(api::api_services::config)
+            .service(healthcheck)
+            .service(shutdown_server) // TODO: remove after dev or require to be admin
+            .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html"))
+            .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html"))
+            .default_service(Files::new("/", "./res/").default_handler(web::route().to(not_found)))
+            .wrap(actix_web::middleware::Logger::default())
+    });
+    let server = if use_ssl {
         info!("Running using ssl (https)");
-        server = server_builder.bind_openssl(format!("0.0.0.0:{}", port), builder)?;
+        server_builder.bind_openssl(format!("0.0.0.0:{}", port), builder)?
     } else {
         info!("Running using no ssl (http)");
-        server = server_builder.bind(("0.0.0.0", port))?;
-    }
+        server_builder.bind(("0.0.0.0", port))?
+    };
     server.run().await
 }

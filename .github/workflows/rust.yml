@@ -21,6 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Takes around 8min's
       - name: Update local toolchain
         run: |
           rustup update

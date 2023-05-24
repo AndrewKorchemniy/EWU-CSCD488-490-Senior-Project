@@ -1,2 +1,2 @@
-pub mod api;
+pub mod api_services;
 pub mod token;
