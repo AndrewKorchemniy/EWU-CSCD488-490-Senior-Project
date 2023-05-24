@@ -41,7 +41,7 @@ pub async fn token(
         .1
         .get("SSL_ENABLE")
         .expect("Missing \"SSL_ENABLE\" value");
-    let auth_url:String = if use_ssl {
+    let auth_url: String = if use_ssl {
         let url: String = app_data
             .get_ref()
             .1
