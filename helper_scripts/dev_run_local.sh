@@ -8,19 +8,7 @@ Purple='\033[0;35m'       # Purple
 cd /home/tztz8/dev/EWU-CSCD488-490-Senior-Project
 
 echo -e "$Cyan Build... $Color_Off"
-cd backend
-cargo build
-cd ..
-cd adminpage
-trunk build
-cd ..
-cd studentpage
-trunk build
-cd ..
-mkdir -p res
-cp adminpage/dist/* res
-cp studentpage/dist/* res
-rm res/index.html
+sh ./helper_scripts/build.sh
 echo -e "$Cyan Stop old server... $Color_Off"
 #sudo systemctl stop actix
 kill $(lsof -ti:8443)

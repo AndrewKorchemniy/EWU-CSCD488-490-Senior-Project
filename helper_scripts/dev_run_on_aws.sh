@@ -8,15 +8,7 @@ Purple='\033[0;35m'       # Purple
 cd /home/tztz8/dev/EWU-CSCD488-490-Senior-Project
 
 echo -e "$Cyan Build... $Color_Off"
-cd backend
-cargo build --release
-cd ..
-cd adminpage
-trunk build --release
-cd ..
-cd studentpage
-trunk build --release
-cd ..
+sh ./helper_scripts/build.sh
 echo -e "$Cyan Stop old server... $Color_Off"
 ssh ec2-user@aws.tftinker.tech 'sudo systemctl stop actix'
 ssh ec2-user@aws.tftinker.tech 'kill $(lsof -ti:8443)'

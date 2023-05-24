@@ -118,3 +118,5 @@ fabric.properties
 #/target
 
 secret.config.toml
+res
+bin.tar.gz
