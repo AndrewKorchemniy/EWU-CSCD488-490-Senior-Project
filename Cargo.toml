@@ -1,3 +1,4 @@
 [workspace]
-members = ["adminpage", "studentpage", "backend", "database", "common"]
+members = ["backend", "database", "common"]
 default-members = ["backend"]
+exclude = ["adminpage", "studentpage"]
