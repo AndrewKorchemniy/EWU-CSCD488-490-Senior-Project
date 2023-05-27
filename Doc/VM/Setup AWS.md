@@ -1,5 +1,7 @@
 # Setup AWS
 
+> TODO: remake for Amazon Linux 2 AMI
+
 Notes I made as I setup on AWS EC2 Amazon linux
 
 ## SSL Cert:
