@@ -1,4 +1,5 @@
 use actix_web::{get, post, web::Data, web::Form, web::Json, HttpResponse};
+use actix_web::web;
 use oauth2::basic::{
     BasicClient, BasicErrorResponse, BasicRevocationErrorResponse, BasicTokenIntrospectionResponse,
     BasicTokenResponse, BasicTokenType,
@@ -22,11 +23,150 @@ pub struct TokenBody {
     redirect_uri: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct AuthRedirectUrl {
-    url: String,
+#[derive(Serialize)]
+pub struct OAuthClientConfig {
+    client_id: String,
+    auth_url: String,
+    token_url: String,
 }
 
+#[derive(Serialize)]
+pub struct Response {
+    message: String,
+}
+
+pub fn config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("oauth")
+        .service(login)
+        .service(token)
+        .service(give_config)
+        .service(give_client_id)
+        .service(give_auth_url)
+        .service(give_token_url),
+    );
+}
+
+
+#[get("/config")]
+pub async fn give_config(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
+    let client_id_results: Result<String, _> = app_data
+    .get_ref().2
+    .get("OAUTH_CLIENT_ID");
+
+    match client_id_results {
+        Ok(client_id) => {
+            let auth_url: Result<String, _> = app_data
+                .get_ref()
+                .2
+                .get("OAUTH_AUTH_URL");
+
+            match auth_url {
+                Ok(auth_url) => {
+                    let token_url: Result<String, _> = app_data
+                        .get_ref()
+                        .2
+                        .get("OAUTH_TOKEN_URL");
+
+                    match token_url {
+                        Ok(token_url) => {
+                            HttpResponse::Ok().json(OAuthClientConfig {
+                                client_id: client_id,
+                                auth_url: auth_url,
+                                token_url: token_url,
+                            })
+                        }
+                        Err(_) => {
+                            HttpResponse::InternalServerError().json(Response {
+                                message: String::from("Unable to get token url"),
+                            })
+                        }
+                    }
+                }
+                Err(_) => {
+                    HttpResponse::InternalServerError().json(Response {
+                        message: String::from("Unable to get auth url"),
+                    })
+                }
+            }
+
+        }
+        Err(_) => {
+            HttpResponse::InternalServerError().json(Response {
+                message: String::from("Unable to get client id"),
+            })
+        }
+    }
+
+
+}
+
+
+#[get("/tokenurl")]
+pub async fn give_token_url(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
+    let token_url: Result<String, _> = app_data
+    .get_ref()
+    .2
+    .get("OAUTH_TOKEN_URL");
+
+    match token_url {
+        Ok(token_url) => {
+            HttpResponse::Ok().json(Response {
+                message: token_url,
+            })
+        }
+        Err(_) => {
+            HttpResponse::InternalServerError().json(Response {
+                message: String::from("Unable to get token url"),
+            })
+        }
+    }
+}
+
+#[get("/authurl")]
+pub async fn give_auth_url(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
+    let auth_url: Result<String, _> = app_data
+    .get_ref()
+    .2
+    .get("OAUTH_AUTH_URL");
+
+    match auth_url {
+        Ok(auth_url) => {
+            HttpResponse::Ok().json(Response {
+                message: auth_url,
+            })
+        }
+        Err(_) => {
+            HttpResponse::InternalServerError().json(Response {
+                message: String::from("Unable to get auth url"),
+            })
+        }
+    }
+}
+
+#[get("/clientid")]
+pub async fn give_client_id(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
+    let client_id: Result<String, _> = app_data
+    .get_ref()
+    .2
+    .get("OAUTH_CLIENT_ID");
+
+    match client_id {
+        Ok(client_id) => {
+            HttpResponse::Ok().json(Response {
+                message: client_id,
+            })
+        }
+        Err(_) => {
+            HttpResponse::InternalServerError().json(Response {
+                message: String::from("Unable to get client id"),
+            })
+        }
+    }
+}
+
+
+/// This is a bad login do not use
 #[get("/login")]
 pub async fn login(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     // TODO: add
@@ -66,8 +206,8 @@ pub async fn login(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
 
     // TODO: use csrf_state to check login
 
-    let aru = AuthRedirectUrl {
-        url: authorize_url.to_string(),
+    let aru = Response {
+        message: authorize_url.to_string(),
     };
 
     HttpResponse::Ok().json(aru)
