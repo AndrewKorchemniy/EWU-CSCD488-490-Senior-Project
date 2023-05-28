@@ -1,4 +1,7 @@
+use gloo::console::log;
 use yew::prelude::*;
+use yew_oauth2::oauth2::*;
+use yew_oauth2::prelude::*;
 use yew_router::prelude::*;
 
 mod components;
@@ -27,13 +30,31 @@ pub enum Route {
     NotFound,
 }
 
-#[function_component(App)]
-pub fn app() -> Html {
+#[function_component(AppMain)]
+pub fn app_main() -> Html {
+    let agent = use_auth_agent().expect("Requires OAuth2Context");
+
+    // TODO: Add OAuth2
+    // let login = {
+    //     let agent = agent.clone();
+    //     Callback::from(move |_: MouseEvent| {
+    //         if let Err(err) = agent.start_login() {
+    //             log!(format!("Failed to start login: {err}"));
+    //         }
+    //     })
+    // };
+
+    let logout = Callback::from(move |_: MouseEvent| {
+        if let Err(err) = agent.start_login() {
+            log!(format!("Failed to logout: {err}"));
+        }
+    });
+
     html! {
         <BrowserRouter>
             <div class="container-fluid mx-auto px-4" style="min-width: 480px;">
                 <div class="row">
-                    <div class="col"> <Navbar /> </div>
+                    <div class="col"> <Navbar logout={logout}/> </div>
                 </div>
                 <div class="row">
                     <div class="col"> <Switch<Route> render={switch} /> </div>
@@ -43,6 +64,45 @@ pub fn app() -> Html {
                 </div>
             </div>
         </BrowserRouter>
+        // TODO: Add OAuth2
+        // <OAuth2 {config}>
+        //     <Authenticated>
+        //         <BrowserRouter>
+        //             <div class="container-fluid mx-auto px-4" style="min-width: 480px;">
+        //                 <div class="row">
+        //                     <div class="col"> <Navbar logout={logout}/> </div>
+        //                 </div>
+        //                 <div class="row">
+        //                     <div class="col"> <Switch<Route> render={switch} /> </div>
+        //                 </div>
+        //                 <div class="row">
+        //                     <div class="col"> <Footer /> </div>
+        //                 </div>
+        //             </div>
+        //         </BrowserRouter>
+        //     </Authenticated>
+        //     <NotAuthenticated>
+        //         <p>
+        //             { "You need to log in" }
+        //             <button onclick={login}> { "Log in" } </button>
+        //         </p>
+        //     </NotAuthenticated>
+        // </OAuth2>
+    }
+}
+
+#[function_component(App)]
+pub fn app() -> Html {
+    let config = Config {
+        client_id: "client_id".into(),
+        auth_url: "auth_url".into(),
+        token_url: "token_url".into(),
+    };
+
+    html! {
+        <OAuth2 config={config}>
+            <AppMain />
+        </OAuth2>
     }
 }
 
