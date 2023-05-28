@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-use crate::components::atoms::button::{Button, ButtonVariant};
+use crate::components::button::{Button, ButtonVariant};
 
 /// Properties for [IndividualForm]
 #[derive(PartialEq, Properties)]

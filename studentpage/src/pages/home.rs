@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
-use crate::components::atoms::sprint::{ReportStatus, Sprint};
-use crate::components::molecules::calendar::Calendar;
+use crate::components::calendar::Calendar;
+use crate::components::sprint::{ReportStatus, Sprint};
 use crate::Route;
 
 #[function_component(Home)]

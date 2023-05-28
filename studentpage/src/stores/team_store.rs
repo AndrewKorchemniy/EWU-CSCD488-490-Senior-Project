@@ -1,4 +1,4 @@
-use crate::components::atoms::text_area::TextAreaValidation;
+use crate::components::text_area::TextAreaValidation;
 use serde::{Deserialize, Serialize};
 use yew::prelude::*;
 use yewdux::prelude::*;
@@ -6,9 +6,9 @@ use yewdux::prelude::*;
 #[derive(Store, Default, PartialEq, Clone, Serialize, Deserialize)]
 #[store(storage = "session")]
 // TODO: use local storage instead, so that the data persists across sessions.
-// Local storage does not expire, so a custom method of clearing the data will be needed.
+// Local storage does not expire, so a custom method of clearing the data is required.
 // Especially since data should not persist between sprints.
-// One option is to store the data within the store itself.
+// One option is to store the date within the store itself.
 pub struct TeamStore {
     pub understand_easy: Option<String>,
     pub understand_hard: Option<String>,

@@ -5,7 +5,7 @@ use yew::html::TargetCast;
 use yew::prelude::*;
 use yewdux::prelude::*;
 
-use crate::components::atoms::button::{Button, ButtonVariant};
+use crate::components::button::{Button, ButtonVariant};
 use crate::stores::admin_store::AdminStore;
 
 #[function_component(Home)]
@@ -18,6 +18,7 @@ pub fn home() -> Html {
         store.testing = Some("Hello".to_string());
     });
 
+    // Closure to parse and upload file content.
     let upload_files = |files: Option<FileList>| {
         let mut result = Vec::new();
 
