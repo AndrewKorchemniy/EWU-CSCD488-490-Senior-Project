@@ -15,11 +15,11 @@ pub enum ButtonVariant {
 /// Properties for [Button]
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    /// The text to display on the button.
+    /// Text to display within the button.
     pub label: AttrValue,
-    /// Any additional classes to apply to the button.
+    /// Additional classes.
     #[prop_or_default]
-    pub class: AttrValue,
+    pub class: Classes,
     /// The variant of the button.
     #[prop_or(ButtonVariant::Light)]
     pub variant: ButtonVariant,
@@ -41,9 +41,12 @@ pub fn button(props: &Props) -> Html {
 
     html! {
         <button
-            class={format!("btn shadow {} {}", get_variant(&props.variant), props.class)}
-            onclick={ &props.onclick }
-            style="background-image: linear-gradient(135deg, #FFFFFF20, #00000020)">
+            class={classes!(
+                "btn", "shadow",
+                get_variant(&props.variant),
+                props.class.clone(),
+            )}
+            onclick={ &props.onclick }>
             { &*props.label }
         </button>
     }

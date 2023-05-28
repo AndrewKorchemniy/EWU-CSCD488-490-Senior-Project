@@ -1,12 +1,19 @@
-use crate::components::atoms::button::{Button, ButtonVariant};
+use crate::components::button::{Button, ButtonVariant};
 use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::Route;
 
+/// Properties for [NavBar].
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    /// The onclick callback for logging out.
+    pub logout: Callback<MouseEvent>,
+}
+
 /// The [Navbar] component provides a styled navbar for the application.
 #[function_component(Navbar)]
-pub fn navbar() -> Html {
+pub fn navbar(props: &Props) -> Html {
     html! {
         <nav class="border border-secondary-subtle rounded shadow
                     font-weight-bold text-light
@@ -18,7 +25,11 @@ pub fn navbar() -> Html {
                 </Link<Route>>
             </span>
             <span>
-                <Button variant={ ButtonVariant::Dark } class="my-1" label="Logout" />
+                <Button
+                    variant={ ButtonVariant::Dark }
+                    class="my-1"
+                    label="Logout"
+                    onclick={ &props.logout }/>
             </span>
         </nav>
     }

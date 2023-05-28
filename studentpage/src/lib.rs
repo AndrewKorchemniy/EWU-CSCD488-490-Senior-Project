@@ -1,4 +1,5 @@
 use gloo::console::log;
+use stylist::Style;
 use yew::prelude::*;
 use yew_oauth2::oauth2::*;
 use yew_oauth2::prelude::*;
@@ -32,6 +33,8 @@ pub enum Route {
     NotFound,
 }
 
+const STYLESHEET: &str = include_str!("assets/main.css");
+
 #[function_component(AppMain)]
 pub fn app_main() -> Html {
     let agent = use_auth_agent().expect("Requires OAuth2Context");
@@ -54,7 +57,7 @@ pub fn app_main() -> Html {
 
     html! {
         <BrowserRouter>
-            <div class="container-fluid mx-auto px-4" style="min-width: 480px;">
+            <div class="container-fluid mx-auto px-4 min-width">
                 <div class="row">
                     <div class="col"> <Navbar logout={logout}/> </div>
                 </div>
@@ -95,6 +98,8 @@ pub fn app_main() -> Html {
 
 #[function_component(App)]
 pub fn app() -> Html {
+    let stylesheet = Style::new(STYLESHEET).unwrap();
+
     let config = Config {
         client_id: "client_id".into(),
         auth_url: "auth_url".into(),
@@ -102,9 +107,12 @@ pub fn app() -> Html {
     };
 
     html! {
-        <OAuth2 config={config}>
-            <AppMain />
-        </OAuth2>
+        <div class={stylesheet}>
+            <OAuth2 config={config}>
+                <AppMain />
+            </OAuth2>
+        </div>
+
     }
 }
 
