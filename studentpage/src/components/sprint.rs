@@ -12,7 +12,7 @@ pub enum ReportStatus {
 }
 
 /// Properties for [Sprint]
-#[derive(Properties, PartialEq)]
+#[derive(PartialEq, Properties)]
 pub struct Props {
     /// The sprint number.
     pub sprint_number: u8,

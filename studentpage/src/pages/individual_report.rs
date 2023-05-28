@@ -1,12 +1,12 @@
 use yew::prelude::*;
 use yewdux::prelude::*;
 
-use crate::components::atoms::collapse::{Collapse, CollapseValidation};
-use crate::components::atoms::collapsible::Collapsible;
-use crate::components::atoms::instructions::Instructions;
-use crate::components::molecules::activity_accounting::ActivityAccounting;
-use crate::components::molecules::individual_form::IndividualForm;
-use crate::components::molecules::time_accounting::TimeAccounting;
+use crate::components::activity_accounting::ActivityAccounting;
+use crate::components::collapse::{Collapse, CollapseValidation};
+use crate::components::collapsible::Collapsible;
+use crate::components::individual_form::IndividualForm;
+use crate::components::instructions::Instructions;
+use crate::components::time_accounting::TimeAccounting;
 
 use crate::stores::individual_store::IndividualStore;
 

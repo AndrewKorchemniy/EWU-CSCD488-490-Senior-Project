@@ -5,13 +5,15 @@ use yew_oauth2::prelude::*;
 use yew_router::prelude::*;
 
 mod components;
-use components::molecules::footer::Footer;
-use components::molecules::navbar::Navbar;
-use components::pages::home::Home;
-use components::pages::individual_report::IndividualReport;
-use components::pages::page_not_found::PageNotFound;
-use components::pages::requirements::Requirements;
-use components::pages::team_report::TeamReport;
+use components::footer::Footer;
+use components::navbar::Navbar;
+
+mod pages;
+use pages::home::Home;
+use pages::individual_report::IndividualReport;
+use pages::page_not_found::PageNotFound;
+use pages::requirements::Requirements;
+use pages::team_report::TeamReport;
 
 mod stores;
 

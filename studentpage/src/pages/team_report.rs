@@ -3,12 +3,12 @@ use web_sys::{HtmlInputElement, HtmlTextAreaElement};
 use yew::prelude::*;
 use yewdux::prelude::*;
 
-use crate::components::atoms::button::{Button, ButtonVariant};
-use crate::components::atoms::instructions::Instructions;
-use crate::components::atoms::range::Range;
-use crate::components::atoms::text_area::TextAreaValidation;
-use crate::components::atoms::text_area::{TextArea, TextAreaVariant};
-use crate::components::molecules::team_form::TeamForm;
+use crate::components::button::{Button, ButtonVariant};
+use crate::components::instructions::Instructions;
+use crate::components::range::Range;
+use crate::components::team_form::TeamForm;
+use crate::components::text_area::TextAreaValidation;
+use crate::components::text_area::{TextArea, TextAreaVariant};
 
 use crate::stores::team_store::{validate, TeamStore};
 

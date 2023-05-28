@@ -1,4 +1,4 @@
-use crate::components::atoms::text_area::TextAreaValidation;
+use crate::components::text_area::TextAreaValidation;
 use serde::{Deserialize, Serialize};
 use yew::prelude::*;
 use yewdux::prelude::*;
