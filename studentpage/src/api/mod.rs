@@ -10,15 +10,7 @@ pub struct OAuthClientConfigResponse {
     pub token_url: String,
 }
 
-// TODO: remove since it does not work
 pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
-    // let response = Request::get(&format!("{BASE_API_URI}/oauth/config",))
-    //     .send()
-    //     .await
-    //     .unwrap()
-    //     .json::<OAuthClientConfigResponse>()
-    //     .await
-    //     .unwrap();
     let response = Request::get(&format!("{BASE_API_URI}/oauth/config",))
         .send()
         .await;
@@ -32,6 +24,7 @@ pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
         }
     }
 
+    // Return invalid config, which will cause the app to display an error
     OAuthClientConfigResponse {
         client_id: String::new(),
         auth_url: String::new(),
