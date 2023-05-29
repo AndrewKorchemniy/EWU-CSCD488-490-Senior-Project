@@ -18,7 +18,7 @@ use pages::team_report::TeamReport;
 
 mod api;
 mod stores;
-//use api::{api_get_auth_config, OAuthClientConfigResponse};
+use api::{api_get_auth_config, OAuthClientConfigResponse};
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
@@ -98,39 +98,40 @@ pub fn app() -> Html {
     // Set up global stylesheet
     let stylesheet = Style::new(STYLESHEET).unwrap();
 
-    let config = Config {
-        client_id: "client_id".to_string(),
-        auth_url: "client_url".to_string(),
-        token_url: "token_url".to_string(),
-    };
-
-    // TODO: DOES NOT WORK
-    // cannot use Config within a sate
-    // cannot use blocking api call within yew
-
     // The state for the OAuth2 config
-    // let _config_state = use_state(|| config.clone());
-    // let config_state = _config_state.clone();
-    // let config_state_changes = Callback::from(move |config: OAuthClientConfigResponse| {
-    //     _config_state.set(Config {
-    //         client_id: config.client_id,
-    //         auth_url: config.auth_url,
-    //         token_url: config.token_url,
-    //     });
-    // });
+    let _config_request_state = use_state(|| false as bool);
+    let config_request_state = _config_request_state.clone();
+    let config_request_state_changes = Callback::from(move |value: bool| {
+        _config_request_state.set(value);
+    });
+    let _config_state = use_state(|| (String::new(), String::new(), String::new()));
+    let config_state = _config_state.clone();
+    let config_state_changes = Callback::from(move |config: OAuthClientConfigResponse| {
+        _config_state.set((config.client_id, config.auth_url, config.token_url));
+        config_request_state_changes.emit(true);
+    });
 
-    // wasm_bindgen_futures::spawn_local(async move {
-    //     let result = api_get_auth_config().await;
-    //     config_state_changes.emit(result);
-    // });
+    if !*config_request_state {
+        wasm_bindgen_futures::spawn_local(async move {
+            let result = api_get_auth_config().await;
+            config_state_changes.emit(result);
+        });
+    }
 
     html! {
-        //
-        <div class={stylesheet}>
-            <OAuth2 config={config} >
-                <AppMain />
-            </OAuth2>
-        </div>
+        if *config_request_state {
+            <div class={stylesheet}>
+                <OAuth2 config={{
+                    let (client_id, auth_url, token_url) = &*config_state;
+                    Config {
+                        client_id: client_id.clone(),
+                        auth_url: auth_url.clone(),
+                        token_url: token_url.clone(),
+                    }}} >
+                    <AppMain />
+                </OAuth2>
+            </div>
+        }
     }
 }
 

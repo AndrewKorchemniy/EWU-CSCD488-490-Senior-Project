@@ -12,18 +12,30 @@ pub struct OAuthClientConfigResponse {
 
 // TODO: remove since it does not work
 pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
+    // let response = Request::get(&format!("{BASE_API_URI}/oauth/config",))
+    //     .send()
+    //     .await
+    //     .unwrap()
+    //     .json::<OAuthClientConfigResponse>()
+    //     .await
+    //     .unwrap();
     let response = Request::get(&format!("{BASE_API_URI}/oauth/config",))
         .send()
-        .await
-        .unwrap()
-        .json::<OAuthClientConfigResponse>()
-        .await
-        .unwrap();
+        .await;
+
+    if response.is_ok() {
+        let response = response.unwrap();
+        let response = response.json::<OAuthClientConfigResponse>().await;
+        if response.is_ok() {
+            let response = response.unwrap();
+            return response;
+        }
+    }
 
     OAuthClientConfigResponse {
-        client_id: response.client_id,
-        auth_url: response.auth_url,
-        token_url: response.token_url,
+        client_id: String::new(),
+        auth_url: String::new(),
+        token_url: String::new(),
     }
 }
 
