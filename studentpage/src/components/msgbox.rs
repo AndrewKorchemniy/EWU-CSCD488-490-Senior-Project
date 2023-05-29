@@ -20,6 +20,9 @@ pub struct Props {
     /// The text of the message box. Defaults to an empty string.
     #[prop_or_default]
     pub text: AttrValue,
+    /// Additional classes.
+    #[prop_or_default]
+    pub class: Classes,
     #[prop_or_default]
     pub children: Children,
 }
@@ -35,7 +38,11 @@ pub fn msg(props: &Props) -> Html {
     };
 
     html! {
-        <div class={format!("card shadow {}", get_variant(&props.variant))}>
+        <div class={classes!(
+            "card", "shadow",
+            get_variant(&props.variant),
+            props.class.clone(),
+        )}>
             <div class="card-body">
                 <h5 class="card-title"> { props.title.clone() } </h5>
                 <p class="card-text"> { props.text.clone() } </p>
