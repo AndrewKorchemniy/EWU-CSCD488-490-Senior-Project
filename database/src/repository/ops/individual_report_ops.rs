@@ -2,7 +2,7 @@ use crate::cli::args::{
     CreateIndividualReport, IndividualReportCommand, IndividualReportSubcommand,
     UpdateIndividualReport,
 };
-use common::models::status_report::{IndividualReport, NewIndividualReport};
+use crate::repository::models::{IndividualReport, NewIndividualReport};
 use diesel::prelude::*;
 use crate::repository::db::establish_connection;
 
@@ -23,7 +23,7 @@ pub fn create_individual_report(individual_report_cmd: CreateIndividualReport) {
         "creating the Individual Report: {:?}",
         individual_report_cmd
     );
-    use crate::schema::individual_reports::dsl::*;
+    use crate::repository::schema::individual_reports::dsl::*;
 
     let connection = &mut establish_connection();
     let new_individual_report = NewIndividualReport {
@@ -39,7 +39,7 @@ pub fn create_individual_report(individual_report_cmd: CreateIndividualReport) {
 
 pub fn update_individual_report(individual_report_cmd: UpdateIndividualReport) {
     println!("updating the individualReport: {:?}", individual_report_cmd);
-    use crate::schema::individual_reports::dsl::*;
+    use crate::repository::schema::individual_reports::dsl::*;
 
     let connection = &mut establish_connection();
     let new_individual_report = IndividualReport {

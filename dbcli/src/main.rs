@@ -1,16 +1,14 @@
 #[macro_use]
+extern crate diesel;
+extern crate dotenv;
 
-
-// extern crate diesel;
-// extern crate dotenv;
 use database::repository::ops;
-
 use database::cli::args;
+use database::repository::db;
+use database::repository::models;
+use database::repository::schema;
 
-// mod db;
-// mod models;
-// mod ops;
-// mod schema;
+
 
 use ops::individual_report_ops::handle_individual_report_command;
 use ops::sprint_ops::handle_sprint_command;

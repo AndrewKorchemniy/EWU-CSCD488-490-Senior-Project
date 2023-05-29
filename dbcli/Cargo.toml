@@ -9,3 +9,5 @@ edition = "2021"
 clap = { version = "4.2.7", features = ["derive"] }
 common = { path = "../common" }
 database = { path = "../database"}
+dotenv = "0.15.0"
+diesel = { version ="2.0.1", features=["mysql","chrono"]}

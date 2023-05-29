@@ -1,6 +1,6 @@
 use crate::cli::args::{CreateSprint, SprintCommand, SprintSubcommand};
 use crate::repository::db::establish_connection;
-use common::models::status_report::{NewSprint, SprintNumDate};
+use crate::repository::models::{NewSprint, SprintNumDate};
 use diesel::prelude::*;
 
 pub fn handle_sprint_command(sprintcmd: SprintCommand) {
@@ -17,7 +17,7 @@ pub fn handle_sprint_command(sprintcmd: SprintCommand) {
 
 pub fn create_sprint(sprintcmd: CreateSprint) {
     println!("creating the sprint: {:?}", sprintcmd);
-    use crate::schema::sprint_num_dates::dsl::*;
+    use crate::repository::schema::sprint_num_dates::dsl::*;
 
     let connection = &mut establish_connection();
     let new_sprint = NewSprint {
@@ -32,7 +32,7 @@ pub fn create_sprint(sprintcmd: CreateSprint) {
 }
 
 pub fn show() {
-    use crate::schema::sprint_num_dates::dsl::*;
+    use crate::repository::schema::sprint_num_dates::dsl::*;
 
     let connection = &mut establish_connection();
     let results = sprint_num_dates

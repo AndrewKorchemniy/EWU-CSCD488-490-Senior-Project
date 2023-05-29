@@ -1,6 +1,6 @@
 use crate::cli::args::{CreateUser, UserCommand, UserSubcommand, UpdateUser};
 use crate::repository::db::establish_connection;
-use common::models::status_report::{NewUser, User};
+use crate::repository::models::{NewUser, User};
 use diesel::prelude::*;
 
 pub fn handle_user_command(user_cmd: UserCommand) {
@@ -16,7 +16,7 @@ pub fn handle_user_command(user_cmd: UserCommand) {
 }
 pub fn create_user(user_cmd: CreateUser) {
     println!("creating thee user: {:?}", user_cmd);
-    use crate::schema::users::dsl::*;
+    use crate::repository::schema::users::dsl::*;
 
     let connection = &mut establish_connection();
     let new_user = NewUser {
@@ -34,7 +34,7 @@ pub fn create_user(user_cmd: CreateUser) {
 }
 pub fn update_user(user_cmd: UpdateUser) {
     println!("updating the requirement: {:?}", user_cmd);
-    use crate::schema::users::dsl::*;
+    use crate::repository::schema::users::dsl::*;
 
     let connection = &mut establish_connection();
     let new_user = User {

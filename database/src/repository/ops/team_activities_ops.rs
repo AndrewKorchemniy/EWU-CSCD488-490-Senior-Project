@@ -1,6 +1,6 @@
 use crate::cli::args::{CreateTeamActivity, TeamActivityCommand, TeamActivitySubcommand, UpdateTeamActivity};
 use crate::repository::db::establish_connection;
-use common::models::status_report::{NewTeamActivity, TeamActivity};
+use crate::repository::models::{NewTeamActivity, TeamActivity};
 use diesel::prelude::*;
 
 pub fn handle_team_activity_command(team_activity_cmd: TeamActivityCommand) {
@@ -17,7 +17,7 @@ pub fn handle_team_activity_command(team_activity_cmd: TeamActivityCommand) {
 
 pub fn create_team_activity(team_activity_cmd: CreateTeamActivity) {
     println!("creating the team activity: {:?}", team_activity_cmd);
-    use crate::schema::team_activities::dsl::*;
+    use crate::repository::schema::team_activities::dsl::*;
 
     let connection = &mut establish_connection();
     let new_team_activity = NewTeamActivity {
@@ -33,7 +33,7 @@ pub fn create_team_activity(team_activity_cmd: CreateTeamActivity) {
 }
 pub fn update_team_activity(team_activity_cmd: UpdateTeamActivity) {
     println!("updating the requirement: {:?}", team_activity_cmd);
-    use crate::schema::team_activities::dsl::*;
+    use crate::repository::schema::team_activities::dsl::*;
 
     let connection = &mut establish_connection();
     let new_team_activity = TeamActivity {

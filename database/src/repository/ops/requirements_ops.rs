@@ -1,7 +1,9 @@
 use crate::cli::args::{CreateRequirement, RequirementCommand, RequirementSubcommand, UpdateRequirement};
 use crate::repository::db::establish_connection;
-use common::models::status_report::{NewRequirement, Requirement};
+use crate::repository::models::{NewRequirement, Requirement};
 use diesel::prelude::*;
+
+
 
 pub fn handle_requirement_command(requirement_cmd: RequirementCommand) {
     let command = requirement_cmd.command;
@@ -17,7 +19,7 @@ pub fn handle_requirement_command(requirement_cmd: RequirementCommand) {
 
 pub fn create_requirement(requirement_cmd: CreateRequirement) {
     println!("creating the requirement: {:?}", requirement_cmd);
-    use crate::schema::requirements::dsl::*;
+    use crate::repository::schema::requirements::dsl::*;
 
     let connection = &mut establish_connection();
     let new_requirement = NewRequirement {
@@ -33,7 +35,7 @@ pub fn create_requirement(requirement_cmd: CreateRequirement) {
 
 pub fn update_requirement(requirement_cmd: UpdateRequirement) {
     println!("updating the requirement: {:?}", requirement_cmd);
-    use crate::schema::requirements::dsl::*;
+    use crate::repository::schema::requirements::dsl::*;
 
     let connection = &mut establish_connection();
     let new_requirement = Requirement {

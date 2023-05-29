@@ -1,6 +1,6 @@
 use crate::cli::args::{CreateTeamReport, TeamReportCommand, TeamReportSubcommand, UpdateTeamReport};
 use crate::repository::db::establish_connection;
-use common::models::status_report::{NewTeamReport, TeamReport};
+use crate::repository::models::{NewTeamReport, TeamReport};
 use diesel::prelude::*;
 
 pub fn handle_team_report_command(team_report_cmd: TeamReportCommand) {
@@ -17,7 +17,7 @@ pub fn handle_team_report_command(team_report_cmd: TeamReportCommand) {
 
 pub fn create_team_report(team_report_cmd: CreateTeamReport) {
     println!("creating the new_team_report: {:?}", team_report_cmd);
-    use crate::schema::team_reports::dsl::*;
+    use crate::repository::schema::team_reports::dsl::*;
 
     let connection = &mut establish_connection();
     let new_team_report = NewTeamReport {
@@ -33,7 +33,7 @@ pub fn create_team_report(team_report_cmd: CreateTeamReport) {
 
 pub fn update_team_report(team_report_cmd: UpdateTeamReport) {
     println!("updating team report: {:?}", team_report_cmd);
-    use crate::schema::team_reports::dsl::*;
+    use crate::repository::schema::team_reports::dsl::*;
 
     let connection = &mut establish_connection();
     let new_team_report = TeamReport {
