@@ -18,22 +18,22 @@ pub enum ButtonVariant {
 pub struct Props {
     /// Text to display within the button.
     pub label: AttrValue,
+    /// The type of the button.
+    #[prop_or_default]
+    pub button_type: String,
     /// Additional classes.
     #[prop_or_default]
     pub class: Classes,
-    /// Variant of the button.
+    /// The variant of the button.
     #[prop_or(ButtonVariant::Light)]
     pub variant: ButtonVariant,
     /// data-bs-toggle
     #[prop_or_default]
     pub data_bs_toggle: String,
-    /// Button type
-    #[prop_or("button".to_string())]
-    pub button_type: String,
-    /// Aria state
-    #[prop_or("false".to_string())]
-    pub aria_expanded: String,
-    /// Onclick callback
+    /// data-bs-target
+    #[prop_or_default]
+    pub data_bs_target: AttrValue,
+    /// The onclick callback.
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
 }
@@ -57,9 +57,8 @@ pub fn button(props: &Props) -> Html {
                 get_variant(&props.variant),
                 props.class.clone(),
             )}
-            style="background-image: linear-gradient(135deg, #FFFFFF20, #00000020)"
             data-bs-toggle={ props.data_bs_toggle.clone() }
-            aria-expanded={ props.aria_expanded.clone() }
+            data-bs-target={ props.data_bs_target.clone() }
             type={ props.button_type.clone() }
             onclick={ &props.onclick }>
             { &*props.label }
