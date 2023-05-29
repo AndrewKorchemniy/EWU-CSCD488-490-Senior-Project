@@ -91,22 +91,14 @@ pub fn app() -> Html {
     let stylesheet = Style::new(STYLESHEET).unwrap();
 
     // The state of the oauth config request
-    let _config_request_state = use_state(|| false as bool);
-    let config_request_state = _config_request_state.clone();
-    let config_request_state_changes = Callback::from(move |value: bool| {
-        _config_request_state.set(value);
-    });
-
-    // The state of the oauth config
-    let _config_state = use_state(|| (String::new(), String::new(), String::new()));
+    let _config_state = use_state(|| None as Option<OAuthClientConfigResponse>);
     let config_state = _config_state.clone();
     let config_state_changes = Callback::from(move |config: OAuthClientConfigResponse| {
-        _config_state.set((config.client_id, config.auth_url, config.token_url));
-        config_request_state_changes.emit(true);
+        _config_state.set(Some(config));
     });
 
     // Fetch the oauth config if it hasn't been fetched yet
-    if !*config_request_state {
+    if config_state.is_none() {
         wasm_bindgen_futures::spawn_local(async move {
             let result = api_get_auth_config().await;
             config_state_changes.emit(result);
@@ -115,20 +107,19 @@ pub fn app() -> Html {
 
     html! {
         <div class={stylesheet}>
-            if *config_request_state {
-                <OAuth2 config={{
-                    let (client_id, auth_url, token_url) = &*config_state;
+            if config_state.is_some() {
+                <OAuth2 config={
                     Config {
-                        client_id: client_id.clone(),
-                        auth_url: auth_url.clone(),
-                        token_url: token_url.clone(),
-                    }}} >
+                        client_id: config_state.as_ref().unwrap().client_id.clone(),
+                        auth_url: config_state.as_ref().unwrap().auth_url.clone(),
+                        token_url: config_state.as_ref().unwrap().token_url.clone(),
+                    }} >
                     <AppMain />
                 </OAuth2>
             } else {
                 <div class="spinner-wrapper text-primary">
-                    <div class="spinner-grow" role="status" style="width: 6rem; height: 6rem;">
-                        <span class="visually-hidden"> {"Loading..."} </span>
+                    <div class="spinner-border" role="status" style="width: 6rem; height: 6rem;">
+                        <span class="visually-hidden"> { "Loading..." } </span>
                     </div>
                 </div>
             }
