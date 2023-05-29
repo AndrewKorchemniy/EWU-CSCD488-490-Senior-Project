@@ -17,12 +17,21 @@ pub enum ButtonVariant {
 pub struct Props {
     /// Text to display within the button.
     pub label: AttrValue,
+    /// The type of the button.
+    #[prop_or_default]
+    pub button_type: AttrValue,
     /// Additional classes.
     #[prop_or_default]
     pub class: Classes,
     /// The variant of the button.
     #[prop_or(ButtonVariant::Light)]
     pub variant: ButtonVariant,
+    /// data-bs-toggle
+    #[prop_or_default]
+    pub data_bs_toggle: AttrValue,
+    /// data-bs-target
+    #[prop_or_default]
+    pub data_bs_target: AttrValue,
     /// The onclick callback.
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
@@ -46,6 +55,9 @@ pub fn button(props: &Props) -> Html {
                 get_variant(&props.variant),
                 props.class.clone(),
             )}
+            button_type={ props.button_type.clone() }
+            data-bs-toggle={ props.data_bs_toggle.clone() }
+            data-bs-target={ props.data_bs_target.clone() }
             onclick={ &props.onclick }>
             { &*props.label }
         </button>

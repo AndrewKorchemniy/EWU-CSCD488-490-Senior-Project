@@ -1,7 +1,5 @@
 use yew::prelude::*;
 
-use crate::components::button::{Button, ButtonVariant};
-
 /// Properties for [IndividualForm]
 #[derive(PartialEq, Properties)]
 pub struct Props {
@@ -14,9 +12,10 @@ pub fn individual_form(props: &Props) -> Html {
     html! {
         <div class="card shadow border-0">
             <div class="card-body">
-                <form class="mt-1 row g-3">
+                <form class="mt-1 row g-3" onsubmit={Callback::from(|event: SubmitEvent| {
+                    event.prevent_default(); // prevent the defualt form submission behavior
+                })}>
                     { for props.children.iter() }
-                    <Button variant={ ButtonVariant::Danger } label="Submit" class="mt-3 col-auto ms-2" />
                 </form>
             </div>
         </div>

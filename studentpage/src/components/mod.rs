@@ -6,6 +6,7 @@ pub mod collapsible;
 pub mod footer;
 pub mod individual_form;
 pub mod instructions;
+pub mod modal;
 pub mod msgbox;
 pub mod navbar;
 pub mod range;

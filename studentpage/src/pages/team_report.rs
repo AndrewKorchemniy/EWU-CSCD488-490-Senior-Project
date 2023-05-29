@@ -5,6 +5,7 @@ use yewdux::prelude::*;
 
 use crate::components::button::{Button, ButtonVariant};
 use crate::components::instructions::Instructions;
+use crate::components::modal::Modal;
 use crate::components::range::Range;
 use crate::components::team_form::TeamForm;
 use crate::components::text_area::TextAreaValidation;
@@ -181,14 +182,14 @@ pub fn team_report() -> Html {
     };
 
     // Callback for submitting the form. Triggers client-side validation.
-    let onsubmit = dispatch.reduce_mut_callback_with(move |store, event: SubmitEvent| {
+    let onsubmit = dispatch.reduce_mut_callback_with(move |store, event: MouseEvent| {
         event.prevent_default();
         log!(validate_submit(store));
         // TODO: submit to server
     });
 
     html! {
-        <TeamForm onsubmit={ onsubmit }>
+        <TeamForm>
             <Instructions
                 text="Consider the following four pairs of questions hierarchically. They are not the same question. If you think they are, then you are likely not using an appropriate breadth and depth of software-engineering thought. This course is a practical application of the aspects of product, process, and people. We are trying to account for everything: not just to create a good product, but also to learn from the process to improve the people. Reflect on the experience of the entire team collectively over this sprint. You do not need to account for all activities, just two that were representative of easiest and hardest. Use activity codes (e.g., A1) for specific references, but most of the response should be in sentence form. <br/> <br/> For reference, understand relates to the comprehension of what need to be done; approach to how you think it should be solved; solve to implementing the actual solution; and evalutate to demonstrating to yourself and your team (if applicable) that the performance of your solution is consistent with everything else in the project. Remember The Cartoon from CS 350.
                 <hr class='mb-0'/>"/>
@@ -276,7 +277,16 @@ pub fn team_report() -> Html {
             <Button
                 variant={ ButtonVariant::Danger }
                 label="Submit"
-                class="mt-3 col-auto ms-2" />
+                class="mt-3 col-auto ms-2"
+                data_bs_toggle="modal"
+                data_bs_target="#confirm" />
+            <Modal
+                id="confirm"
+                title="Are you sure?"
+                body="You can only submit once."
+                action_label="Submit"
+                action_button_type="submit"
+                onclick={ onsubmit } />
         </TeamForm>
     }
 }
