@@ -57,7 +57,7 @@ pub fn home() -> Html {
                             class="mb-1 form-label text-light fs-4 fw-semibold">
                             { "Update Classes" }
                         </label>
-                        <input class="form-control" type="file" id="updateClasses" {onchange} {ondrag}/>
+                        <input class="form-control" type="file" id="updateClasses" onchange={&onchange} ondrag={&ondrag}/>
                         <Button variant={ ButtonVariant::Danger }
                             onclick={ onclick }
                             class="mt-2"
@@ -94,7 +94,7 @@ pub fn home() -> Html {
                             <Button variant={ ButtonVariant::Light }
                                 class="ms-2 dropdown-toggle"
                                 data_bs_toggle="dropdown"
-                                label="Select Team" />
+                                label="Select Sprint" />
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">{"Action"}</a></li>
                                 <li><a class="dropdown-item" href="#">{"Another action"}</a></li>

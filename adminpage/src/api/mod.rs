@@ -34,36 +34,26 @@ pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
 }
 
 #[allow(dead_code)]
-pub async fn api_get_sprints() {
-    todo!()
-}
-
-#[allow(dead_code)]
-pub async fn api_post_team_report() {
-    todo!()
-}
-
-#[allow(dead_code)]
-pub async fn api_get_individual_report() {
-    todo!()
-}
-
-#[allow(dead_code)]
-pub async fn api_post_individual_report() {
-    todo!()
-}
-
-#[allow(dead_code)]
-pub async fn api_get_requirements() {
-    todo!()
-}
-
-#[allow(dead_code)]
-pub async fn api_post_requirements() {
-    todo!()
-}
-
-#[allow(dead_code)]
 pub async fn api_request_logout() {
+    todo!()
+}
+
+#[allow(dead_code)]
+pub async fn api_post_classes() {
+    todo!()
+}
+
+#[allow(dead_code)]
+pub async fn api_post_students() {
+    todo!()
+}
+
+#[allow(dead_code)]
+pub async fn api_post_teams() {
+    todo!()
+}
+
+#[allow(dead_code)]
+pub async fn api_get_sprint() {
     todo!()
 }

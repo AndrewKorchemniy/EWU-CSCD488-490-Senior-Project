@@ -178,9 +178,7 @@ TODO
 TODO
 ```
 
-**Error Handling:** TODO
-
-## Endpoint 9 - Request Server Shutdown
+## Endpoint 10 - Request Server Shutdown
 
 **Request Format:** /api/shutdown
 
@@ -200,9 +198,9 @@ TODO
 
 **Error Handling:** TODO
 
-## Endpoint 9 - Getting Server Health Status
+## Endpoint 11 - Getting Server Health Status
 
-**Request Format:** /api/healths
+**Request Format:** /api/health
 
 **Request Type:** GET
 
@@ -219,3 +217,101 @@ TODO
 ```
 
 **Error Handling:** TODO
+
+## Endpoint 12 - Getting User Type
+
+**Request Format:** /api/user
+
+**Request Type:** GET
+
+**Returned Data Format**: JSON
+
+**Description:** Returns the user type of the current user.
+
+**Example Request:** TODO
+
+**Example Response:**
+
+```
+TODO
+```
+
+**Error Handling:** TODO
+
+## Endpoint 13 - Submitting Class Update
+
+**Request Format:** /api/admin/classes
+
+**Request Type:** POST
+
+**Returned Data Format**: JSON
+
+**Description:** Submits a file containing a list of classes to the database.
+
+**Example Request:** TODO
+
+**Example Response:** TOOD
+
+```json
+TODO
+```
+
+**Error Handling:** TODO
+
+## Endpoint 14 - Submitting Students Update
+
+**Request Format:** /api/admin/students
+
+**Request Type:** POST
+
+**Returned Data Format**: JSON
+
+**Description:** Submits a file containig a list of students within a class to the database.
+
+**Example Request:** TODO
+
+**Example Response:** TOOD
+
+```json
+TODO
+```
+
+**Error Handling:** TODO
+
+## Endpoint 15 - Submitting Teams Update
+
+**Request Format:** /api/admin/teams
+
+**Request Type:** POST
+
+**Returned Data Format**: JSON
+
+**Description:** Submits a file containig a list of teams within a class to the database.
+
+**Example Request:** TODO
+
+**Example Response:** TOOD
+
+```json
+TODO
+```
+
+**Error Handling:** TODO
+
+## Endpoint 16 - Downloading Class Sprint Submissions
+
+**Request Format:** /api/admin/sprints
+
+**Request Type:** GET
+
+**Returned Data Format**: JSON
+
+**Description:** Downloads a file of all sprint submissions for a class.
+
+**Example Request:** TODO
+
+**Example Response:** TOOD
+
+```json
+TODO
+```
