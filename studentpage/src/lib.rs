@@ -18,7 +18,7 @@ use pages::team_report::TeamReport;
 
 mod api;
 mod stores;
-use api::{api_get_auth_config, OAuthClientConfigResponse};
+//use api::{api_get_auth_config, OAuthClientConfigResponse};
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
