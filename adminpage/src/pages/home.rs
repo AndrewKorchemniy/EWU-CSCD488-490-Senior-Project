@@ -37,6 +37,9 @@ pub fn home() -> Html {
             log!(result[0].size());
             log!(result[0].raw_mime_type());
         }
+
+        // TODO: Call the api to send the file contents.
+        // File upload example: https://github.com/yewstack/yew/tree/master/examples/file_upload 
     };
 
     let onchange = Callback::from(move |event: Event| {
