@@ -1,3 +1,4 @@
+use reqwasm::Error;
 use yew::prelude::*;
 
 use crate::api::{api_get_sprints, SprintsResponse};
@@ -15,7 +16,7 @@ pub fn home() -> Html {
     let credentials = use_context::<OAuth2Context>();
 
     // The state of the sprints request.
-    let _sprints_state = use_state(|| None as Option<Result<SprintsResponse, reqwasm::Error>>);
+    let _sprints_state = use_state(|| None as Option<Result<SprintsResponse, Error>>);
     let sprints_state = _sprints_state.clone();
     let sprints_state_changes =
         Callback::from(move |sprints: Result<SprintsResponse, reqwasm::Error>| {

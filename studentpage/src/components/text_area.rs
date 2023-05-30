@@ -27,6 +27,9 @@ pub struct Props {
     /// The value to use for the textarea. Defaults to an empty string.
     #[prop_or_default]
     pub value: AttrValue,
+    /// The amount of rows to defaujlt to. Defaults to 4.
+    #[prop_or("4".into())]
+    pub rows: AttrValue,
     /// The onchange callback.
     #[prop_or_default]
     pub onchange: Callback<Event>,
@@ -82,7 +85,7 @@ pub fn text_area(props: &Props) -> Html {
                         } else {
                             ""
                         })}
-                    rows="4"
+                    rows={ props.rows.clone() }
                     placeholder={ props.placeholder.clone() }
                     id={ props.id.clone() }
                     value={ props.value.clone() }

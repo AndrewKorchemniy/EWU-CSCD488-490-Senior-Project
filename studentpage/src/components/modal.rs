@@ -20,6 +20,9 @@ pub struct Props {
     /// The onclick callback for the action.
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
+    #[prop_or_default]
+    /// The id of the action button.
+    pub action_id: AttrValue,
 }
 
 /// The [Modal] component provides styled bootstrap modal (a dialog popup).
@@ -39,6 +42,7 @@ pub fn modal(props: &Props) -> Html {
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">{ "Close" }</button>
                         <button
+                            id={ props.action_id.clone() }
                             type="button"
                             class="btn btn-danger"
                             data-bs-dismiss="modal"

@@ -8,7 +8,7 @@
 
 **Returned Data Format**: JSON
 
-**Description:** Returns a list of all sprints in the database for a student.
+**Description:** Gets a list of all sprints in the database for a student.
 
 **Example Request:** TODO
 
@@ -48,7 +48,7 @@ TODO
 
 **Returned Data Format**: JSON
 
-**Description:** Get an individual report from the database. Can return an empty report if no report exists for the student.
+**Description:** Gets an individual report from the database. Can return an empty report if no report exists for the student.
 
 **Example Request:** TODO
 
@@ -88,7 +88,7 @@ TODO
 
 **Returned Data Format**: JSON
 
-**Description:** Get team project requirements from the database.
+**Description:** Gets the project requirements of a team from the database.
 
 **Example Request:** TODO
 
@@ -102,13 +102,31 @@ TODO
 
 ## Endpoint 6 - Submitting Team Project Requirements
 
-**Request Format:** /api/submit/requirements
+**Request Format:** /api/submit/new_requirement
 
 **Request Type:** POST
 
 **Returned Data Format**: JSON
 
-**Description:** Submit team project reuqirements to the database.
+**Description:** Submits a new team project requirement to the database.
+
+**Example Request:** TODO
+
+**Example Response:** TOOD
+
+```json
+TODO
+```
+
+## Endpoint 7 - Deleting Team Project Requirements
+
+**Request Format:** /api/submit/delete_requirement
+
+**Request Type:** POST
+
+**Returned Data Format**: JSON
+
+**Description:** Request a requirement to be deleted from the database.
 
 **Example Request:** TODO
 
@@ -148,7 +166,7 @@ TODO
 
 **Returned Data Format**: JSON
 
-**Description:** Request the server's OAuth configuration.
+**Description:** Gets the server's OAuth configuration.
 
 **Example Request:** TODO
 

@@ -10,6 +10,7 @@ use components::footer::Footer;
 // TODO: uncomment import when the API for OAuth is ready.
 // use components::msgbox::{MsgBox, MsgBoxVariant};
 use components::navbar::Navbar;
+use components::spinner::Spinner;
 
 mod pages;
 use pages::home::Home;
@@ -21,8 +22,6 @@ use pages::team_report::TeamReport;
 mod api;
 mod stores;
 use api::{api_get_auth_config, OAuthClientConfigResponse};
-
-use crate::components::spinner::Spinner;
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
@@ -98,17 +97,17 @@ const STYLESHEET: &str = include_str!("assets/main.css");
 
 #[function_component(App)]
 pub fn app() -> Html {
-    // Set up the scoped stylesheet (global)
+    // Set up the scoped stylesheet (global).
     let stylesheet = Style::new(STYLESHEET).unwrap();
 
-    // The state of the oauth config request
+    // The state of the oauth config request.
     let _config_state = use_state(|| None as Option<OAuthClientConfigResponse>);
     let config_state = _config_state.clone();
     let config_state_changes = Callback::from(move |config: OAuthClientConfigResponse| {
         _config_state.set(Some(config));
     });
 
-    // Fetch the oauth config if it hasn't been fetched yet
+    // Fetch the oauth config if it hasn't been fetched yet.
     if config_state.is_none() {
         wasm_bindgen_futures::spawn_local(async move {
             let result = api_get_auth_config().await;

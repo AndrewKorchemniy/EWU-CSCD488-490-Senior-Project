@@ -20,6 +20,9 @@ pub struct Props {
     /// The type of the button.
     #[prop_or_default]
     pub button_type: AttrValue,
+    /// The id of the button element.
+    #[prop_or_default]
+    pub id: AttrValue,
     /// Additional classes.
     #[prop_or_default]
     pub class: Classes,
@@ -60,6 +63,7 @@ pub fn button(props: &Props) -> Html {
             button_type={ props.button_type.clone() }
             data-bs-toggle={ props.data_bs_toggle.clone() }
             data-bs-target={ props.data_bs_target.clone() }
+            id={ props.id.clone() }
             onclick={ &props.onclick }>
             { &*props.label }
         </button>

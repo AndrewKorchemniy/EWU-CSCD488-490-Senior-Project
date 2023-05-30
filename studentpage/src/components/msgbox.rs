@@ -7,6 +7,7 @@ pub enum MsgBoxVariant {
     Success,
     Info,
     Warning,
+    Secondary,
     Danger,
 }
 
@@ -34,6 +35,7 @@ pub fn msg(props: &Props) -> Html {
         MsgBoxVariant::Success => "text-success border-success",
         MsgBoxVariant::Info => "text-info border-info",
         MsgBoxVariant::Warning => "text-warning border-warning",
+        MsgBoxVariant::Secondary => "text-secondary border-secondary",
         MsgBoxVariant::Danger => "text-danger border-danger",
     };
 
