@@ -1,4 +1,5 @@
 use crate::Route;
+use chrono::prelude::*;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -9,6 +10,25 @@ pub enum ReportStatus {
     Missing,
     Upcoming,
     Active(Route),
+}
+
+impl ReportStatus {
+    /// Returns the appropriate ReportStatus based on the given ReportStatusResponse.
+    pub fn from(is_completed: &bool, due_date: NaiveDate) -> Self {
+        match is_completed {
+            true => ReportStatus::Submitted,
+            false => {
+                let now = Local::now().naive_local().date();
+                if now > due_date {
+                    ReportStatus::Missing
+                } else if now == due_date {
+                    ReportStatus::Active(Route::TeamReport)
+                } else {
+                    ReportStatus::Upcoming
+                }
+            }
+        }
+    }
 }
 
 /// Properties for [Sprint]

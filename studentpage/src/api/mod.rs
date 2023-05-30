@@ -1,10 +1,12 @@
+use chrono::NaiveDate;
 use reqwasm::http::Request;
 use serde::{Deserialize, Serialize};
 
 // TODO: use an environment variable instead of a file for the base API URI
 const BASE_API_URI: &str = include_str!("base_api_uri.txt");
 
-#[derive(Deserialize, Serialize)]
+// TODO: move types to common
+#[derive(Deserialize)]
 pub struct OAuthClientConfigResponse {
     pub client_id: String,
     pub auth_url: String,
@@ -25,7 +27,7 @@ pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
         }
     }
 
-    // Return invalid config, which will cause the app to display an error
+    // Return invalid config, which will cause the oauth components to display an error
     OAuthClientConfigResponse {
         client_id: String::new(),
         auth_url: String::new(),
@@ -33,9 +35,35 @@ pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
     }
 }
 
-#[allow(dead_code)]
-pub async fn api_get_sprints() {
-    todo!()
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SprintResponse {
+    pub id: u8,
+    pub due_date: NaiveDate,
+    pub is_individual_report_submitted: bool,
+    pub is_team_report_submitted: bool,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SprintsResponse {
+    pub sprints: Vec<SprintResponse>,
+}
+
+pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, reqwasm::Error> {
+    let response = Request::get(&format!("{BASE_API_URI}/api/sprints",))
+        .header("Authorization", token)
+        .send()
+        .await;
+
+    match response {
+        Ok(response) => {
+            let response = response.json::<SprintsResponse>().await;
+            match response {
+                Ok(response) => Ok(response),
+                Err(err) => Err(err),
+            }
+        }
+        Err(err) => Err(err),
+    }
 }
 
 #[allow(dead_code)]
