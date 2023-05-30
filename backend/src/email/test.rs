@@ -5,13 +5,14 @@ use config::Config;
 
 use log::{debug, error, info};
 
-pub fn send_test_email(to_who: &str, secret: &Config, server: &Config) -> Result<String, String> {
+pub fn send_test_email(to_who: String, secret: &Config, server: &Config) -> Result<String, String> {
     info!("Sending test email");
     let email_result = Message::builder()
         // "NoBody <nobody@domain.tld>"
         .from(format!("Status Reports Server <{}>", server.get::<String>("smtp_email").expect("Missing sender email")).parse().unwrap())
         .reply_to(format!("no-reply <{}>", server.get::<String>("smtp_email").expect("Missing sender email")).parse().unwrap())
-        .to(format!("{} <{}>", to_who, server.get::<String>("admin_email").expect("Missing admin email")).parse().unwrap())
+        // .to(format!("{} <{}>", to_who, server.get::<String>("admin_email").expect("Missing admin email")).parse().unwrap())
+        .to(to_who.parse().unwrap())
         .subject("Test Email from Status Reports Backend")
         .header(ContentType::TEXT_PLAIN)
         .body(String::from("Be happy!"));
