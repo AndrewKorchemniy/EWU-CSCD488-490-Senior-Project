@@ -17,6 +17,13 @@ cp adminpage/dist/* res
 cp studentpage/dist/* res
 rm res/index.html
 
+if [ -f "server.config.toml" ];
+then
+  echo "Using existing file"
+else
+  cp server.example.config.toml server.config.toml
+fi
+
 if [ -f "secret.config.toml" ];
 then
   echo "Using existing file"

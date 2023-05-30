@@ -51,21 +51,21 @@ pub fn config(cfg: &mut web::ServiceConfig) {
 #[get("/config")]
 pub async fn give_config(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let client_id_results: Result<String, _> = app_data
-    .get_ref().2
+    .get_ref().1
     .get("OAUTH_CLIENT_ID");
 
     match client_id_results {
         Ok(client_id) => {
             let auth_url: Result<String, _> = app_data
                 .get_ref()
-                .2
+                .1
                 .get("OAUTH_AUTH_URL");
 
             match auth_url {
                 Ok(auth_url) => {
                     let token_url: Result<String, _> = app_data
                         .get_ref()
-                        .2
+                        .1
                         .get("OAUTH_TOKEN_URL");
 
                     match token_url {
@@ -106,7 +106,7 @@ pub async fn give_config(app_data: Data<(Database, Config, Config)>) -> HttpResp
 pub async fn give_token_url(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let token_url: Result<String, _> = app_data
     .get_ref()
-    .2
+    .1
     .get("OAUTH_TOKEN_URL");
 
     match token_url {
@@ -127,7 +127,7 @@ pub async fn give_token_url(app_data: Data<(Database, Config, Config)>) -> HttpR
 pub async fn give_auth_url(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let auth_url: Result<String, _> = app_data
     .get_ref()
-    .2
+    .1
     .get("OAUTH_AUTH_URL");
 
     match auth_url {
@@ -148,7 +148,7 @@ pub async fn give_auth_url(app_data: Data<(Database, Config, Config)>) -> HttpRe
 pub async fn give_client_id(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let client_id: Result<String, _> = app_data
     .get_ref()
-    .2
+    .1
     .get("OAUTH_CLIENT_ID");
 
     match client_id {
@@ -260,7 +260,7 @@ fn make_client(
         ClientId::new(
             app_data
                 .get_ref()
-                .2
+                .1
                 .get("OAUTH_CLIENT_ID")
                 .expect("Missing \"OAUTH_CLIENT_ID\" value"),
         ),
@@ -274,7 +274,7 @@ fn make_client(
         AuthUrl::new(
             app_data
                 .get_ref()
-                .2
+                .1
                 .get("OAUTH_AUTH_URL")
                 .expect("Missing \"OAUTH_AUTH_URL\" value"),
         )
@@ -283,7 +283,7 @@ fn make_client(
             TokenUrl::new(
                 app_data
                     .get_ref()
-                    .2
+                    .1
                     .get("OAUTH_TOKEN_URL")
                     .expect("Missing \"OAUTH_TOKEN_URL\" value"),
             )

@@ -118,5 +118,6 @@ fabric.properties
 #/target
 
 secret.config.toml
+server.config.toml
 res
 bin.tar.gz
