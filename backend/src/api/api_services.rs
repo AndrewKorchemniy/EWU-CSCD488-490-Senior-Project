@@ -1,4 +1,5 @@
 use crate::api::token;
+use crate::email::test::send_test_email;
 use actix_web::web;
 use actix_web::{
     delete, get, post, put,
@@ -8,13 +9,12 @@ use actix_web::{
 use common::models::todo::Todo;
 use config::Config;
 use database::repository::db_connector::Database;
-use crate::email::test::send_test_email;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct EmailInfo {
     pub email: String,
-    pub name: String
+    pub name: String,
 }
 
 // https://actix.rs/docs/databases/
@@ -79,11 +79,18 @@ pub async fn delete_todo_by_id(
 
 // TODO: remove using for dev
 #[get("/send_test_email")]
-pub async fn send_email(
-    data: Data<(Database, Config, Config)>,
-) -> HttpResponse {
+pub async fn send_email(data: Data<(Database, Config, Config)>) -> HttpResponse {
     let email_out = send_test_email(
-        format!("admin <{}>", data.get_ref().1.get::<String>("admin_email").expect("Missing admin email")), &data.get_ref().2, &data.get_ref().1);
+        format!(
+            "admin <{}>",
+            data.get_ref()
+                .1
+                .get::<String>("admin_email")
+                .expect("Missing admin email")
+        ),
+        &data.get_ref().2,
+        &data.get_ref().1,
+    );
     match email_out {
         Ok(message) => HttpResponse::Ok().body(message),
         Err(message) => HttpResponse::InternalServerError().body(message),
@@ -94,9 +101,13 @@ pub async fn send_email(
 #[post("/send_test_email")]
 pub async fn send_email_to(
     data: Data<(Database, Config, Config)>,
-    email_info: Json<EmailInfo>
+    email_info: Json<EmailInfo>,
 ) -> HttpResponse {
-    let email_out = send_test_email(format!("{} <{}>", email_info.name, email_info.email), &data.get_ref().2, &data.get_ref().1);
+    let email_out = send_test_email(
+        format!("{} <{}>", email_info.name, email_info.email),
+        &data.get_ref().2,
+        &data.get_ref().1,
+    );
     match email_out {
         Ok(message) => HttpResponse::Ok().body(message),
         Err(message) => HttpResponse::InternalServerError().body(message),
