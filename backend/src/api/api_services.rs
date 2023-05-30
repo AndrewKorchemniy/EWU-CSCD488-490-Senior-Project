@@ -1,5 +1,4 @@
 use crate::api::token;
-use crate::email::test::send_test_email;
 use actix_web::web;
 use actix_web::{
     delete, get, post, put,
