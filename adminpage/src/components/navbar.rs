@@ -12,6 +12,7 @@ pub struct Props {
 }
 
 /// The [Navbar] component provides a styled navbar for the application.
+/// See https://getbootstrap.com/docs/5.3/components/navbar/
 #[function_component(Navbar)]
 pub fn navbar(props: &Props) -> Html {
     html! {

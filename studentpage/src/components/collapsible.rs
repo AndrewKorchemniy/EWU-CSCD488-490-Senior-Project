@@ -13,6 +13,8 @@ pub struct Props {
 }
 
 /// The [Collapsible] component provides a styled wrapper for the content to collapse.
+/// See https://getbootstrap.com/docs/5.3/components/collapse/
+/// See https://getbootstrap.com/docs/5.3/components/card/
 #[function_component(Collapsible)]
 pub fn collapsible(props: &Props) -> Html {
     html! {

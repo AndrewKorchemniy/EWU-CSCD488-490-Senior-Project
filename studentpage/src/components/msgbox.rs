@@ -1,12 +1,13 @@
 use yew::prelude::*;
 
 /// Variants of the [MsgBox]
-#[allow(dead_code)] // TODO: remove if some variants never get used
+#[allow(dead_code)] // TODO: Remove if some variants never get used.
 #[derive(PartialEq, Clone)]
 pub enum MsgBoxVariant {
     Success,
     Info,
     Warning,
+    Secondary,
     Danger,
 }
 
@@ -20,6 +21,9 @@ pub struct Props {
     /// The text of the message box. Defaults to an empty string.
     #[prop_or_default]
     pub text: AttrValue,
+    /// Additional classes.
+    #[prop_or_default]
+    pub class: Classes,
     #[prop_or_default]
     pub children: Children,
 }
@@ -31,11 +35,16 @@ pub fn msg(props: &Props) -> Html {
         MsgBoxVariant::Success => "text-success border-success",
         MsgBoxVariant::Info => "text-info border-info",
         MsgBoxVariant::Warning => "text-warning border-warning",
+        MsgBoxVariant::Secondary => "text-secondary border-secondary",
         MsgBoxVariant::Danger => "text-danger border-danger",
     };
 
     html! {
-        <div class={format!("card shadow {}", get_variant(&props.variant))}>
+        <div class={classes!(
+            "card", "shadow",
+            get_variant(&props.variant),
+            props.class.clone(),
+        )}>
             <div class="card-body">
                 <h5 class="card-title"> { props.title.clone() } </h5>
                 <p class="card-text"> { props.text.clone() } </p>

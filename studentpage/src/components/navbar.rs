@@ -8,10 +8,11 @@ use crate::Route;
 #[derive(Properties, PartialEq)]
 pub struct Props {
     /// The onclick callback for logging out.
-    pub logout: Callback<MouseEvent>,
+    pub logout: Option<Callback<MouseEvent>>,
 }
 
 /// The [Navbar] component provides a styled navbar for the application.
+/// See https://getbootstrap.com/docs/5.3/components/navbar/
 #[function_component(Navbar)]
 pub fn navbar(props: &Props) -> Html {
     // The requirements button is conditionally rendered based on the current route.
@@ -27,16 +28,20 @@ pub fn navbar(props: &Props) -> Html {
                 </Link<Route>>
             </span>
             <span class="my-1">
-                if is_route_home() {
-                    <Link<Route> to={ Route::Requirements }>
-                        <Button
-                            variant={ ButtonVariant::Primary }
-                            class="me-2"
-                            label="Requirements"
-                            onclick={&props.logout} />
-                    </Link<Route>>
+                if let Some(logout) = &props.logout {
+                    if is_route_home() {
+                        <Link<Route> to={ Route::Requirements }>
+                            <Button
+                                variant={ ButtonVariant::Primary }
+                                class="me-2"
+                                label="Requirements" />
+                        </Link<Route>>
+                    }
+                    <Button
+                        variant={ ButtonVariant::Warning }
+                        label="Logout"
+                        onclick={logout.clone()} />
                 }
-                <Button variant={ ButtonVariant::Warning } label="Logout" />
             </span>
         </nav>
     }

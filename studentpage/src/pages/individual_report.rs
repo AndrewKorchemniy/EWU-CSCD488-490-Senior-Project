@@ -2,10 +2,12 @@ use yew::prelude::*;
 use yewdux::prelude::*;
 
 use crate::components::activity_accounting::ActivityAccounting;
+use crate::components::button::{Button, ButtonVariant};
 use crate::components::collapse::{Collapse, CollapseValidation};
 use crate::components::collapsible::Collapsible;
-use crate::components::individual_form::IndividualForm;
+use crate::components::form::Form;
 use crate::components::instructions::Instructions;
+use crate::components::modal::Modal;
 use crate::components::time_accounting::TimeAccounting;
 
 use crate::stores::individual_store::IndividualStore;
@@ -33,15 +35,14 @@ pub fn individual_report() -> Html {
     // });
 
     // Time accounting validation.
-    let cloned_store = store.clone();
-    let time_validate = Callback::from(move |_: MouseEvent| {
-        if cloned_store.saturday_hours.is_some()
-            || cloned_store.sunday_hours.is_some()
-            || cloned_store.monday_hours.is_some()
-            || cloned_store.tuesday_hours.is_some()
-            || cloned_store.wednesday_hours.is_some()
-            || cloned_store.thursday_hours.is_some()
-            || cloned_store.friday_hours.is_some()
+    let time_validate = dispatch.reduce_mut_callback_with(move |store, _: MouseEvent| {
+        if store.saturday_hours.is_some()
+            || store.sunday_hours.is_some()
+            || store.monday_hours.is_some()
+            || store.tuesday_hours.is_some()
+            || store.wednesday_hours.is_some()
+            || store.thursday_hours.is_some()
+            || store.friday_hours.is_some()
         {
             time_state_changes.emit(CollapseValidation::Complete);
         } else {
@@ -49,8 +50,17 @@ pub fn individual_report() -> Html {
         }
     });
 
+    // Callback for submitting the form. Triggers client-side validation.
+    let cloned_time_validate = time_validate.clone();
+    let onsubmit = dispatch.reduce_mut_callback_with(move |_, event: MouseEvent| {
+        event.prevent_default();
+        cloned_time_validate.emit(event);
+        //log!(validate_submit(store));
+        // TODO: submit to server
+    });
+
     html! {
-        <IndividualForm>
+        <Form>
             <Instructions
                 text="Complete all relevant fields. Refer to the tutorial (coming) for instructions. <br/> Your time and activity account will be shared with all team members and the client."/>
 
@@ -82,12 +92,27 @@ pub fn individual_report() -> Html {
                 {"Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger."}
 
                 <Collapse
-                    label="Testing"
-                    target="#testing2" />
-                <Collapsible id="testing2" is_open={ true }>
-                    {"noice"}
+                    label="Activity #1"
+                    target="#activity1" />
+                <Collapsible id="activity1" is_open={ true }>
+                    { ". . ." }
                 </Collapsible>
             </Collapsible>
-        </IndividualForm>
+
+            // <Button variant={ ButtonVariant::Danger } label="Submit" class="mt-3 col-auto ms-2" />
+            <Button
+                variant={ ButtonVariant::Danger }
+                label="Submit"
+                class="mt-3 col-auto ms-2"
+                data_bs_toggle="modal"
+                data_bs_target="#confirm" />
+            <Modal
+                id="confirm"
+                title="Are you sure?"
+                body="You can only submit once."
+                action_label="Submit"
+                action_button_type="submit"
+                onclick={ onsubmit } />
+        </Form>
     }
 }

@@ -5,3 +5,10 @@ button {
 .min-width {
   min-width: 480px;
 }
+
+.spinner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}

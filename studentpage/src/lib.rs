@@ -7,7 +7,10 @@ use yew_router::prelude::*;
 
 mod components;
 use components::footer::Footer;
+// TODO: uncomment import when the API for OAuth is ready.
+// use components::msgbox::{MsgBox, MsgBoxVariant};
 use components::navbar::Navbar;
+use components::spinner::Spinner;
 
 mod pages;
 use pages::home::Home;
@@ -16,7 +19,9 @@ use pages::page_not_found::PageNotFound;
 use pages::requirements::Requirements;
 use pages::team_report::TeamReport;
 
+mod api;
 mod stores;
+use api::{api_get_auth_config, OAuthClientConfigResponse};
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
@@ -33,21 +38,9 @@ pub enum Route {
     NotFound,
 }
 
-const STYLESHEET: &str = include_str!("assets/main.css");
-
 #[function_component(AppMain)]
 pub fn app_main() -> Html {
     let agent = use_auth_agent().expect("Requires OAuth2Context");
-
-    // TODO: Add OAuth2
-    // let login = {
-    //     let agent = agent.clone();
-    //     Callback::from(move |_: MouseEvent| {
-    //         if let Err(err) = agent.start_login() {
-    //             log!(format!("Failed to start login: {err}"));
-    //         }
-    //     })
-    // };
 
     let logout = Callback::from(move |_: MouseEvent| {
         if let Err(err) = agent.start_login() {
@@ -59,7 +52,7 @@ pub fn app_main() -> Html {
         <BrowserRouter>
             <div class="container-fluid mx-auto px-4 min-width">
                 <div class="row">
-                    <div class="col"> <Navbar logout={logout}/> </div>
+                    <div class="col"> <Navbar logout={logout.clone()}/> </div>
                 </div>
                 <div class="row">
                     <div class="col"> <Switch<Route> render={switch} /> </div>
@@ -69,50 +62,74 @@ pub fn app_main() -> Html {
                 </div>
             </div>
         </BrowserRouter>
-        // TODO: Add OAuth2
-        // <OAuth2 {config}>
-        //     <Authenticated>
-        //         <BrowserRouter>
-        //             <div class="container-fluid mx-auto px-4" style="min-width: 480px;">
-        //                 <div class="row">
-        //                     <div class="col"> <Navbar logout={logout}/> </div>
-        //                 </div>
-        //                 <div class="row">
-        //                     <div class="col"> <Switch<Route> render={switch} /> </div>
-        //                 </div>
-        //                 <div class="row">
-        //                     <div class="col"> <Footer /> </div>
-        //                 </div>
+        // TODO: Replace the above with the following when the API for OAuth is ready.
+        // <BrowserRouter>
+        //     <div class="container-fluid mx-auto px-4 min-width">
+        //         <Failure>
+        //             <div class="row">
+        //                 <div class="col"> <Navbar /> </div>
         //             </div>
-        //         </BrowserRouter>
-        //     </Authenticated>
-        //     <NotAuthenticated>
-        //         <p>
-        //             { "You need to log in" }
-        //             <button onclick={login}> { "Log in" } </button>
-        //         </p>
-        //     </NotAuthenticated>
-        // </OAuth2>
+        //         </Failure>
+        //         <Authenticated>
+        //             <div class="row">
+        //                 <div class="col"> <Navbar logout={logout.clone()}/> </div>
+        //             </div>
+        //             <div class="row">
+        //                 <div class="col"> <Switch<Route> render={switch} /> </div>
+        //             </div>
+        //         </Authenticated>
+        //         <NotAuthenticated>
+        //             <MsgBox
+        //                 title="Failed to authenticate"
+        //                 text="Please try again later."
+        //                 variant={MsgBoxVariant::Danger}>
+        //             </MsgBox>
+        //         </NotAuthenticated>
+        //         <div class="row">
+        //             <div class="col"> <Footer /> </div>
+        //         </div>
+        //     </div>
+        // </BrowserRouter>
     }
 }
 
+const STYLESHEET: &str = include_str!("assets/main.css");
+
 #[function_component(App)]
 pub fn app() -> Html {
+    // Set up the scoped stylesheet (global).
     let stylesheet = Style::new(STYLESHEET).unwrap();
 
-    let config = Config {
-        client_id: "client_id".into(),
-        auth_url: "auth_url".into(),
-        token_url: "token_url".into(),
-    };
+    // The state of the oauth config request.
+    let _config_state = use_state(|| None as Option<OAuthClientConfigResponse>);
+    let config_state = _config_state.clone();
+    let config_state_changes = Callback::from(move |config: OAuthClientConfigResponse| {
+        _config_state.set(Some(config));
+    });
+
+    // Fetch the oauth config if it hasn't been fetched yet.
+    if config_state.is_none() {
+        wasm_bindgen_futures::spawn_local(async move {
+            let result = api_get_auth_config().await;
+            config_state_changes.emit(result);
+        });
+    }
 
     html! {
         <div class={stylesheet}>
-            <OAuth2 config={config}>
-                <AppMain />
-            </OAuth2>
+            if config_state.is_some() {
+                <OAuth2 config={
+                    Config {
+                        client_id: config_state.as_ref().unwrap().client_id.clone(),
+                        auth_url: config_state.as_ref().unwrap().auth_url.clone(),
+                        token_url: config_state.as_ref().unwrap().token_url.clone(),
+                    }} >
+                    <AppMain />
+                </OAuth2>
+            } else {
+                <Spinner />
+            }
         </div>
-
     }
 }
 

@@ -6,6 +6,8 @@ use yew::prelude::*;
 use yewdux::prelude::*;
 
 use crate::components::button::{Button, ButtonVariant};
+use crate::components::download::Download;
+use crate::components::modal::Modal;
 use crate::stores::admin_store::AdminStore;
 
 #[function_component(Home)]
@@ -50,59 +52,85 @@ pub fn home() -> Html {
     html! {
         <div class="card shadow">
             <div class="card-body">
-                <form>
+                <form onsubmit={ Callback::from(|event: SubmitEvent| {
+                    event.prevent_default(); // Prevent the defualt form submission behavior.
+                })}>
+                    // Upload class csv file.
                     <div class="mb-3 col-12 col-xl-6">
                         <label
                             for="updateClasses"
-                            class="mb-1 form-label text-light fs-4 fw-semibold">
+                            class="form-label text-light fs-4 fw-semibold">
                             { "Update Classes" }
                         </label>
-                        <input class="form-control" type="file" id="updateClasses" {onchange} {ondrag}/>
-                        <Button variant={ ButtonVariant::Danger }
-                            onclick={ onclick }
-                            class="mt-2"
-                            label="Upload" />
+                        <input
+                            class="form-control"
+                            type="file"
+                            id="updateClasses"
+                            onchange={&onchange}
+                            ondrag={&ondrag}/>
+                        <Button
+                            variant={ ButtonVariant::Danger }
+                            label="Upload"
+                            class="mt-3"
+                            data_bs_toggle="modal"
+                            data_bs_target="#confirm-class-upload" />
+                        <Modal
+                            id="confirm-class-upload"
+                            title="Are you sure?"
+                            body="This action is irreversible."
+                            action_label="Upload"
+                            onclick={ &onclick } />
                     </div>
 
+                    // Upload students csv file.
+                    <div class="mb-3 col-12 col-xl-6">
+                        <label
+                            for="updateStudents"
+                            class="form-label text-light fs-4 fw-semibold">
+                            { "Update Students" }
+                        </label>
+                        <input
+                            class="form-control"
+                            type="file"
+                            id="updateStudents"/>
+                        <Button
+                            variant={ ButtonVariant::Danger }
+                            label="Upload"
+                            class="mt-3"
+                            data_bs_toggle="modal"
+                            data_bs_target="#confirm-students-upload" />
+                        <Modal
+                            id="confirm-students-upload"
+                            title="Are you sure?"
+                            body="This action is irreversible."
+                            action_label="Upload"
+                            onclick={ &onclick } />
+                    </div>
+
+                    // Upload teams csv file.
                     <div class="mb-3 col-12 col-xl-6">
                         <label
                             for="updateTeams"
-                            class="mb-1 form-label text-light fs-4 fw-semibold">
+                            class="form-label text-light fs-4 fw-semibold">
                             { "Update Teams" }
                         </label>
                         <input class="form-control" type="file" id="updateTeams"/>
-                        <Button variant={ ButtonVariant::Danger } class="mt-2" label="Upload" />
+                        <Button
+                            variant={ ButtonVariant::Danger }
+                            label="Upload"
+                            class="mt-3"
+                            data_bs_toggle="modal"
+                            data_bs_target="#confirm-teams-upload" />
+                        <Modal
+                            id="confirm-teams-upload"
+                            title="Are you sure?"
+                            body="This action is irreversible."
+                            action_label="Upload"
+                            onclick={ &onclick } />
                     </div>
 
-                    <div class="col-12 col-xl-6 mb-2">
-                        <label
-                            for="download"
-                            class="mb-1 form-label text-light fs-4 fw-semibold">
-                            { "Download" }
-                        </label>
-                        <div class="dropdown" id="download">
-                            <Button variant={ ButtonVariant::Light }
-                                class="dropdown-toggle"
-                                data_bs_toggle="dropdown"
-                                label="Select Class" />
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">{"Action"}</a></li>
-                                <li><a class="dropdown-item" href="#">{"Another action"}</a></li>
-                                <li><a class="dropdown-item" href="#">{"Something else here"}</a></li>
-                            </ul>
-
-                            <Button variant={ ButtonVariant::Light }
-                                class="ms-2 dropdown-toggle"
-                                data_bs_toggle="dropdown"
-                                label="Select Team" />
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">{"Action"}</a></li>
-                                <li><a class="dropdown-item" href="#">{"Another action"}</a></li>
-                                <li><a class="dropdown-item" href="#">{"Something else here"}</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <Button variant={ ButtonVariant::Primary } label="Download" />
+                    // Download submissions group.
+                    <Download />
                 </form>
             </div>
         </div>
