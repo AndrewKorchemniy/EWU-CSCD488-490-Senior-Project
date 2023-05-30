@@ -34,12 +34,7 @@ jobs:
           cargo --version --verbose
           rustc --version
           cargo clippy --version
-          trunk --version
-
-      - name: Lint
-        run: |
-          cargo fmt -- --check
-          cargo clippy -- -D warnings          
+          trunk --version          
 
       - name: Test
         run: |
@@ -61,3 +56,8 @@ jobs:
         with:
           files: |
             bin.tar.gz
+
+      - name: Lint
+        run: |
+          cargo fmt -- --check
+          cargo clippy -- -D warnings
