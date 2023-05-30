@@ -19,6 +19,8 @@ mod api;
 mod stores;
 use api::{api_get_auth_config, OAuthClientConfigResponse};
 
+use crate::components::spinner::Spinner;
+
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
     #[at("/adminpage")]
@@ -117,11 +119,7 @@ pub fn app() -> Html {
                     <AppMain />
                 </OAuth2>
             } else {
-                <div class="spinner-wrapper text-primary">
-                    <div class="spinner-border" role="status" style="width: 6rem; height: 6rem;">
-                        <span class="visually-hidden"> { "Loading..." } </span>
-                    </div>
-                </div>
+                <Spinner />
             }
         </div>
     }

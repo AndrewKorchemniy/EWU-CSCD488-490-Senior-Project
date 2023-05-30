@@ -4,3 +4,4 @@ pub mod footer;
 pub mod modal;
 pub mod msgbox;
 pub mod navbar;
+pub mod spinner;

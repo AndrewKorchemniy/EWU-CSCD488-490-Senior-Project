@@ -14,3 +14,4 @@ pub mod sprint;
 pub mod team_form;
 pub mod text_area;
 pub mod time_accounting;
+pub mod spinner;
