@@ -4,13 +4,15 @@ use yew::prelude::*;
 use yew_oauth2::prelude::OAuth2Context;
 use yew_router::prelude::*;
 
-use crate::api::{api_get_requirements, api_post_delete_requirement, RequirementsResponse};
+use crate::api::{api_get_requirements, api_post_delete_requirement};
 use crate::components::button::{Button, ButtonVariant};
 use crate::components::card::Card;
 use crate::components::modal::Modal;
 use crate::components::msgbox::{MsgBox, MsgBoxVariant};
 use crate::components::spinner::SpinnerInset;
 use crate::Route;
+
+use common::models::types::RequirementsResponse;
 
 #[function_component(Requirements)]
 pub fn requirements() -> Html {

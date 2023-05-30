@@ -5,6 +5,7 @@ use yew_oauth2::oauth2::*;
 use yew_oauth2::prelude::*;
 use yew_router::prelude::*;
 
+
 mod components;
 use components::footer::Footer;
 // TODO: uncomment import when the API for OAuth is ready.
@@ -21,7 +22,8 @@ use pages::team_report::TeamReport;
 
 mod api;
 mod stores;
-use api::{api_get_auth_config, OAuthClientConfigResponse};
+use api::api_get_auth_config;
+use common::models::types::OAuthClientConfigResponse;
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {

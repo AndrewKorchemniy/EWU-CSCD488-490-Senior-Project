@@ -17,7 +17,8 @@ use pages::page_not_found::PageNotFound;
 
 mod api;
 mod stores;
-use api::{api_get_auth_config, OAuthClientConfigResponse};
+use api::api_get_auth_config;
+use common::models::types::OAuthClientConfigResponse;
 
 use crate::components::spinner::Spinner;
 
