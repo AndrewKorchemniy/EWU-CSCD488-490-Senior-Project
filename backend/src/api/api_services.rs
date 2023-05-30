@@ -1,4 +1,5 @@
 use crate::api::token;
+use crate::email::test::send_test_email;
 use actix_web::web;
 use actix_web::{
     delete, get, post, put,
@@ -8,7 +9,6 @@ use actix_web::{
 use common::models::todo::Todo;
 use config::Config;
 use database::repository::db_connector::Database;
-use crate::email::test::send_test_email;
 
 // https://actix.rs/docs/databases/
 
@@ -72,9 +72,7 @@ pub async fn delete_todo_by_id(
 
 // TODO: remove using for dev
 #[get("/send_test_email")]
-pub async fn send_email(
-    data: Data<(Database, Config, Config)>,
-) -> HttpResponse {
+pub async fn send_email(data: Data<(Database, Config, Config)>) -> HttpResponse {
     let email_out = send_test_email("admin", &data.get_ref().2, &data.get_ref().1);
     match email_out {
         Ok(message) => HttpResponse::Ok().body(message),

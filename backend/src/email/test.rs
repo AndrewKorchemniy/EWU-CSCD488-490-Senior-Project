@@ -1,7 +1,7 @@
+use config::Config;
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{Message, SmtpTransport, Transport};
-use config::Config;
 
 use log::{debug, error, info};
 
@@ -9,9 +9,35 @@ pub fn send_test_email(to_who: &str, secret: &Config, server: &Config) -> Result
     info!("Sending test email");
     let email_result = Message::builder()
         // "NoBody <nobody@domain.tld>"
-        .from(format!("Status Reports Server <{}>", server.get::<String>("smtp_email").expect("Missing sender email")).parse().unwrap())
-        .reply_to(format!("no-reply <{}>", server.get::<String>("smtp_email").expect("Missing sender email")).parse().unwrap())
-        .to(format!("{} <{}>", to_who, server.get::<String>("admin_email").expect("Missing admin email")).parse().unwrap())
+        .from(
+            format!(
+                "Status Reports Server <{}>",
+                server
+                    .get::<String>("smtp_email")
+                    .expect("Missing sender email")
+            )
+            .parse()
+            .unwrap(),
+        )
+        .reply_to(
+            format!(
+                "no-reply <{}>",
+                server
+                    .get::<String>("smtp_email")
+                    .expect("Missing sender email")
+            )
+            .parse()
+            .unwrap(),
+        )
+        .to(format!(
+            "{} <{}>",
+            to_who,
+            server
+                .get::<String>("admin_email")
+                .expect("Missing admin email")
+        )
+        .parse()
+        .unwrap())
         .subject("Test Email from Status Reports Backend")
         .header(ContentType::TEXT_PLAIN)
         .body(String::from("Be happy!"));
@@ -33,7 +59,7 @@ pub fn send_test_email(to_who: &str, secret: &Config, server: &Config) -> Result
 
     let creds = Credentials::new(username, password);
 
-    let server_url:String = server.get("smtp_server").expect("Missing email server url");
+    let server_url: String = server.get("smtp_server").expect("Missing email server url");
 
     // Open a remote connection to gmail
     let mailer = SmtpTransport::starttls_relay(&*server_url)
@@ -48,10 +74,10 @@ pub fn send_test_email(to_who: &str, secret: &Config, server: &Config) -> Result
         Ok(_) => {
             info!("Email sent");
             Ok("Email sent successfully!".to_string())
-        },
+        }
         Err(e) => {
             error!("Email not sent");
             Err(format!("Could not send email: {:?}", e))
-        },
+        }
     }
 }

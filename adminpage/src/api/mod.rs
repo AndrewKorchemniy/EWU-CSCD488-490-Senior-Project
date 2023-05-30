@@ -1,20 +1,8 @@
+use common::models::types::OAuthClientConfigResponse;
 use reqwasm::http::Request;
-use serde::{Deserialize, Serialize};
-
-// TODO: use an environment variable instead of a file for the base API URI
-const BASE_API_URI: &str = include_str!("base_api_uri.txt");
-
-#[derive(Deserialize, Serialize)]
-pub struct OAuthClientConfigResponse {
-    pub client_id: String,
-    pub auth_url: String,
-    pub token_url: String,
-}
 
 pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
-    let response = Request::get(&format!("{BASE_API_URI}/oauth/config",))
-        .send()
-        .await;
+    let response = Request::get("/oauth/config").send().await;
 
     if response.is_ok() {
         let response = response.unwrap();
@@ -25,7 +13,7 @@ pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
         }
     }
 
-    // Return invalid config, which will cause the app to display an error
+    // Return an invalid config, which will cause the app to display an error
     OAuthClientConfigResponse {
         client_id: String::new(),
         auth_url: String::new(),

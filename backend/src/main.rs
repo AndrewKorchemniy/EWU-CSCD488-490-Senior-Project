@@ -4,6 +4,7 @@
 // TODO: Email
 
 use actix_files::{Files, NamedFile};
+use actix_web::dev::{fn_service, ServiceRequest, ServiceResponse};
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder, Result};
 use config::Config;
 use log::{error, info};
@@ -11,7 +12,6 @@ use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 use serde::Serialize;
 use std::process;
 use std::process::Command;
-use actix_web::dev::{fn_service, ServiceRequest, ServiceResponse};
 
 use database::repository;
 
@@ -133,18 +133,26 @@ async fn main() -> std::io::Result<()> {
             .configure(api::api_services::config)
             .service(healthcheck)
             .service(shutdown_server) // TODO: remove after dev or require to be admin
-            .service(Files::new("/studentpage", "./studentpage/dist/").index_file("index.html").default_handler(fn_service(|req: ServiceRequest| async {
-                let (req, _) = req.into_parts();
-                let file = NamedFile::open_async("./studentpage/dist/index.html").await?;
-                let res = file.into_response(&req);
-                Ok(ServiceResponse::new(req, res))
-            })))
-            .service(Files::new("/adminpage", "./adminpage/dist/").index_file("index.html").default_handler(fn_service(|req: ServiceRequest| async {
-                let (req, _) = req.into_parts();
-                let file = NamedFile::open_async("./adminpage/dist/index.html").await?;
-                let res = file.into_response(&req);
-                Ok(ServiceResponse::new(req, res))
-            })))
+            .service(
+                Files::new("/studentpage", "./studentpage/dist/")
+                    .index_file("index.html")
+                    .default_handler(fn_service(|req: ServiceRequest| async {
+                        let (req, _) = req.into_parts();
+                        let file = NamedFile::open_async("./studentpage/dist/index.html").await?;
+                        let res = file.into_response(&req);
+                        Ok(ServiceResponse::new(req, res))
+                    })),
+            )
+            .service(
+                Files::new("/adminpage", "./adminpage/dist/")
+                    .index_file("index.html")
+                    .default_handler(fn_service(|req: ServiceRequest| async {
+                        let (req, _) = req.into_parts();
+                        let file = NamedFile::open_async("./adminpage/dist/index.html").await?;
+                        let res = file.into_response(&req);
+                        Ok(ServiceResponse::new(req, res))
+                    })),
+            )
             .default_service(Files::new("/", "./res/").default_handler(web::route().to(not_found)))
             .wrap(actix_web::middleware::Logger::default())
     });

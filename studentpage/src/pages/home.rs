@@ -1,7 +1,8 @@
 use reqwasm::Error;
 use yew::prelude::*;
 
-use crate::api::{api_get_sprints, SprintsResponse};
+use crate::api::api_get_sprints;
+use common::models::types::SprintsResponse;
 use crate::components::calendar::Calendar;
 // TODO: Uncomment when the api is ready.
 // use crate::components::msgbox::{MsgBox, MsgBoxVariant};
