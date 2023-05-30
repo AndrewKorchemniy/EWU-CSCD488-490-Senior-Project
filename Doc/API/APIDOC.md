@@ -26,11 +26,15 @@ TODO
 
 **Request Type:** POST
 
-**Returned Data Format**: JSON
+**Returned Data Format**: TEXT
 
 **Description:** Submits a team report to the database for a team.
 
 **Example Request:** TODO
+
+```json
+
+```
 
 **Example Response:** TOOD
 

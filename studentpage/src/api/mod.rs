@@ -1,6 +1,6 @@
+use common::models::types::*;
 use reqwasm::http::Request;
 use reqwasm::Error;
-use common::models::types::*;
 use serde_json::json;
 
 /// Gets the server's OAuth configuration.
@@ -46,8 +46,38 @@ pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
 }
 
 #[allow(dead_code)]
-pub async fn api_post_team_report() {
-    todo!()
+/// Posts a team report to the database for a team.
+pub async fn api_post_team_report(token: &str, body: TeamResponse) -> Result<String, Error> {
+    let body = json!({
+        "understand_easy": body.understand_easy,
+        "understand_hard": body.understand_hard,
+        "approach_easy": body.approach_easy,
+        "approach_hard": body.approach_hard,
+        "solve_easy": body.solve_easy,
+        "solve_hard": body.solve_hard,
+        "evaluate_easy": body.evaluate_easy,
+        "evaluate_hard": body.evaluate_hard,
+        "completion_percent": body.completion_percent,
+        "pace_succeed": body.pace_succeed,
+        "issues_comments": body.issues_comments,
+    });
+
+    let response = Request::post("/api/submit/team")
+        .header("Authorization", token)
+        .body(body.to_string())
+        .send()
+        .await;
+
+    match response {
+        Ok(response) => {
+            let response = response.text().await;
+            match response {
+                Ok(response) => Ok(response),
+                Err(err) => Err(err),
+            }
+        }
+        Err(err) => Err(err),
+    }
 }
 
 #[allow(dead_code)]
