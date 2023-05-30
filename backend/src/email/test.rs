@@ -35,9 +35,7 @@ pub fn send_test_email(to_who: String, secret: &Config, server: &Config) -> Resu
         .header(ContentType::TEXT_PLAIN)
         .body(String::from("Be happy!"));
     let email = match email_result {
-        Ok(em) => {
-            em
-        }
+        Ok(em) => em,
         Err(e) => {
             error!("Unable to make email: {:?}", e);
             return Err(format!("Could not make email: {:?}", e));
