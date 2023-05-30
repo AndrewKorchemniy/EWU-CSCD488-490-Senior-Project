@@ -2,7 +2,7 @@ use yew::prelude::*;
 
 use crate::api::{api_get_sprints, SprintsResponse};
 use crate::components::calendar::Calendar;
-// TODO: Uncomment when the api is ready
+// TODO: Uncomment when the api is ready.
 // use crate::components::msgbox::{MsgBox, MsgBoxVariant};
 use crate::components::spinner::SpinnerInset;
 use crate::components::sprint::{ReportStatus, Sprint};
@@ -11,10 +11,10 @@ use yew_oauth2::context::OAuth2Context;
 
 #[function_component(Home)]
 pub fn home() -> Html {
-    // Get the OAuth2Context from the agent
+    // Get the OAuth2Context to get the access token.
     let credentials = use_context::<OAuth2Context>();
 
-    // The state of the sprints request
+    // The state of the sprints request.
     let _sprints_state = use_state(|| None as Option<Result<SprintsResponse, reqwasm::Error>>);
     let sprints_state = _sprints_state.clone();
     let sprints_state_changes =
@@ -22,7 +22,7 @@ pub fn home() -> Html {
             _sprints_state.set(Some(sprints));
         });
 
-    // Fetch the sprints if they haven't been fetched yet
+    // Fetch the sprints if they haven't been fetched yet.
     if sprints_state.is_none() {
         wasm_bindgen_futures::spawn_local(async move {
             let creds = credentials.unwrap();
@@ -42,14 +42,22 @@ pub fn home() -> Html {
                             <Sprint
                                 sprint_number={sprint.id}
                                 due_date={sprint.due_date.format("%b %e").to_string()}
-                                team_report_status={ReportStatus::from(&sprint.is_team_report_submitted, sprint.due_date.clone())}
-                                individual_report_status={ReportStatus::from(&sprint.is_team_report_submitted, sprint.due_date.clone())}>
+                                team_report_status={ReportStatus::from(
+                                    &sprint.is_team_report_submitted,
+                                    sprint.due_date.clone(),
+                                    Route::TeamReport
+                                )}
+                                individual_report_status={ReportStatus::from(
+                                    &sprint.is_team_report_submitted,
+                                    sprint.due_date.clone(),
+                                    Route::IndividualReport
+                                )}>
                             </Sprint>
                         }
                     })}
                 </Calendar>
             } else {
-                // TODO: Uncomment when the api is ready
+                // TODO: Uncomment when the api is ready.
                 // <MsgBox
                 //     variant={ MsgBoxVariant::Danger }
                 //     title="Failed to fetch sprints"

@@ -13,8 +13,8 @@ pub enum ReportStatus {
 }
 
 impl ReportStatus {
-    /// Returns the appropriate ReportStatus based on the given ReportStatusResponse.
-    pub fn from(is_completed: &bool, due_date: NaiveDate) -> Self {
+    /// Returns the appropriate ReportStatus based on the given parameters.
+    pub fn from(is_completed: &bool, due_date: NaiveDate, route: Route) -> Self {
         match is_completed {
             true => ReportStatus::Submitted,
             false => {
@@ -22,7 +22,7 @@ impl ReportStatus {
                 if now > due_date {
                     ReportStatus::Missing
                 } else if now == due_date {
-                    ReportStatus::Active(Route::TeamReport)
+                    ReportStatus::Active(route)
                 } else {
                     ReportStatus::Upcoming
                 }

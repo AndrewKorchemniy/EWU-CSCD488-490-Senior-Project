@@ -5,7 +5,7 @@ use crate::components::activity_accounting::ActivityAccounting;
 use crate::components::button::{Button, ButtonVariant};
 use crate::components::collapse::{Collapse, CollapseValidation};
 use crate::components::collapsible::Collapsible;
-use crate::components::individual_form::IndividualForm;
+use crate::components::form::Form;
 use crate::components::instructions::Instructions;
 use crate::components::modal::Modal;
 use crate::components::time_accounting::TimeAccounting;
@@ -60,7 +60,7 @@ pub fn individual_report() -> Html {
     });
 
     html! {
-        <IndividualForm>
+        <Form>
             <Instructions
                 text="Complete all relevant fields. Refer to the tutorial (coming) for instructions. <br/> Your time and activity account will be shared with all team members and the client."/>
 
@@ -113,6 +113,6 @@ pub fn individual_report() -> Html {
                 action_label="Submit"
                 action_button_type="submit"
                 onclick={ onsubmit } />
-        </IndividualForm>
+        </Form>
     }
 }

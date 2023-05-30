@@ -4,10 +4,10 @@ use yew::prelude::*;
 use yewdux::prelude::*;
 
 use crate::components::button::{Button, ButtonVariant};
+use crate::components::form::Form;
 use crate::components::instructions::Instructions;
 use crate::components::modal::Modal;
 use crate::components::range::Range;
-use crate::components::team_form::TeamForm;
 use crate::components::text_area::TextAreaValidation;
 use crate::components::text_area::{TextArea, TextAreaVariant};
 
@@ -189,7 +189,7 @@ pub fn team_report() -> Html {
     });
 
     html! {
-        <TeamForm>
+        <Form>
             <Instructions
                 text="Consider the following four pairs of questions hierarchically. They are not the same question. If you think they are, then you are likely not using an appropriate breadth and depth of software-engineering thought. This course is a practical application of the aspects of product, process, and people. We are trying to account for everything: not just to create a good product, but also to learn from the process to improve the people. Reflect on the experience of the entire team collectively over this sprint. You do not need to account for all activities, just two that were representative of easiest and hardest. Use activity codes (e.g., A1) for specific references, but most of the response should be in sentence form. <br/> <br/> For reference, understand relates to the comprehension of what need to be done; approach to how you think it should be solved; solve to implementing the actual solution; and evalutate to demonstrating to yourself and your team (if applicable) that the performance of your solution is consistent with everything else in the project. Remember The Cartoon from CS 350.
                 <hr class='mb-0'/>"/>
@@ -287,6 +287,6 @@ pub fn team_report() -> Html {
                 action_label="Submit"
                 action_button_type="submit"
                 onclick={ onsubmit } />
-        </TeamForm>
+        </Form>
     }
 }
