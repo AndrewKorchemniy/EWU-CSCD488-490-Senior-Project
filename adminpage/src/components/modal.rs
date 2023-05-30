@@ -22,7 +22,7 @@ pub struct Props {
     pub onclick: Callback<MouseEvent>,
 }
 
-/// The [Modal] component provides styled bootstrap modal (a dialog popup)
+/// The [Modal] component provides styled bootstrap modal (a dialog popup).
 /// See https://getbootstrap.com/docs/5.3/components/modal/
 #[function_component(Modal)]
 pub fn modal(props: &Props) -> Html {
