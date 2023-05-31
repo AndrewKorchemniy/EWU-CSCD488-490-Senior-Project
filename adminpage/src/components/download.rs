@@ -19,9 +19,9 @@ pub fn download() -> Html {
                     data_bs_toggle="dropdown"
                     label="Select Class" />
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">{"Action"}</a></li>
-                    <li><a class="dropdown-item" href="#">{"Another action"}</a></li>
-                    <li><a class="dropdown-item" href="#">{"Something else here"}</a></li>
+                    <li><a class="dropdown-item" href="#">{"495-040"}</a></li>
+                    <li><a class="dropdown-item" href="#">{"495-041"}</a></li>
+                    <li><a class="dropdown-item" href="#">{"495-042"}</a></li>
                 </ul>
                 <Button
                     variant={ ButtonVariant::Light }
@@ -29,9 +29,9 @@ pub fn download() -> Html {
                     data_bs_toggle="dropdown"
                     label="Select Sprint" />
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">{"Action"}</a></li>
-                    <li><a class="dropdown-item" href="#">{"Another action"}</a></li>
-                    <li><a class="dropdown-item" href="#">{"Something else here"}</a></li>
+                    <li><a class="dropdown-item" href="#">{"Sprint #1"}</a></li>
+                    <li><a class="dropdown-item" href="#">{"Sprint #2"}</a></li>
+                    <li><a class="dropdown-item" href="#">{"Sprint #3"}</a></li>
                 </ul>
             </div>
             <Button variant={ ButtonVariant::Primary } class="mt-3" label="Download" />
