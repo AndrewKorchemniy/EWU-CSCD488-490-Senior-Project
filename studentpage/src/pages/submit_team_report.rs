@@ -17,7 +17,7 @@ pub fn submit_team_report() -> Html {
     // Local session store.
     let (store, _) = use_store::<TeamStore>();
 
-    // TODO: Horrible code, needs to be better!!! Super ugly.
+    // Fetch data from session store.
     let body = TeamResponse {
         understand_easy: store
             .understand_easy
