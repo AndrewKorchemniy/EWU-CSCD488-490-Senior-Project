@@ -14,7 +14,8 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
+    runs-on: self-hosted
     timeout-minutes: 40
     # NOTE already has rust
     # NOTE already has openssl
@@ -25,25 +26,25 @@ jobs:
       # TODO: Does Cache work?
       # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
       # https://github.com/marketplace/actions/cache
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-            studentpage/target/
-            adminpage/target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#            ~/.cargo/bin/
+#            ~/.cargo/registry/index/
+#            ~/.cargo/registry/cache/
+#            ~/.cargo/git/db/
+#            target/
+#            studentpage/target/
+#            adminpage/target/
+#          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       # Takes around 8min's
-      - name: Update local toolchain (takes around 8 mins)
-        run: |
-          rustup update
-          rustup component add clippy
-          rustup target add wasm32-unknown-unknown
-          if ! command -v trunk &> /dev/null ; then cargo install --locked trunk; fi
+#      - name: Update local toolchain (takes around 8 mins)
+#        run: |
+#          rustup update
+#          rustup component add clippy
+#          rustup target add wasm32-unknown-unknown
+#          if ! command -v trunk &> /dev/null ; then cargo install --locked trunk; fi
 
       - name: Toolchain info
         run: |

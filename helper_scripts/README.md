@@ -15,6 +15,10 @@ Install
 ### TODO: Need
 
 - [ ] Install libs (`openssl`)
+```shell
+sudo dnf update
+sudo dnf install openssl mariadb-connector-c
+```
 - [ ] Setup server user (`status-reports`)
 - [ ] Copy server into user (`/home/status-reports/server`)
 - [ ] Copy SSL cert into user (`/home/status-reports/server`)
