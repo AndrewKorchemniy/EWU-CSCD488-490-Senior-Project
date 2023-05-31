@@ -3,6 +3,7 @@ use crate::repository::db::establish_connection;
 use crate::repository::models::{NewTeamReport, TeamReport};
 use diesel::prelude::*;
 
+
 pub fn handle_team_report_command(team_report_cmd: TeamReportCommand) {
     let command = team_report_cmd.command;
     match command {
@@ -50,6 +51,7 @@ pub fn update_team_report(team_report_cmd: UpdateTeamReport) {
         completion: team_report_cmd.completion,
         contact: team_report_cmd.contact,
         comments: team_report_cmd.comments,
+
     };
     // DATABASE TARGET
     let updated_row =

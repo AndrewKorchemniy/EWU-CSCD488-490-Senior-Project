@@ -1,18 +1,19 @@
 
 use chrono::NaiveDate;
 
+#[derive(Clone)]
 pub struct SprintNumDate {
     pub sprint_num: i32,
     pub sprint_date: NaiveDate,
 }
-
+#[derive(Clone)]
 pub struct NewSprint<'a> {
     pub sprint_num: i32,
     pub sprint_date: &'a NaiveDate,
 }
 
-
-pub struct TeamReport {
+#[derive(Clone)]
+pub struct TeamReport{
     pub teams: String,
     pub sprint_num: i32,
     pub understand_easiest: String,
@@ -26,14 +27,15 @@ pub struct TeamReport {
     pub completion: i32,
     pub contact: String,
     pub comments: String,
+    // TODO: pub is_completed: bool,
 }
-
+#[derive(Clone)]
 pub struct NewTeamReport<'a> {
     pub teams: &'a str,
     pub sprint_num: i32,
 }
 
-
+#[derive(Clone)]
 pub struct IndividualReport {
     pub email: String,
     pub sprint_num: i32,
@@ -46,15 +48,16 @@ pub struct IndividualReport {
     pub sunday_time: i32,
     pub discrepancy: String,
     pub request: String,
+    // TODO: pub is_completed: bool,
 }
 
-
+#[derive(Clone)]
 pub struct NewIndividualReport<'a> {
     pub email: &'a str,
     pub sprint_num: i32,
 }
 
-
+#[derive(Clone)]
 pub struct Requirement {
 
     pub teams       : String,
@@ -62,13 +65,13 @@ pub struct Requirement {
     pub description : String,
 }
 
-
+#[derive(Clone)]
 pub struct NewRequirement<'a> {
     pub teams   : &'a str,
     pub indexs  : i32,
 }
 
-
+#[derive(Clone)]
 pub struct TeamActivity {
     pub teams           : String,
     pub email           : String,
@@ -77,14 +80,14 @@ pub struct TeamActivity {
     pub answers         : String,
 }
 
-
+#[derive(Clone)]
 pub struct NewTeamActivity<'a> {
     pub teams           : &'a str,
     pub email           : &'a str,
     pub sprint_num      : i32,
 }
 
-
+#[derive(Clone)]
 pub struct User {
     pub email: String,
     pub ouath_id: String,
@@ -97,7 +100,7 @@ pub struct User {
     pub last_name: String,
 }
 
-
+#[derive(Clone)]
 pub struct NewUser<'a> {
     pub email: &'a str,
     pub ouath_id: &'a str,

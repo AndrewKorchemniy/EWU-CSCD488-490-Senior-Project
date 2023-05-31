@@ -9,7 +9,7 @@ use common::models::todo::Todo;
 use config::Config;
 use database::repository::db_connector::Database;
 
-// https://actix.rs/docs/databases/
+//https://actix.rs/docs/databases/
 
 #[post("/todos")]
 pub async fn create_todo(
@@ -45,12 +45,12 @@ pub async fn get_todo_by_id(
 pub async fn update_todo_by_id(
     data: Data<(Database, Config, Config)>,
     id: web::Path<String>,
-    updated_todo: web::Json<Todo>,
+    _updated_todo: web::Json<Todo>,
 ) -> HttpResponse {
     let todo = data
         .get_ref()
         .0
-        .update_todo_by_id(&id, updated_todo.into_inner());
+        .delete_todo_by_id(&id);
     match todo {
         Some(todo) => HttpResponse::Ok().json(todo),
         None => HttpResponse::NotFound().body("Todo not found"),

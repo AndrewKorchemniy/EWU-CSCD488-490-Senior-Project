@@ -1,12 +1,12 @@
-#[macro_use]
+//#[macro_use]
 extern crate diesel;
 extern crate dotenv;
 
 use database::repository::ops;
 use database::cli::args;
-use database::repository::db;
-use database::repository::models;
-use database::repository::schema;
+// use database::repository::db;
+// use database::repository::models;
+//use database::repository::schema;
 
 
 

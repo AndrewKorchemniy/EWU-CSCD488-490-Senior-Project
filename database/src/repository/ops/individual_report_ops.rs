@@ -54,6 +54,7 @@ pub fn update_individual_report(individual_report_cmd: UpdateIndividualReport) {
         sunday_time: individual_report_cmd.sunday_time,
         discrepancy: individual_report_cmd.discrepancy,
         request: individual_report_cmd.request,
+
     };
 
     let updated_row = diesel::update(individual_reports.find((

@@ -1,13 +1,14 @@
 use crate::repository::schema::*;
 use chrono::NaiveDate;
 
-#[derive(Queryable, Debug, AsChangeset)]
+
+#[derive(Queryable, Debug, AsChangeset,Clone)]
 pub struct SprintNumDate {
     pub sprint_num: i32,
     pub sprint_date: NaiveDate,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable,Clone)]
 // db target must be specified as table_name
 #[diesel(table_name = sprint_num_dates)]
 pub struct NewSprint<'a> {
@@ -15,7 +16,7 @@ pub struct NewSprint<'a> {
     pub sprint_date: &'a NaiveDate,
 }
 
-#[derive(Queryable, Debug, AsChangeset)]
+#[derive(Queryable, Debug, AsChangeset,Clone)]
 pub struct TeamReport {
     pub teams: String,
     pub sprint_num: i32,
@@ -30,16 +31,18 @@ pub struct TeamReport {
     pub completion: i32,
     pub contact: String,
     pub comments: String,
+    // TODO: pub is_completed: bool,
+
 }
 
-#[derive(Insertable)]
+#[derive(Insertable,Clone)]
 #[diesel(table_name = team_reports)]
 pub struct NewTeamReport<'a> {
     pub teams: &'a str,
     pub sprint_num: i32,
 }
 
-#[derive(Queryable, Debug, AsChangeset)]
+#[derive(Queryable, Debug, AsChangeset,Clone)]
 pub struct IndividualReport {
     pub email: String,
     pub sprint_num: i32,
@@ -52,16 +55,17 @@ pub struct IndividualReport {
     pub sunday_time: i32,
     pub discrepancy: String,
     pub request: String,
+    // TODO: pub is_completed: bool,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable,Clone)]
 #[diesel(table_name = individual_reports)]
 pub struct NewIndividualReport<'a> {
     pub email: &'a str,
     pub sprint_num: i32,
 }
 
-#[derive(Debug, Queryable, AsChangeset)]
+#[derive(Debug, Queryable, AsChangeset,Clone)]
 pub struct Requirement {
 
     pub teams       : String,
@@ -76,7 +80,7 @@ pub struct NewRequirement<'a> {
     pub indexs  : i32,
 }
 
-#[derive(Debug, Queryable, AsChangeset)]
+#[derive(Debug, Queryable, AsChangeset,Clone)]
 #[diesel(table_name = team_activities)]
 pub struct TeamActivity {
     pub teams           : String,
@@ -86,7 +90,7 @@ pub struct TeamActivity {
     pub answers         : String,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable,Clone)]
 #[diesel(table_name = team_activities)]
 pub struct NewTeamActivity<'a> {
     pub teams           : &'a str,
@@ -94,7 +98,7 @@ pub struct NewTeamActivity<'a> {
     pub sprint_num      : i32,
 }
 
-#[derive(Debug, Queryable, AsChangeset)]
+#[derive(Debug, Queryable, AsChangeset,Clone)]
 pub struct User {
     pub email: String,
     pub ouath_id: String,
@@ -107,7 +111,7 @@ pub struct User {
     pub last_name: String,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable,Clone)]
 #[diesel(table_name = users)]
 pub struct NewUser<'a> {
     pub email: &'a str,

@@ -125,6 +125,7 @@ pub struct UpdateIndividualReport {
     pub sunday_time: i32,
     pub discrepancy: String,
     pub request: String,
+
 }
 
 // commands args for requirements
