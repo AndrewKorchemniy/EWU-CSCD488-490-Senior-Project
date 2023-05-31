@@ -6,6 +6,14 @@ cd dbcli
 cargo doc --document-private-items --release --no-deps
 cd ..
 
+cd database
+cargo doc --document-private-items --release --no-deps
+cd ..
+
+cd common
+cargo doc --document-private-items --release --no-deps
+cd ..
+
 mkdir -p Doc/code/bin
 rm -rf Doc/code/bin/*
 cp -r target/doc Doc/code/bin

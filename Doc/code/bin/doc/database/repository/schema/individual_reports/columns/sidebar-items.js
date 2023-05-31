@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["FROM_CLAUSE"],"struct":["discrepancy","email","friday_time","monday_time","request","saturday_time","sprint_num","star","sunday_time","thursday_time","tuesday_time","wednesday_time"]};

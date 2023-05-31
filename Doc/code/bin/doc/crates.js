@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["backend","dbcli"];
+window.ALL_CRATES = ["backend","common","database","dbcli"];
