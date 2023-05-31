@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["TextAreaValidation","TextAreaVariant"],"fn":["text_area"],"struct":["Props","TextArea"]};

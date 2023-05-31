@@ -23,6 +23,8 @@ Instructor: Sanmeet Kaur skaur20@ewu.edu
 
 ## Doc
 
+[Code Doc From Cargo](Doc/code/README.md)
+
 [OLD System info](Doc/OldSystem/oldSystemInfo.md)
 
 [Essential Features/Requirements](Doc/Requirements/requirements.md)

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["individual_store","requirements_store","team_store"]};

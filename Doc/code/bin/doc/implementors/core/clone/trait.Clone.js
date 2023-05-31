@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"backend":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.69.0/core/clone/trait.Clone.html\" title=\"trait core::clone::Clone\">Clone</a> for <a class=\"struct\" href=\"backend/api/api_services/struct.EmailInfo.html\" title=\"struct backend::api::api_services::EmailInfo\">EmailInfo</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"adminpage":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.69.0/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"enum\" href=\"adminpage/enum.Route.html\" title=\"enum adminpage::Route\">Route</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.69.0/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"adminpage/stores/admin_store/struct.AdminStore.html\" title=\"struct adminpage::stores::admin_store::AdminStore\">AdminStore</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

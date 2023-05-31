@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["modal"],"struct":["Modal","Props"]};

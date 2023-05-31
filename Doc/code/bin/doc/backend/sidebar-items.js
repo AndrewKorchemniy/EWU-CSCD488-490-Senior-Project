@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["healthcheck","main","not_found","shutdown_server"],"mod":["api","email"],"struct":["Response","healthcheck","shutdown_server"]};

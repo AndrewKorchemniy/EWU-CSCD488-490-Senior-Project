@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["home","individual_report","login","page_not_found","requirements","submit_team_report","team_report"]};
