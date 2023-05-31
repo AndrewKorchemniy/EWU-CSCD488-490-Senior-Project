@@ -26,17 +26,17 @@ jobs:
       # TODO: Does Cache work?
       # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
       # https://github.com/marketplace/actions/cache
-#      - uses: actions/cache@v3
-#        with:
-#          path: |
-#            ~/.cargo/bin/
-#            ~/.cargo/registry/index/
-#            ~/.cargo/registry/cache/
-#            ~/.cargo/git/db/
-#            target/
-#            studentpage/target/
-#            adminpage/target/
-#          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+            studentpage/target/
+            adminpage/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       # Takes around 8min's
 #      - name: Update local toolchain (takes around 8 mins)
