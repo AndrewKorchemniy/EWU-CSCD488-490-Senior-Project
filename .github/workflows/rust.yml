@@ -18,6 +18,8 @@ jobs:
 
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    # NOTE already has rust
+    # NOTE already has openssl
 
     steps:
       - uses: actions/checkout@v3
@@ -38,7 +40,7 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       # Takes around 8min's
-      - name: Update local toolchain
+      - name: Update local toolchain (takes around 8 mins)
         run: |
           rustup update
           rustup component add clippy
