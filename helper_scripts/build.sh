@@ -2,7 +2,9 @@ cd backend
 cargo build --release
 cd ..
 
-# TODO: build database_cli
+cd dbcli
+cargo build --release
+cd ..
 
 cd adminpage
 trunk build --release
@@ -17,16 +19,20 @@ cp adminpage/dist/* res
 cp studentpage/dist/* res
 rm res/index.html
 
+echo "server config file"
 if [ -f "server.config.toml" ];
 then
   echo "Using existing file"
 else
+  echo "Using example file"
   cp server.example.config.toml server.config.toml
 fi
 
+echo "secret config file"
 if [ -f "secret.config.toml" ];
 then
   echo "Using existing file"
 else
+  echo "Using example file"
   cp secret.example.config.toml secret.config.toml
 fi

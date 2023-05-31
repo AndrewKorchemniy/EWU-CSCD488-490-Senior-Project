@@ -1,4 +1,3 @@
-
 use chrono::NaiveDate;
 
 #[derive(Clone)]
@@ -13,7 +12,7 @@ pub struct NewSprint<'a> {
 }
 
 #[derive(Clone)]
-pub struct TeamReport{
+pub struct TeamReport {
     pub teams: String,
     pub sprint_num: i32,
     pub understand_easiest: String,
@@ -59,32 +58,31 @@ pub struct NewIndividualReport<'a> {
 
 #[derive(Clone)]
 pub struct Requirement {
-
-    pub teams       : String,
-    pub indexs      : i32,
-    pub description : String,
+    pub teams: String,
+    pub indexs: i32,
+    pub description: String,
 }
 
 #[derive(Clone)]
 pub struct NewRequirement<'a> {
-    pub teams   : &'a str,
-    pub indexs  : i32,
+    pub teams: &'a str,
+    pub indexs: i32,
 }
 
 #[derive(Clone)]
 pub struct TeamActivity {
-    pub teams           : String,
-    pub email           : String,
-    pub sprint_num      : i32,
-    pub activity_index  : i32,
-    pub answers         : String,
+    pub teams: String,
+    pub email: String,
+    pub sprint_num: i32,
+    pub activity_index: i32,
+    pub answers: String,
 }
 
 #[derive(Clone)]
 pub struct NewTeamActivity<'a> {
-    pub teams           : &'a str,
-    pub email           : &'a str,
-    pub sprint_num      : i32,
+    pub teams: &'a str,
+    pub email: &'a str,
+    pub sprint_num: i32,
 }
 
 #[derive(Clone)]
@@ -108,5 +106,3 @@ pub struct NewUser<'a> {
     pub first_name: &'a str,
     pub last_name: &'a str,
 }
-
-

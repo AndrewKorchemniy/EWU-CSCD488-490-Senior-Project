@@ -2,9 +2,9 @@ use crate::cli::args::{
     CreateIndividualReport, IndividualReportCommand, IndividualReportSubcommand,
     UpdateIndividualReport,
 };
+use crate::repository::db::establish_connection;
 use crate::repository::models::{IndividualReport, NewIndividualReport};
 use diesel::prelude::*;
-use crate::repository::db::establish_connection;
 
 pub fn handle_individual_report_command(individual_report_cmd: IndividualReportCommand) {
     let command = individual_report_cmd.command;
@@ -54,7 +54,6 @@ pub fn update_individual_report(individual_report_cmd: UpdateIndividualReport) {
         sunday_time: individual_report_cmd.sunday_time,
         discrepancy: individual_report_cmd.discrepancy,
         request: individual_report_cmd.request,
-
     };
 
     let updated_row = diesel::update(individual_reports.find((

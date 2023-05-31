@@ -1,9 +1,9 @@
-use crate::cli::args::{CreateRequirement, RequirementCommand, RequirementSubcommand, UpdateRequirement};
+use crate::cli::args::{
+    CreateRequirement, RequirementCommand, RequirementSubcommand, UpdateRequirement,
+};
 use crate::repository::db::establish_connection;
 use crate::repository::models::{NewRequirement, Requirement};
 use diesel::prelude::*;
-
-
 
 pub fn handle_requirement_command(requirement_cmd: RequirementCommand) {
     let command = requirement_cmd.command;
@@ -44,9 +44,10 @@ pub fn update_requirement(requirement_cmd: UpdateRequirement) {
         description: requirement_cmd.description,
     };
 
-    let updated_row = diesel::update(requirements.find((requirement_cmd.indexs, requirement_cmd.teams,)))
-        .set(&new_requirement)
-        .execute(connection)
-        .expect("Error updating requirement");
+    let updated_row =
+        diesel::update(requirements.find((requirement_cmd.indexs, requirement_cmd.teams)))
+            .set(&new_requirement)
+            .execute(connection)
+            .expect("Error updating requirement");
     println!("Updated {} rows", updated_row);
 }

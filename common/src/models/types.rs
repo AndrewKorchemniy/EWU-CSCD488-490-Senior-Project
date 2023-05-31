@@ -57,7 +57,7 @@ impl TeamResponse {
     pub fn validate(&self) -> bool {
         let mut valid = true;
         let min_size_three = |value: &str| -> bool {
-            return value.len() >= 3;
+            value.len() >= 3
         };
 
         valid = min_size_three(&self.understand_easy) && valid;

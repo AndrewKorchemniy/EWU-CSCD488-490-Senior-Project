@@ -1,8 +1,6 @@
 use chrono::NaiveDate;
 use clap::{Args, Parser, Subcommand};
 
-
-
 #[derive(Parser, Debug)]
 #[clap(author, version, about)]
 pub struct DatabaseArgs {
@@ -125,7 +123,6 @@ pub struct UpdateIndividualReport {
     pub sunday_time: i32,
     pub discrepancy: String,
     pub request: String,
-
 }
 
 // commands args for requirements
@@ -133,7 +130,6 @@ pub struct UpdateIndividualReport {
 pub struct RequirementCommand {
     #[clap(subcommand)]
     pub command: RequirementSubcommand,
-
 }
 
 #[derive(Debug, Subcommand)]
@@ -162,7 +158,6 @@ pub struct UpdateRequirement {
 pub struct TeamActivityCommand {
     #[clap(subcommand)]
     pub command: TeamActivitySubcommand,
-
 }
 
 #[derive(Debug, Subcommand)]
@@ -176,18 +171,18 @@ pub enum TeamActivitySubcommand {
 
 #[derive(Debug, Args)]
 pub struct CreateTeamActivity {
-    pub teams           : String,
-    pub email           : String,
-    pub sprint_num      : i32,
+    pub teams: String,
+    pub email: String,
+    pub sprint_num: i32,
 }
 
 #[derive(Debug, Args)]
 pub struct UpdateTeamActivity {
-    pub teams           : String,
-    pub email           : String,
-    pub sprint_num      : i32,
-    pub activity_index  : i32,
-    pub answers         : String,
+    pub teams: String,
+    pub email: String,
+    pub sprint_num: i32,
+    pub activity_index: i32,
+    pub answers: String,
 }
 
 // commands args for Users
@@ -195,7 +190,6 @@ pub struct UpdateTeamActivity {
 pub struct UserCommand {
     #[clap(subcommand)]
     pub command: UserSubcommand,
-
 }
 
 #[derive(Debug, Subcommand)]
@@ -222,9 +216,9 @@ pub struct UpdateUser {
     pub ouath_id: String,
     pub is_teacher: bool,
     pub is_student: bool,
-    pub is_admin:   bool,
-    pub teams:      String,
-    pub class:      String,
+    pub is_admin: bool,
+    pub teams: String,
+    pub class: String,
     pub first_name: String,
-    pub last_name:  String,
+    pub last_name: String,
 }

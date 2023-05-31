@@ -1,4 +1,6 @@
-use crate::cli::args::{CreateTeamActivity, TeamActivityCommand, TeamActivitySubcommand, UpdateTeamActivity};
+use crate::cli::args::{
+    CreateTeamActivity, TeamActivityCommand, TeamActivitySubcommand, UpdateTeamActivity,
+};
 use crate::repository::db::establish_connection;
 use crate::repository::models::{NewTeamActivity, TeamActivity};
 use diesel::prelude::*;
@@ -44,9 +46,10 @@ pub fn update_team_activity(team_activity_cmd: UpdateTeamActivity) {
         answers: team_activity_cmd.answers,
     };
 
-    let updated_row = diesel::update(team_activities.find((team_activity_cmd.teams, team_activity_cmd.email)))
-        .set(&new_team_activity)
-        .execute(connection)
-        .expect("Error updating requirement");
+    let updated_row =
+        diesel::update(team_activities.find((team_activity_cmd.teams, team_activity_cmd.email)))
+            .set(&new_team_activity)
+            .execute(connection)
+            .expect("Error updating requirement");
     println!("Updated {} rows", updated_row);
 }

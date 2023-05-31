@@ -1,12 +1,12 @@
 use chrono::prelude::*;
+use common::models::status_report;
+use diesel::{QueryDsl, RunQueryDsl};
 use std::fmt::Error;
 use std::sync::{Arc, Mutex};
-use diesel::{QueryDsl, RunQueryDsl};
-use common::models::status_report;
 
-use common::models::todo::Todo;
 use crate::repository::db::establish_connection;
 use crate::repository::models;
+use common::models::todo::Todo;
 
 pub struct Database {
     pub sprints: Arc<Mutex<Vec<Todo>>>,
@@ -50,7 +50,7 @@ impl Database {
 
     pub fn update_team_report(team_in: status_report::TeamReport) {
         use crate::repository::schema::team_reports::dsl::*;
-        let team_update = models::TeamReport{
+        let team_update = models::TeamReport {
             teams: team_in.teams.clone(),
             sprint_num: team_in.sprint_num,
             understand_easiest: team_in.understand_easiest,
@@ -69,13 +69,11 @@ impl Database {
         let connection = &mut establish_connection();
 
         // DATABASE TARGET
-        let updated_row =
-            diesel::update(team_reports.find((team_in.teams, team_in.sprint_num)))
-                .set(&team_update)
-                .execute(connection)
-                .expect("Error in db_connector update_team_report");
+        let updated_row = diesel::update(team_reports.find((team_in.teams, team_in.sprint_num)))
+            .set(&team_update)
+            .execute(connection)
+            .expect("Error in db_connector update_team_report");
         println!("Updated {} rows", updated_row);
-
     }
 
     pub fn delete_todo_by_id(&self, id: &str) -> Option<Todo> {

@@ -6,7 +6,7 @@ use actix_web::{
     web::{Data, Json},
     HttpResponse,
 };
-use common::models::todo::Todo;// TODO: remove todo example
+use common::models::todo::Todo; // TODO: remove todo example
 use config::Config;
 use database::repository::db_connector::Database;
 use serde::{Deserialize, Serialize};
@@ -59,10 +59,7 @@ pub async fn update_todo_by_id(
     id: web::Path<String>,
     _updated_todo: web::Json<Todo>,
 ) -> HttpResponse {
-    let todo = data
-        .get_ref()
-        .0
-        .delete_todo_by_id(&id);
+    let todo = data.get_ref().0.delete_todo_by_id(&id);
     match todo {
         Some(todo) => HttpResponse::Ok().json(todo),
         None => HttpResponse::NotFound().body("Todo not found"),
@@ -125,12 +122,12 @@ pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/api")
             .configure(token::config)
-            .service(send_email)// TODO: remove after dev or require to be admin
-            .service(send_email_to)// TODO: remove after dev or require to be admin
-            .service(create_todo)// TODO: remove todo example
-            .service(get_todos)// TODO: remove todo example
-            .service(get_todo_by_id)// TODO: remove todo example
-            .service(update_todo_by_id)// TODO: remove todo example
-            .service(delete_todo_by_id),// TODO: remove todo example
+            .service(send_email) // TODO: remove after dev or require to be admin
+            .service(send_email_to) // TODO: remove after dev or require to be admin
+            .service(create_todo) // TODO: remove todo example
+            .service(get_todos) // TODO: remove todo example
+            .service(get_todo_by_id) // TODO: remove todo example
+            .service(update_todo_by_id) // TODO: remove todo example
+            .service(delete_todo_by_id), // TODO: remove todo example
     );
 }

@@ -1,4 +1,4 @@
-use crate::cli::args::{CreateUser, UserCommand, UserSubcommand, UpdateUser};
+use crate::cli::args::{CreateUser, UpdateUser, UserCommand, UserSubcommand};
 use crate::repository::db::establish_connection;
 use crate::repository::models::{NewUser, User};
 use diesel::prelude::*;
