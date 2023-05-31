@@ -1,4 +1,4 @@
-use gloo::console::log;
+use gloo_utils::window;
 use web_sys::{HtmlInputElement, HtmlTextAreaElement};
 use yew::prelude::*;
 use yewdux::prelude::*;
@@ -15,6 +15,8 @@ use crate::stores::team_store::{validate, TeamStore};
 
 #[function_component(TeamReport)]
 pub fn team_report() -> Html {
+    let document = window();
+
     // Local session store.
     let (store, dispatch) = use_store::<TeamStore>();
 
@@ -184,8 +186,9 @@ pub fn team_report() -> Html {
     // Callback for submitting the form. Triggers client-side validation.
     let onsubmit = dispatch.reduce_mut_callback_with(move |store, event: MouseEvent| {
         event.prevent_default();
-        log!(validate_submit(store));
-        // TODO: submit to server
+        if validate_submit(store) {
+            document.location().set_href("team-report/submit").ok();
+        }
     });
 
     html! {

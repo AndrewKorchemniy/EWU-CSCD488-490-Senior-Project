@@ -1,26 +1,12 @@
-use chrono::NaiveDate;
+use common::models::types::*;
 use reqwasm::http::Request;
 use reqwasm::Error;
-use serde::{Deserialize, Serialize};
 use serde_json::json;
-
-// TODO: use an environment variable instead of a file for the base API URI
-const BASE_API_URI: &str = include_str!("base_api_uri.txt");
-
-// TODO: move types to common
-#[derive(Deserialize)]
-pub struct OAuthClientConfigResponse {
-    pub client_id: String,
-    pub auth_url: String,
-    pub token_url: String,
-}
 
 /// Gets the server's OAuth configuration.
 /// See APIDOC for more information.
 pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
-    let response = Request::get(&format!("{BASE_API_URI}/oauth/config",))
-        .send()
-        .await;
+    let response = Request::get("/api/oauth/config").send().await;
 
     if response.is_ok() {
         let response = response.unwrap();
@@ -39,23 +25,10 @@ pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct SprintResponse {
-    pub id: u8,
-    pub due_date: NaiveDate,
-    pub is_individual_report_submitted: bool,
-    pub is_team_report_submitted: bool,
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct SprintsResponse {
-    pub sprints: Vec<SprintResponse>,
-}
-
 /// Gets a list of all sprints in the database for a student.
 /// See APIDOC for more information.
 pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
-    let response = Request::get(&format!("{BASE_API_URI}/api/sprints",))
+    let response = Request::get("/api/sprints")
         .header("Authorization", token)
         .send()
         .await;
@@ -73,8 +46,38 @@ pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
 }
 
 #[allow(dead_code)]
-pub async fn api_post_team_report() {
-    todo!()
+/// Posts a team report to the database for a team.
+pub async fn api_post_team_report(token: &str, body: TeamResponse) -> Result<String, Error> {
+    let body = json!({
+        "understand_easy": body.understand_easy,
+        "understand_hard": body.understand_hard,
+        "approach_easy": body.approach_easy,
+        "approach_hard": body.approach_hard,
+        "solve_easy": body.solve_easy,
+        "solve_hard": body.solve_hard,
+        "evaluate_easy": body.evaluate_easy,
+        "evaluate_hard": body.evaluate_hard,
+        "completion_percent": body.completion_percent,
+        "pace_succeed": body.pace_succeed,
+        "issues_comments": body.issues_comments,
+    });
+
+    let response = Request::post("/api/submit/team")
+        .header("Authorization", token)
+        .body(body.to_string())
+        .send()
+        .await;
+
+    match response {
+        Ok(response) => {
+            let response = response.text().await;
+            match response {
+                Ok(response) => Ok(response),
+                Err(err) => Err(err),
+            }
+        }
+        Err(err) => Err(err),
+    }
 }
 
 #[allow(dead_code)]
@@ -87,22 +90,10 @@ pub async fn api_post_individual_report() {
     todo!()
 }
 
-#[derive(Deserialize, Serialize)]
-pub struct RequirementResponse {
-    pub id: i32,
-    pub title: String,
-    pub description: String,
-}
-
-#[derive(Deserialize, Serialize)]
-pub struct RequirementsResponse {
-    pub requirements: Vec<RequirementResponse>,
-}
-
 /// Gets the project requirements of a team from the database.
 /// See APIDOC for more information.
 pub async fn api_get_requirements(token: &str) -> Result<RequirementsResponse, Error> {
-    let _response = Request::get(&format!("{BASE_API_URI}/api/requirements",))
+    let _response = Request::get("/api/requirements")
         .header("Authorization", token)
         .send()
         .await;
@@ -145,7 +136,7 @@ pub async fn api_post_new_requirement(title: String, description: String, token:
         "title": title,
         "description": description,
     });
-    let _response = Request::post(&format!("{BASE_API_URI}/api/submit/new_requirement",))
+    let _response = Request::post("/api/submit/new_requirement")
         .header("Authorization", token)
         .body(body.to_string())
         .send()
@@ -163,7 +154,7 @@ pub async fn api_post_delete_requirement(
     let body = json!({
         "id": id,
     });
-    let response = Request::post(&format!("{BASE_API_URI}/api/submit/delete_requirement",))
+    let response = Request::post("/api/submit/delete_requirement")
         .header("Authorization", token)
         .body(body.to_string())
         .send()

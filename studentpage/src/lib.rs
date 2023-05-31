@@ -17,11 +17,13 @@ use pages::home::Home;
 use pages::individual_report::IndividualReport;
 use pages::page_not_found::PageNotFound;
 use pages::requirements::Requirements;
+use pages::submit_team_report::SubmitTeamReport;
 use pages::team_report::TeamReport;
 
 mod api;
 mod stores;
-use api::{api_get_auth_config, OAuthClientConfigResponse};
+use api::api_get_auth_config;
+use common::models::types::OAuthClientConfigResponse;
 
 #[derive(Clone, Copy, Routable, PartialEq)]
 pub enum Route {
@@ -33,6 +35,8 @@ pub enum Route {
     IndividualReport,
     #[at("/studentpage/team-report")]
     TeamReport,
+    #[at("/studentpage/team-report/submit")]
+    SubmitTeamReport,
     #[not_found]
     #[at("/studentpage/404")]
     NotFound,
@@ -138,6 +142,7 @@ fn switch(routes: Route) -> Html {
         Route::Home => html! { <Home /> },
         Route::IndividualReport => html! { <IndividualReport /> },
         Route::TeamReport => html! { <TeamReport /> },
+        Route::SubmitTeamReport => html! { <SubmitTeamReport /> },
         Route::Requirements => html! { <Requirements /> },
         Route::NotFound => html! { <PageNotFound /> },
     }
