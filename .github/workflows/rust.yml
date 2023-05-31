@@ -1,9 +1,7 @@
 name: Rust
 # Mostly from: https://kerkour.com/rust-github-actions-ci-cd
 # Also from: https://github.com/letsgetrusty/example_lib/blob/master/.github/workflows/rust.yml
-on:
-  push:
-    branches: [ main ]
+on: push
 
 env:
   CARGO_TERM_COLOR: always
