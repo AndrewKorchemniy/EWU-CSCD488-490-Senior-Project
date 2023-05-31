@@ -35,6 +35,8 @@ pub struct Response {
     message: String,
 }
 
+// TODO: setup login
+
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("oauth")

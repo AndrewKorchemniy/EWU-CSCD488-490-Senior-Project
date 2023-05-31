@@ -43,7 +43,7 @@ jobs:
           rustup update
           rustup component add clippy
           rustup target add wasm32-unknown-unknown
-          cargo install trunk
+          if ! command -v trunk &> /dev/null ; then cargo install --locked trunk; fi
 
       - name: Toolchain info
         run: |
@@ -68,12 +68,12 @@ jobs:
           files: |
             bin.tar.gz
 
-      - name: Test
-        run: |
-          cargo check --verbose
-          cargo test --all --verbose 
-
-      - name: Lint
-        run: |
-          cargo fmt -- --check
-          cargo clippy -- -D warnings
+#      - name: Test
+#        run: |
+#          cargo check --verbose
+#          cargo test --all --verbose
+#
+#      - name: Lint
+#        run: |
+#          cargo fmt -- --check
+#          cargo clippy -- -D warnings

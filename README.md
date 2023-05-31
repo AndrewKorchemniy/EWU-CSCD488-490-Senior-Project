@@ -2,7 +2,7 @@
 
 > This project is similar to the reporting system used in CSCD 350 and 488/490 to define and track project requirements, as well as individual and team performance. The old system still works fine, but it is out of date in many respects. We’d like a new standalone version (not integrated with anything else).
 
-> Still in progress
+> Still in progress (**NOT READY FOR TO BE USED**)
 
 Sponsor: Dan Tappan dtappan@ewu.edu
 

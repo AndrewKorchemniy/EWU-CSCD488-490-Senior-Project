@@ -153,6 +153,7 @@ async fn main() -> std::io::Result<()> {
                         Ok(ServiceResponse::new(req, res))
                     })),
             )
+            // TODO: redirect root to student page
             .default_service(Files::new("/", "./res/").default_handler(web::route().to(not_found)))
             .wrap(actix_web::middleware::Logger::default())
     });
