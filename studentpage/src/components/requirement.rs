@@ -38,9 +38,11 @@ pub fn reuirement(props: &Props) -> Html {
         wasm_bindgen_futures::spawn_local(async move {
             let creds = cloned_credentials.unwrap();
             let token = creds.access_token().unwrap_or_default();
-            _ = api_post_delete_requirement(id, token).await;
+            let result = api_post_delete_requirement(id, token).await;
             // TODO: Use result to display an error.
-            cloned_called_delete_state.set(true);
+            if result.is_err() || result.is_ok() {
+                cloned_called_delete_state.set(true);
+            }
         });
     });
 
