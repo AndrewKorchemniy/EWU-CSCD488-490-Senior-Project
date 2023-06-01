@@ -2,15 +2,16 @@ use crate::api::token;
 use crate::email::test::send_test_email;
 use actix_web::web;
 use actix_web::{
-    delete, get, post, put,
+    get, post,
     web::{Data, Json},
     HttpResponse,
 };
-use config::Config;
-use log::debug;
-use database::repository::db_connector::Database;
-use serde::{Deserialize, Serialize};
+use common::models::status_report;
 use common::models::types::TeamResponse;
+use config::Config;
+use database::repository::db_connector::Database;
+use log::debug;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct EmailInfo {
@@ -20,21 +21,53 @@ pub struct EmailInfo {
 
 //https://actix.rs/docs/databases/
 
-
 #[get("/sprints")]
-pub async fn get_sprints(
-    data: Data<(Database, Config, Config)>,
-) -> HttpResponse {
-   HttpResponse::NotImplemented().body("Not Ready")
+pub async fn get_sprints(_data: Data<(Database, Config, Config)>) -> HttpResponse {
+    HttpResponse::NotImplemented().body("Not Ready")
 }
 
-#[get("/submit/team")]
+#[post("/submit/team")]
 pub async fn post_team(
     data: Data<(Database, Config, Config)>,
-    body: web::Json<TeamResponse>
+    body: web::Json<TeamResponse>,
 ) -> HttpResponse {
-    debug!("body.client_meeting: {}", body.client_meeting);
-    HttpResponse::NotImplemented().body("Not Ready")
+    let completion_value;
+    if body.completion_percent.is_empty() {
+        debug!("Bad Request: completion_percent is empty");
+        completion_value = 0;
+    } else {
+        completion_value = match body.completion_percent.parse() {
+            Ok(value) => value,
+            Err(error_message) => {
+                debug!(
+                    "Bad Request: completion_percent is unable to be parse ({}) ({})",
+                    body.completion_percent,
+                    error_message
+                );
+                return HttpResponse::BadRequest().body("completion_percent is unable to be parse");
+            }
+        }
+    }
+    let update_value = status_report::TeamReport {
+        teams: "unknownTeam".to_string(), // TODO: fix
+        sprint_num: 1,
+        understand_easiest: body.understand_easy.clone(),
+        understand_hardest: body.understand_hard.clone(),
+        approach_easiest: body.approach_easy.clone(),
+        approach_hardest: body.approach_hard.clone(),
+        solve_easiest: body.solve_easy.clone(),
+        solve_hardest: body.solve_hard.clone(),
+        evaluate_easiest: body.evaluate_easy.clone(),
+        evaluate_hardest: body.evaluate_hard.clone(),
+        completion: completion_value,
+        // TODO: pace_succeed?
+        contact: "unknownContact".to_string(), // TODO: fix
+        comments: body.issues_comments.clone(),
+    };
+    data.get_ref().0.update_team_report(update_value);
+    HttpResponse::Ok().body("Done")
+    // debug!("body.client_meeting: {}", body.client_meeting);
+    // HttpResponse::NotImplemented().body("Not Ready")
 }
 
 // TODO: remove using for dev

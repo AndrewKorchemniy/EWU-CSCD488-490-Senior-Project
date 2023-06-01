@@ -1,24 +1,23 @@
-use chrono::prelude::*;
+// use chrono::prelude::*;
 use common::models::status_report;
 use diesel::{QueryDsl, RunQueryDsl};
-use std::fmt::Error;
-use std::sync::{Arc, Mutex};
+// use std::fmt::Error;
+// use std::sync::{Arc, Mutex};
 use log::info;
 
 use crate::repository::db::establish_connection;
 use crate::repository::models;
-use common::models::todo::Todo;
+// use common::models::todo::Todo;
 
-pub struct Database {
-}
+pub struct Database {}
 
 impl Database {
     pub fn new() -> Self {
-        Database { }
+        Database {}
     }
     /*all update section*/
 
-    pub fn update_team_report(team_in: status_report::TeamReport) {
+    pub fn update_team_report(&self, team_in: status_report::TeamReport) {
         use crate::repository::schema::team_reports::dsl::*;
         let team_update = models::TeamReport {
             teams: team_in.teams.clone(),

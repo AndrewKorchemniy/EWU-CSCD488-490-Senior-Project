@@ -56,9 +56,7 @@ pub struct TeamResponse {
 impl TeamResponse {
     pub fn validate(&self) -> bool {
         let mut valid = true;
-        let min_size_three = |value: &str| -> bool {
-            value.trim().len() >= 3
-        };
+        let min_size_three = |value: &str| -> bool { value.trim().len() >= 3 };
 
         valid = min_size_three(&self.understand_easy) && valid;
         valid = min_size_three(&self.understand_hard) && valid;
