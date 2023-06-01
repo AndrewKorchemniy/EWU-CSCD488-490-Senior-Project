@@ -3,48 +3,18 @@ use common::models::status_report;
 use diesel::{QueryDsl, RunQueryDsl};
 use std::fmt::Error;
 use std::sync::{Arc, Mutex};
+use log::info;
 
 use crate::repository::db::establish_connection;
 use crate::repository::models;
 use common::models::todo::Todo;
 
 pub struct Database {
-    pub sprints: Arc<Mutex<Vec<Todo>>>,
 }
 
 impl Database {
     pub fn new() -> Self {
-        let todos = Arc::new(Mutex::new(vec![]));
-        Database { sprints: todos }
-    }
-
-    /*all create section*/
-    pub fn create_todo(&self, todo: Todo) -> Result<Todo, Error> {
-        let mut todos = self.sprints.lock().unwrap();
-        let id = uuid::Uuid::new_v4().to_string();
-        let created_at = Utc::now();
-        let updated_at = Utc::now();
-        let todo = Todo {
-            id: Some(id),
-            created_at: Some(created_at),
-            updated_at: Some(updated_at),
-            ..todo
-        };
-        todos.push(todo.clone());
-        Ok(todo)
-    }
-
-    pub fn get_todos(&self) -> Vec<Todo> {
-        let todos = self.sprints.lock().unwrap();
-        todos.clone()
-    }
-
-    pub fn get_todo_by_id(&self, id: &str) -> Option<Todo> {
-        let todos = self.sprints.lock().unwrap();
-        todos
-            .iter()
-            .find(|todo| todo.id == Some(id.to_string()))
-            .cloned()
+        Database { }
     }
     /*all update section*/
 
@@ -73,15 +43,7 @@ impl Database {
             .set(&team_update)
             .execute(connection)
             .expect("Error in db_connector update_team_report");
-        println!("Updated {} rows", updated_row);
-    }
-
-    pub fn delete_todo_by_id(&self, id: &str) -> Option<Todo> {
-        let mut todos = self.sprints.lock().unwrap();
-        let index = todos
-            .iter()
-            .position(|todo| todo.id == Some(id.to_string()))?;
-        Some(todos.remove(index))
+        info!("Updated {} rows", updated_row);
     }
 }
 

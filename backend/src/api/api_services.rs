@@ -6,10 +6,11 @@ use actix_web::{
     web::{Data, Json},
     HttpResponse,
 };
-use common::models::todo::Todo; // TODO: remove todo example
 use config::Config;
+use log::debug;
 use database::repository::db_connector::Database;
 use serde::{Deserialize, Serialize};
+use common::models::types::TeamResponse;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct EmailInfo {
@@ -19,64 +20,21 @@ pub struct EmailInfo {
 
 //https://actix.rs/docs/databases/
 
-// TODO: remove todo example
-#[post("/todos")]
-pub async fn create_todo(
+
+#[get("/sprints")]
+pub async fn get_sprints(
     data: Data<(Database, Config, Config)>,
-    new_todo: Json<Todo>,
 ) -> HttpResponse {
-    let todo = data.get_ref().0.create_todo(new_todo.into_inner());
-    match todo {
-        Ok(todo) => HttpResponse::Ok().json(todo),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
-    }
+   HttpResponse::NotImplemented().body("Not Ready")
 }
 
-// TODO: remove todo example
-#[get("/todos")]
-pub async fn get_todos(data: Data<(Database, Config, Config)>) -> HttpResponse {
-    let todos = data.get_ref().0.get_todos();
-    HttpResponse::Ok().json(todos)
-}
-
-// TODO: remove todo example
-#[get("/todos/{id}")]
-pub async fn get_todo_by_id(
+#[get("/submit/team")]
+pub async fn post_team(
     data: Data<(Database, Config, Config)>,
-    id: web::Path<String>,
+    body: web::Json<TeamResponse>
 ) -> HttpResponse {
-    let todo = data.get_ref().0.get_todo_by_id(&id);
-    match todo {
-        Some(todo) => HttpResponse::Ok().json(todo),
-        None => HttpResponse::NotFound().body("Todo not found"),
-    }
-}
-
-// TODO: remove todo example
-#[put("/todos/{id}")]
-pub async fn update_todo_by_id(
-    data: Data<(Database, Config, Config)>,
-    id: web::Path<String>,
-    _updated_todo: web::Json<Todo>,
-) -> HttpResponse {
-    let todo = data.get_ref().0.delete_todo_by_id(&id);
-    match todo {
-        Some(todo) => HttpResponse::Ok().json(todo),
-        None => HttpResponse::NotFound().body("Todo not found"),
-    }
-}
-
-// TODO: remove todo example
-#[delete("/todos/{id}")]
-pub async fn delete_todo_by_id(
-    data: Data<(Database, Config, Config)>,
-    id: web::Path<String>,
-) -> HttpResponse {
-    let todo = data.get_ref().0.delete_todo_by_id(&id);
-    match todo {
-        Some(todo) => HttpResponse::Ok().json(todo),
-        None => HttpResponse::NotFound().body("Todo not found"),
-    }
+    debug!("body.client_meeting: {}", body.client_meeting);
+    HttpResponse::NotImplemented().body("Not Ready")
 }
 
 // TODO: remove using for dev
@@ -124,10 +82,7 @@ pub fn config(cfg: &mut web::ServiceConfig) {
             .configure(token::config)
             .service(send_email) // TODO: remove after dev or require to be admin
             .service(send_email_to) // TODO: remove after dev or require to be admin
-            .service(create_todo) // TODO: remove todo example
-            .service(get_todos) // TODO: remove todo example
-            .service(get_todo_by_id) // TODO: remove todo example
-            .service(update_todo_by_id) // TODO: remove todo example
-            .service(delete_todo_by_id), // TODO: remove todo example
+            .service(get_sprints)
+            .service(post_team),
     );
 }
