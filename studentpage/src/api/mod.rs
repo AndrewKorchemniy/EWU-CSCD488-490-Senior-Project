@@ -50,6 +50,7 @@ pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
 pub async fn api_post_team_report(token: &str, body: TeamResponse) -> Result<String, Error> {
     let response = Request::post("/api/submit/team")
         .header("Authorization", token)
+        .header("content-type", "application/json")
         .body(serde_json::to_string(&body).unwrap())
         .send()
         .await;
@@ -124,6 +125,7 @@ pub async fn api_post_new_requirement(title: String, description: String, token:
     });
     let _response = Request::post("/api/submit/new_requirement")
         .header("Authorization", token)
+        .header("content-type", "application/json")
         .body(body.to_string())
         .send()
         .await;
@@ -142,6 +144,7 @@ pub async fn api_post_delete_requirement(
     });
     let response = Request::post("/api/submit/delete_requirement")
         .header("Authorization", token)
+        .header("content-type", "application/json")
         .body(body.to_string())
         .send()
         .await;
