@@ -29,7 +29,7 @@ pub async fn api_get_auth_config() -> OAuthClientConfigResponse {
 /// See APIDOC for more information.
 pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
     let response = Request::get("/api/sprints")
-        .header("Authorization", token)
+        .header("Authorization", &format!("Bearer {}", token))
         .send()
         .await;
 
@@ -48,7 +48,7 @@ pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
 /// Posts a team report to the database for a team.
 pub async fn api_post_team_report(token: &str, body: TeamResponse) -> Result<String, Error> {
     let response = Request::post("/api/submit/team")
-        .header("Authorization", token)
+        .header("Authorization", &format!("Bearer {}", token))
         .header("content-type", "application/json")
         .body(serde_json::to_string(&body).unwrap())
         .send()
@@ -80,7 +80,7 @@ pub async fn api_post_individual_report() {
 /// See APIDOC for more information.
 pub async fn api_get_requirements(token: &str) -> Result<RequirementsResponse, Error> {
     let _response = Request::get("/api/requirements")
-        .header("Authorization", token)
+        .header("Authorization", &format!("Bearer {}", token))
         .send()
         .await;
 
@@ -123,7 +123,7 @@ pub async fn api_post_new_requirement(title: String, description: String, token:
         "description": description,
     });
     let _response = Request::post("/api/submit/new_requirement")
-        .header("Authorization", token)
+        .header("Authorization", &format!("Bearer {}", token))
         .header("content-type", "application/json")
         .body(body.to_string())
         .send()
