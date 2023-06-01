@@ -1,14 +1,14 @@
+use gloo_utils::window;
 use reqwasm::Error;
-use web_sys::HtmlButtonElement;
 use yew::prelude::*;
 use yew_oauth2::prelude::OAuth2Context;
 use yew_router::prelude::*;
 
-use crate::api::{api_get_requirements, api_post_delete_requirement};
+use crate::api::api_get_requirements;
 use crate::components::button::{Button, ButtonVariant};
 use crate::components::card::Card;
-use crate::components::modal::Modal;
 use crate::components::msgbox::{MsgBox, MsgBoxVariant};
+use crate::components::requirement::Requirement;
 use crate::components::spinner::SpinnerInset;
 use crate::Route;
 
@@ -28,8 +28,12 @@ pub fn requirements() -> Html {
         },
     );
 
+    // The state for if the call was sent.
+    let called_requirements_state = use_state(|| false);
+
     // Fetch the requirements if they haven't been fetched yet.
-    if requirements_state.is_none() {
+    if !*called_requirements_state {
+        called_requirements_state.set(true);
         let cloned_credentials: Option<OAuth2Context> = credentials.clone();
         let cloned_requirements_state_changes = requirements_state_changes.clone();
         wasm_bindgen_futures::spawn_local(async move {
@@ -40,19 +44,15 @@ pub fn requirements() -> Html {
         });
     }
 
-    // The callback to delete a requirement.
-    let delete_requirement = Callback::from(move |event: MouseEvent| {
-        let cloned_requirements_state_changes = requirements_state_changes.clone();
-        let cloned_credentials = credentials.clone();
-        let target: HtmlButtonElement = event.target_unchecked_into();
-        let requirement_id = target.id().parse::<i32>().unwrap_or_default();
-        wasm_bindgen_futures::spawn_local(async move {
-            let creds = cloned_credentials.unwrap();
-            let token = creds.access_token().unwrap_or_default();
-            let result = api_post_delete_requirement(requirement_id, token).await;
-            cloned_requirements_state_changes.emit(result);
-        });
-    });
+    // The state for if a delete call was sent.
+    let called_delete_state = use_state(|| false);
+    let cloned_called_delete_state = called_delete_state.clone();
+
+    // Reload the page if delete was called.
+    if *called_delete_state {
+        let document = window();
+        _ = document.location().reload();
+    }
 
     html! {
         if requirements_state.is_some() {
@@ -60,27 +60,11 @@ pub fn requirements() -> Html {
                 <Card>
                     { for requirements_state.as_ref().unwrap().as_ref().unwrap().requirements.iter().map(|requirement| {
                         html! {
-                            <MsgBox
-                                class="mt-3 col-12 col-xl-6"
-                                variant={ MsgBoxVariant::Secondary }
-                                title={ format!("{}: {}",
-                                    requirement.id,
-                                    requirement.title.clone()) }
-                                text={ requirement.description.clone() }>
-                                <Button
-                                    variant={ ButtonVariant::Danger }
-                                    label="Delete"
-                                    class="col-auto"
-                                    data_bs_toggle="modal"
-                                    data_bs_target={ format!("#r{}", requirement.id) } />
-                                <Modal
-                                    id={ format!("r{}", requirement.id) }
-                                    title="Are you sure?"
-                                    body="This action is irriversible."
-                                    onclick={ &delete_requirement }
-                                    action_id={ requirement.id.to_string() }
-                                    action_label="Delete" />
-                            </MsgBox>
+                            <Requirement 
+                                id={ requirement.id }
+                                title={ requirement.title.clone() }
+                                description={ requirement.description.clone() }
+                                deleted={ cloned_called_delete_state.clone() } />
                         }
                     })}
                     <Link<Route> to={ Route::Home }>

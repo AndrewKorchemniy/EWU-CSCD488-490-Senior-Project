@@ -24,8 +24,12 @@ pub fn home() -> Html {
             _sprints_state.set(Some(sprints));
         });
 
+    // The state for if the call was sent.
+    let called_sprints_state = use_state(|| false);
+    
     // Fetch the sprints if they haven't been fetched yet.
-    if sprints_state.is_none() {
+    if !*called_sprints_state {
+        called_sprints_state.set(true);
         wasm_bindgen_futures::spawn_local(async move {
             let creds = credentials.unwrap();
             let token = creds.access_token().unwrap_or_default();

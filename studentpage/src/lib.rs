@@ -111,8 +111,12 @@ pub fn app() -> Html {
         _config_state.set(Some(config));
     });
 
+    // The state for if the call was sent.
+    let called_config_state = use_state(|| false);
+
     // Fetch the oauth config if it hasn't been fetched yet.
-    if config_state.is_none() {
+    if !*called_config_state {
+        called_config_state.set(true);
         wasm_bindgen_futures::spawn_local(async move {
             let result = api_get_auth_config().await;
             config_state_changes.emit(result);

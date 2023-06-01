@@ -45,7 +45,6 @@ pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
     }
 }
 
-#[allow(dead_code)]
 /// Posts a team report to the database for a team.
 pub async fn api_post_team_report(token: &str, body: TeamResponse) -> Result<String, Error> {
     let response = Request::post("/api/submit/team")
@@ -131,12 +130,8 @@ pub async fn api_post_new_requirement(title: String, description: String, token:
 }
 
 /// Request a requirement to be deleted from the database.
-/// Returns the new list of requirements.
 /// See APIDOC for more information.
-pub async fn api_post_delete_requirement(
-    id: i32,
-    token: &str,
-) -> Result<RequirementsResponse, Error> {
+pub async fn api_post_delete_requirement(id: i32, token: &str) -> Result<String, Error> {
     let body = json!({
         "id": id,
     });
@@ -148,7 +143,7 @@ pub async fn api_post_delete_requirement(
 
     match response {
         Ok(response) => {
-            let response = response.json::<RequirementsResponse>().await;
+            let response = response.text().await;
             match response {
                 Ok(response) => Ok(response),
                 Err(err) => Err(err),

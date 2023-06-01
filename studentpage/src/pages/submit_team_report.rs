@@ -80,7 +80,11 @@ pub fn submit_team_report() -> Html {
         _submit_state.set(Some(response));
     });
 
-    if submit_state.is_none() {
+    // The state for if the call was sent.
+    let called_submit_state = use_state(|| false);
+
+    if !*called_submit_state {
+        called_submit_state.set(true);
         wasm_bindgen_futures::spawn_local(async move {
             let creds = credentials.unwrap();
             let token = creds.access_token().unwrap_or_default();

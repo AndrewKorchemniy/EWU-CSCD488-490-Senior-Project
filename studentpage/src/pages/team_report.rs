@@ -187,6 +187,8 @@ pub fn team_report() -> Html {
     let onsubmit = dispatch.reduce_mut_callback_with(move |store, event: MouseEvent| {
         event.prevent_default();
         if validate_submit(store) {
+            // TODO: There's probably a better way to redirect.
+            // Preferably something with yew-router.
             document.location().set_href("team-report/submit").ok();
         }
     });
