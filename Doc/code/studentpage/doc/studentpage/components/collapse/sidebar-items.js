@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["CollapseValidation"],"fn":["collapse"],"struct":["Collapse","Props"]};

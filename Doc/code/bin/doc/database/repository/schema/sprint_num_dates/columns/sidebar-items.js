@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["FROM_CLAUSE"],"struct":["sprint_date","sprint_num","star"]};

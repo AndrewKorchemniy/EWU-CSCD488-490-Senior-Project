@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["spinner","spinner_inset"],"struct":["Spinner","SpinnerInset"]};

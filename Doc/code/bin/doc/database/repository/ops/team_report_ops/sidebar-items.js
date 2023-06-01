@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_team_report","handle_team_report_command","update_team_report"]};

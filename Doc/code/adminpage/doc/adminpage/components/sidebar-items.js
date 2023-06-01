@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["button","download","footer","modal","msgbox","navbar","spinner"]};

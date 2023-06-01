@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["acitvity_accounting"],"struct":["ActivityAccounting"]};

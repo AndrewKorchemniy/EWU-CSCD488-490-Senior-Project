@@ -76,8 +76,8 @@ async fn main() -> std::io::Result<()> {
     // Logger
     if std::env::var_os("RUST_LOG").is_none() {
         //std::env::set_var("RUST_LOG", "actix_web=info");
-        std::env::set_var("RUST_LOG", "info");
-        // std::env::set_var("RUST_LOG", "debug");
+        // std::env::set_var("RUST_LOG", "info");
+        std::env::set_var("RUST_LOG", "debug");
     }
     env_logger::init();
 

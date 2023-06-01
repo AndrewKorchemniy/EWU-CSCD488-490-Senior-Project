@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["ROUTER","STYLESHEET"],"enum":["Route"],"fn":["__getit","__init","app","app_main","switch"],"mod":["api","components","pages","stores"],"static":["__KEY"],"struct":["App","AppMain"]};

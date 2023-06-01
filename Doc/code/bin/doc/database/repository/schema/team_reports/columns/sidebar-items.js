@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["FROM_CLAUSE"],"struct":["approach_easiest","approach_hardest","comments","completion","contact","evaluate_easiest","evaluate_hardest","solve_easiest","solve_hardest","sprint_num","star","teams","understand_easiest","understand_hardest"]};

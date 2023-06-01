@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["config","give_auth_url","give_client_id","give_config","give_token_url","login","make_client","token"],"struct":["OAuthClientConfig","Response","TokenBody","give_auth_url","give_client_id","give_config","give_token_url","login","token"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["individual_report_ops","requirements_ops","sprint_ops","team_activities_ops","team_report_ops","user_ops"]};

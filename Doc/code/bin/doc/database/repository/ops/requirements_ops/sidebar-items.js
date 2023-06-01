@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_requirement","handle_requirement_command","update_requirement"]};
