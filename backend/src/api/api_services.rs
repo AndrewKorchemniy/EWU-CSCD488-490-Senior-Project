@@ -1,5 +1,5 @@
 use crate::api::token;
-use crate::email::test::send_test_email;
+use crate::email;
 use actix_web::web;
 use actix_web::{
     get, post,
@@ -49,7 +49,7 @@ pub async fn post_team(
         }
     }
     let update_value = status_report::TeamReport {
-        teams: "unknownTeam".to_string(), // TODO: fix
+        teams: "eagles".to_string(), // TODO: fix
         sprint_num: 1,
         understand_easiest: body.understand_easy.clone(),
         understand_hardest: body.understand_hard.clone(),
@@ -61,11 +61,21 @@ pub async fn post_team(
         evaluate_hardest: body.evaluate_hard.clone(),
         completion: completion_value,
         // TODO: pace_succeed?
-        contact: "unknownContact".to_string(), // TODO: fix
+        contact: "student@ewu.edu".to_string(), // TODO: fix
         comments: body.issues_comments.clone(),
     };
-    data.get_ref().0.update_team_report(update_value);
-    HttpResponse::Ok().body("Done")
+    data.get_ref().0.update_team_report(update_value.clone());
+    // TODO: add email confirmation
+    let email_out = email::team::send_confirmation_email(
+        "Not Stu <nelof50340@soremap.com>".to_string(),
+        update_value,
+        &data.get_ref().2,
+        &data.get_ref().1,
+    );
+    match email_out {
+        Ok(message) => HttpResponse::Ok().body(format!("Done (Confirmation {})", message)),
+        Err(message) => HttpResponse::InternalServerError().body(format!("Done (Error {})", message)),
+    }
     // debug!("body.client_meeting: {}", body.client_meeting);
     // HttpResponse::NotImplemented().body("Not Ready")
 }
@@ -74,7 +84,7 @@ pub async fn post_team(
 #[get("/send_test_email")]
 pub async fn send_email(data: Data<(Database, Config, Config)>) -> HttpResponse {
     // TODO: remove after dev or require to be admin
-    let email_out = send_test_email(
+    let email_out = email::test::send_test_email(
         format!(
             "admin <{}>",
             data.get_ref()
@@ -98,7 +108,7 @@ pub async fn send_email_to(
     email_info: Json<EmailInfo>,
 ) -> HttpResponse {
     // TODO: remove after dev or require to be admin
-    let email_out = send_test_email(
+    let email_out = email::test::send_test_email(
         format!("{} <{}>", email_info.name, email_info.email),
         &data.get_ref().2,
         &data.get_ref().1,

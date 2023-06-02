@@ -205,9 +205,9 @@ pub enum UserSubcommand {
 pub struct CreateUser {
     pub email: String,
     pub ouath_id: String,
-    pub is_admin: bool,
     pub first_name: String,
     pub last_name: String,
+    pub teams: String,
 }
 
 #[derive(Debug, Args)]

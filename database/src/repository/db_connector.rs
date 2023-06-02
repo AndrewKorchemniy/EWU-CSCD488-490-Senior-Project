@@ -7,7 +7,6 @@ use log::info;
 
 use crate::repository::db::establish_connection;
 use crate::repository::models;
-// use common::models::todo::Todo;
 
 pub struct Database {}
 
@@ -48,7 +47,7 @@ impl Database {
 
     /// Updates the users table with the given User struct.
     pub fn update_users(&self, user_in: status_report::User) {
-        use crate::repository::schema::team_reports::dsl::*;
+        use crate::repository::schema::users::dsl::*;
         let user_update = models::User {
             email: user_in.email.clone(),
             ouath_id: user_in.ouath_id,
@@ -56,7 +55,6 @@ impl Database {
             is_student: user_in.is_student,
             is_admin: user_in.is_admin,
             teams: user_in.teams,
-
             class: user_in.class,
             first_name: user_in.first_name,
             last_name: user_in.last_name,
@@ -65,7 +63,7 @@ impl Database {
         let connection = &mut establish_connection();
 
         // DATABASE TARGET
-        let updated_row = diesel::update(user.find(user_in.email))
+        let updated_row = diesel::update(users.find(user_in.email))
             .set(&user_update)
             .execute(connection)
             .expect("Error in db_connector update_user");
@@ -75,7 +73,7 @@ impl Database {
 
     /// Updates the IndividualReport table with the given IndividualReport struct.
     pub fn update_individual_report(&self, individual_in: status_report::IndividualReport) {
-        use crate::repository::schema::team_reports::dsl::*;
+        use crate::repository::schema::individual_reports::dsl::*;
         let individual_update = models::IndividualReport {
             email: individual_in.email.clone(),
             sprint_num: individual_in.sprint_num,

@@ -113,7 +113,7 @@ pub struct User {
 pub struct NewUser<'a> {
     pub email: &'a str,
     pub ouath_id: &'a str,
-    pub is_admin: bool,
     pub first_name: &'a str,
     pub last_name: &'a str,
+    pub teams: &'a str,
 }

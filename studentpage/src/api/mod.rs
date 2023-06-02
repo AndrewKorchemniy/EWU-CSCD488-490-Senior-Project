@@ -46,6 +46,7 @@ pub async fn api_get_sprints(token: &str) -> Result<SprintsResponse, Error> {
 }
 
 /// Posts a team report to the database for a team.
+/// See APIDOC for more information.
 pub async fn api_post_team_report(token: &str, body: TeamResponse) -> Result<String, Error> {
     let response = Request::post("/api/submit/team")
         .header("Authorization", &format!("Bearer {}", token))
@@ -111,7 +112,7 @@ pub async fn api_get_requirements(token: &str) -> Result<RequirementsResponse, E
         requirements: vec![testing, testing2],
     };
 
-    return Ok(testing3);
+    Ok(testing3)
 }
 
 /// Posts a new team project requirement to the database.
