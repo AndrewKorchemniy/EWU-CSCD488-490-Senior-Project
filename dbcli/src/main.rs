@@ -1,6 +1,6 @@
 //#[macro_use]
-extern crate diesel;
-extern crate dotenv;
+// extern crate diesel;
+// extern crate dotenv;
 
 use database::cli::args;
 use database::repository::ops;
@@ -18,6 +18,14 @@ use ops::user_ops::handle_user_command;
 use args::DatabaseArgs;
 use args::EntityType;
 use clap::Parser;
+
+/*
+TODO: add migration to cli so we do not need diesel cli
+https://docs.rs/diesel_migrations/latest/diesel_migrations/macro.embed_migrations.html
+https://crates.io/crates/diesel_migrations
+https://docs.rs/diesel_migrations/latest/diesel_migrations/
+https://docs.rs/crate/diesel_migrations/latest/features
+ */
 
 fn main() {
     let args = DatabaseArgs::parse();
