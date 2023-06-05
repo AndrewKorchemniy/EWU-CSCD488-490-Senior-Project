@@ -162,7 +162,7 @@ pub async fn api_get_requirements(token: &str) -> Result<RequirementsResponse, E
         requirements: vec![testing, testing2],
     };
 
-    return Ok(testing3);
+    Ok(testing3)
 }
 
 /// Posts a new team project requirement to the database.

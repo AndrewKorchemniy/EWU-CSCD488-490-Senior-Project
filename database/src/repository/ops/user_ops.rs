@@ -22,9 +22,9 @@ pub fn create_user(user_cmd: CreateUser) {
     let new_user = NewUser {
         email: &user_cmd.email,
         ouath_id: &user_cmd.ouath_id,
-        is_admin: user_cmd.is_admin,
         first_name: &user_cmd.first_name,
         last_name: &user_cmd.last_name,
+        teams: &user_cmd.teams,
     };
     // DATABASE TARGET
     diesel::insert_into(users)

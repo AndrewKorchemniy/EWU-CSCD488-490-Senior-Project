@@ -18,7 +18,7 @@ echo -e "$Cyan Copy new server... $Color_Off"
 scp target/release/backend ec2-user@aws.tftinker.tech:/home/ec2-user/server
 scp server.config.toml ec2-user@aws.tftinker.tech:/home/ec2-user/server
 scp secret.config.toml ec2-user@aws.tftinker.tech:/home/ec2-user/server
-# TODO: add dbcli
+scp target/release/dbcli ec2-user@aws.tftinker.tech:/home/ec2-user/server
 # pages
 ssh ec2-user@aws.tftinker.tech 'mv /home/ec2-user/server/studentpage /home/ec2-user/server/studentpage-old'
 ssh ec2-user@aws.tftinker.tech 'mkdir -p /home/ec2-user/server/studentpage'
