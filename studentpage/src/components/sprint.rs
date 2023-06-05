@@ -49,8 +49,8 @@ pub struct Props {
 /// Each row within the calendar represents a sprint.
 #[function_component(Sprint)]
 pub fn sprint(props: &Props) -> Html {
-    /// Renders the appropriate icon given the report status.
-    fn get_status(status: &ReportStatus) -> Html {
+    // Renders the appropriate icon given the report status.
+    let get_status = |status: &ReportStatus| -> Html {
         match status {
             ReportStatus::Submitted => html! {
                 <td class="text-center" style="color: limegreen">
@@ -76,7 +76,7 @@ pub fn sprint(props: &Props) -> Html {
                 </td>
             },
         }
-    }
+    };
 
     html! {
         <tr>
