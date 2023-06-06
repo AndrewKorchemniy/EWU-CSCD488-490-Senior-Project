@@ -6,6 +6,7 @@ use crate::repository::db::establish_connection;
 use crate::repository::models::{IndividualReport, NewIndividualReport};
 use diesel::prelude::*;
 
+///command got from main and then sends the next command here to the function called.
 pub fn handle_individual_report_command(individual_report_cmd: IndividualReportCommand) {
     let command = individual_report_cmd.command;
     match command {
@@ -17,7 +18,8 @@ pub fn handle_individual_report_command(individual_report_cmd: IndividualReportC
         }
     }
 }
-
+/// takes in the command, targets the table you want to add to it, establishes a connection to the database,
+/// makes a object with the create struct, and injects the object into the database
 pub fn create_individual_report(individual_report_cmd: CreateIndividualReport) {
     println!(
         "creating the Individual Report: {:?}",
@@ -37,6 +39,8 @@ pub fn create_individual_report(individual_report_cmd: CreateIndividualReport) {
         .expect("Error saving new individualReport");
 }
 
+/// takes in the command, targets the table you want to add rows to, establishes a connection to the database,
+/// makes a object with the update struct, and adds the object to the table.
 pub fn update_individual_report(individual_report_cmd: UpdateIndividualReport) {
     println!("updating the individualReport: {:?}", individual_report_cmd);
     use crate::repository::schema::individual_reports::dsl::*;

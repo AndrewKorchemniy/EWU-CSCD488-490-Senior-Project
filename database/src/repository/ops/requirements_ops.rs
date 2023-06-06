@@ -5,6 +5,7 @@ use crate::repository::db::establish_connection;
 use crate::repository::models::{NewRequirement, Requirement};
 use diesel::prelude::*;
 
+///command got from main and then sends the next command here to the function called.
 pub fn handle_requirement_command(requirement_cmd: RequirementCommand) {
     let command = requirement_cmd.command;
     match command {
@@ -17,6 +18,8 @@ pub fn handle_requirement_command(requirement_cmd: RequirementCommand) {
     }
 }
 
+/// takes in the command, targets the table you want to add to it, establishes a connection to the database,
+/// makes a object with the create struct, and injects the object into the database
 pub fn create_requirement(requirement_cmd: CreateRequirement) {
     println!("creating the requirement: {:?}", requirement_cmd);
     use crate::repository::schema::requirements::dsl::*;
@@ -33,6 +36,8 @@ pub fn create_requirement(requirement_cmd: CreateRequirement) {
         .expect("Error saving new requirement");
 }
 
+/// takes in the command, targets the table you want to add rows to, establishes a connection to the database,
+/// makes a object with the update struct, and adds the object to the table.
 pub fn update_requirement(requirement_cmd: UpdateRequirement) {
     println!("updating the requirement: {:?}", requirement_cmd);
     use crate::repository::schema::requirements::dsl::*;

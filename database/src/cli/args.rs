@@ -7,7 +7,7 @@ pub struct DatabaseArgs {
     #[clap(subcommand)]
     pub entity_type: EntityType,
 }
-
+/// these are the ENUMS for the commands to be created
 #[derive(Debug, Subcommand)]
 pub enum EntityType {
     ///Create, Show
@@ -24,13 +24,14 @@ pub enum EntityType {
     User(UserCommand),
 }
 
-//start Sprint commands
+/// gets the SprintCommand to make a sub command with it
 #[derive(Debug, Args)]
 pub struct SprintCommand {
     #[clap(subcommand)]
     pub command: SprintSubcommand,
 }
 
+///splits up Sprint Command you want
 #[derive(Debug, Subcommand)]
 pub enum SprintSubcommand {
     /// Create a new sprint
@@ -40,6 +41,7 @@ pub enum SprintSubcommand {
     Show,
 }
 
+/// Create Sprint Struct that takes in arguments to Create
 #[derive(Debug, Args)]
 pub struct CreateSprint {
     /// The number of the sprint to create
@@ -49,13 +51,14 @@ pub struct CreateSprint {
     pub sprint_date: NaiveDate,
 }
 
-//start TeamReport commands
+/// gets the RequirementCommand to make a sub command with it
 #[derive(Debug, Args)]
 pub struct TeamReportCommand {
     #[clap(subcommand)]
     pub command: TeamReportSubcommand,
 }
 
+///splits up what Team Report Command you want
 #[derive(Debug, Subcommand)]
 pub enum TeamReportSubcommand {
     /// Create a new TeamReports
@@ -65,12 +68,14 @@ pub enum TeamReportSubcommand {
     Update(UpdateTeamReport),
 }
 
+/// Create Team Report Struct that takes in arguments to Create
 #[derive(Debug, Args)]
 pub struct CreateTeamReport {
     pub teams: String,
     pub sprint_num: i32,
 }
 
+/// Update Team Report Struct that takes in arguments to Update
 #[derive(Debug, Args)]
 pub struct UpdateTeamReport {
     pub teams: String,
@@ -88,13 +93,14 @@ pub struct UpdateTeamReport {
     pub comments: String,
 }
 
-//start IndividualReport commands
+/// gets the RequirementCommand to make a sub command with it
 #[derive(Debug, Args)]
 pub struct IndividualReportCommand {
     #[clap(subcommand)]
     pub command: IndividualReportSubcommand,
 }
 
+///splits up what Individual Report Command you want
 #[derive(Debug, Subcommand)]
 pub enum IndividualReportSubcommand {
     /// Create a new sprint
@@ -104,12 +110,14 @@ pub enum IndividualReportSubcommand {
     Update(UpdateIndividualReport),
 }
 
+/// Create Individual Report Struct that takes in arguments to Create
 #[derive(Debug, Args)]
 pub struct CreateIndividualReport {
     pub email: String,
     pub sprint_num: i32,
 }
 
+/// Update Individual Report Struct that takes in arguments to Update
 #[derive(Debug, Args)]
 pub struct UpdateIndividualReport {
     pub email: String,
@@ -125,13 +133,14 @@ pub struct UpdateIndividualReport {
     pub request: String,
 }
 
-// commands args for requirements
+/// gets the RequirementCommand to make a sub command with it
 #[derive(Debug, Args)]
 pub struct RequirementCommand {
     #[clap(subcommand)]
     pub command: RequirementSubcommand,
 }
 
+///splits up what Requirement Command you want
 #[derive(Debug, Subcommand)]
 pub enum RequirementSubcommand {
     /// Create a new requirement
@@ -141,25 +150,28 @@ pub enum RequirementSubcommand {
     Update(UpdateRequirement),
 }
 
+/// Create Requirement Struct that takes in arguments to Create
 #[derive(Debug, Args)]
 pub struct CreateRequirement {
     pub teams: String,
     pub indexs: i32,
 }
 
+/// Update Requirement Struct that takes in arguments to Update
 #[derive(Debug, Args)]
 pub struct UpdateRequirement {
     pub teams: String,
     pub indexs: i32,
     pub description: String,
 }
-// commands args for team activities
+/// gets the TeamActivityCommand to make a sub command with it
 #[derive(Debug, Args)]
 pub struct TeamActivityCommand {
     #[clap(subcommand)]
     pub command: TeamActivitySubcommand,
 }
 
+///splits up what Team Activity Command you want
 #[derive(Debug, Subcommand)]
 pub enum TeamActivitySubcommand {
     /// Create a new team activity
@@ -168,7 +180,7 @@ pub enum TeamActivitySubcommand {
     /// Update an existing team activity
     Update(UpdateTeamActivity),
 }
-
+/// Create Team Activity Struct that takes in arguments to Create
 #[derive(Debug, Args)]
 pub struct CreateTeamActivity {
     pub teams: String,
@@ -176,6 +188,7 @@ pub struct CreateTeamActivity {
     pub sprint_num: i32,
 }
 
+/// Update Team Activity Struct that takes in arguments to Update
 #[derive(Debug, Args)]
 pub struct UpdateTeamActivity {
     pub teams: String,
@@ -185,13 +198,13 @@ pub struct UpdateTeamActivity {
     pub answers: String,
 }
 
-// commands args for Users
+///gets the UserCommand to make a sub command with it
 #[derive(Debug, Args)]
 pub struct UserCommand {
     #[clap(subcommand)]
     pub command: UserSubcommand,
 }
-
+///splits up what UserCommand you want
 #[derive(Debug, Subcommand)]
 pub enum UserSubcommand {
     /// Create a new team activity
@@ -200,7 +213,7 @@ pub enum UserSubcommand {
     /// Update an existing team activity
     Update(UpdateUser),
 }
-
+/// Create User Struct that takes in arguments to Create
 #[derive(Debug, Args)]
 pub struct CreateUser {
     pub email: String,
@@ -209,7 +222,7 @@ pub struct CreateUser {
     pub last_name: String,
     pub teams: String,
 }
-
+/// Update User Struct that takes in arguments to Update
 #[derive(Debug, Args)]
 pub struct UpdateUser {
     pub email: String,

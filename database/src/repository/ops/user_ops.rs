@@ -3,6 +3,7 @@ use crate::repository::db::establish_connection;
 use crate::repository::models::{NewUser, User};
 use diesel::prelude::*;
 
+///command got from main and then sends the next command here to the function called.
 pub fn handle_user_command(user_cmd: UserCommand) {
     let command = user_cmd.command;
     match command {
@@ -14,6 +15,8 @@ pub fn handle_user_command(user_cmd: UserCommand) {
         }
     }
 }
+/// takes in the command, targets the table you want to add to it, establishes a connection to the database,
+/// makes a object with the create struct, and injects the object into the database
 pub fn create_user(user_cmd: CreateUser) {
     println!("creating thee user: {:?}", user_cmd);
     use crate::repository::schema::users::dsl::*;
@@ -32,6 +35,9 @@ pub fn create_user(user_cmd: CreateUser) {
         .execute(connection)
         .expect("Error saving new user");
 }
+
+/// takes in the command, targets the table you want to add rows to, establishes a connection to the database,
+/// makes a object with the update struct, and adds the object to the table.
 pub fn update_user(user_cmd: UpdateUser) {
     println!("updating the requirement: {:?}", user_cmd);
     use crate::repository::schema::users::dsl::*;

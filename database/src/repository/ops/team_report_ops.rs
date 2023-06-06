@@ -5,6 +5,7 @@ use crate::repository::db::establish_connection;
 use crate::repository::models::{NewTeamReport, TeamReport};
 use diesel::prelude::*;
 
+///command got from main and then sends the next command here to the function called.
 pub fn handle_team_report_command(team_report_cmd: TeamReportCommand) {
     let command = team_report_cmd.command;
     match command {
@@ -17,6 +18,8 @@ pub fn handle_team_report_command(team_report_cmd: TeamReportCommand) {
     }
 }
 
+/// takes in the command, targets the table you want to add to it, establishes a connection to the database,
+/// makes a object with the create struct, and injects the object into the database
 pub fn create_team_report(team_report_cmd: CreateTeamReport) {
     println!("creating the new_team_report: {:?}", team_report_cmd);
     use crate::repository::schema::team_reports::dsl::*;
@@ -33,6 +36,8 @@ pub fn create_team_report(team_report_cmd: CreateTeamReport) {
         .expect("Error saving new team report");
 }
 
+/// takes in the command, targets the table you want to add rows to, establishes a connection to the database,
+/// makes a object with the update struct, and adds the object to the table.
 pub fn update_team_report(team_report_cmd: UpdateTeamReport) {
     println!("updating team report: {:?}", team_report_cmd);
     use crate::repository::schema::team_reports::dsl::*;
