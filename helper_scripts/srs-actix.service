@@ -2,7 +2,7 @@
 Description=Status Repoting System Server in Rust actix
 After=network.target
 #After=mysqld.service # Uncomment when using mysql on same server
-StartLimitIntervalSec=0
+#StartLimitIntervalSec=0
 
 [Service]
 Type=simple
