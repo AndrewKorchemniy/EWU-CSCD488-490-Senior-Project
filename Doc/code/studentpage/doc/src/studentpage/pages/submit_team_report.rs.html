@@ -109,6 +109,10 @@
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
 </pre><pre class="rust"><code><span class="kw">use </span>reqwasm::Error;
 <span class="kw">use </span>yew::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>yew_oauth2::prelude::OAuth2Context;
@@ -191,7 +195,11 @@
         _submit_state.set(<span class="prelude-val">Some</span>(response));
     });
 
-    <span class="kw">if </span>submit_state.is_none() {
+    <span class="comment">// The state for if the call was sent.
+    </span><span class="kw">let </span>called_submit_state = use_state(|| <span class="bool-val">false</span>);
+
+    <span class="kw">if </span>!<span class="kw-2">*</span>called_submit_state {
+        called_submit_state.set(<span class="bool-val">true</span>);
         wasm_bindgen_futures::spawn_local(<span class="kw">async move </span>{
             <span class="kw">let </span>creds = credentials.unwrap();
             <span class="kw">let </span>token = creds.access_token().unwrap_or_default();

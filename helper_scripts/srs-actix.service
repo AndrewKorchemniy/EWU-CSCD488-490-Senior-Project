@@ -1,0 +1,17 @@
+[Unit]
+Description=Status Repoting System Server in Rust actix
+After=network.target
+#After=mysqld.service # Uncomment when using mysql on same server
+#StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+#Restart=always
+#RestartSec=1
+#StartLimitBurst=5
+#StartLimitIntervalSec=10
+User=status-reports
+ExecStart=/usr/bin/sh /home/status-reports/server/run.sh
+
+[Install]
+WantedBy=multi-user.target

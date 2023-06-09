@@ -79,9 +79,9 @@
     <span class="kw">let </span>new_user = NewUser {
         email: <span class="kw-2">&amp;</span>user_cmd.email,
         ouath_id: <span class="kw-2">&amp;</span>user_cmd.ouath_id,
-        is_admin: user_cmd.is_admin,
         first_name: <span class="kw-2">&amp;</span>user_cmd.first_name,
         last_name: <span class="kw-2">&amp;</span>user_cmd.last_name,
+        teams: <span class="kw-2">&amp;</span>user_cmd.teams,
     };
     <span class="comment">// DATABASE TARGET
     </span>diesel::insert_into(users)
