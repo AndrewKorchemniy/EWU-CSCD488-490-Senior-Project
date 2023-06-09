@@ -1,9 +1,13 @@
 # Table of contents
 
+- [directory(repo) structure](repo_layout.md)
+
+Docs
+
 - [API](API): Application Programming Interface (REST API)
   - [APIDOC](API/APIDOC.md)
 - [code](code/README.md): Docs generated from code comments using cargo doc
-- [Database](Database/SQL_Design.md)
+- [Database](Database/README.md)
 - [Frontend](Frontend/README.md)
 - [git](git/README.md)
 - [OldSystem](OldSystem/README.md): Info about the old system
