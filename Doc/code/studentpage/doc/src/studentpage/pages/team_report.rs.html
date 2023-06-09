@@ -293,6 +293,8 @@
 <a href="#293" id="293">293</a>
 <a href="#294" id="294">294</a>
 <a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
 </pre><pre class="rust"><code><span class="kw">use </span>gloo_utils::window;
 <span class="kw">use </span>web_sys::{HtmlInputElement, HtmlTextAreaElement};
 <span class="kw">use </span>yew::prelude::<span class="kw-2">*</span>;
@@ -482,7 +484,9 @@
     </span><span class="kw">let </span>onsubmit = dispatch.reduce_mut_callback_with(<span class="kw">move </span>|store, event: MouseEvent| {
         event.prevent_default();
         <span class="kw">if </span>validate_submit(store) {
-            document.location().set_href(<span class="string">&quot;team-report/submit&quot;</span>).ok();
+            <span class="comment">// TODO: There&#39;s probably a better way to redirect.
+            // Preferably something with yew-router.
+            </span>document.location().set_href(<span class="string">&quot;team-report/submit&quot;</span>).ok();
         }
     });
 

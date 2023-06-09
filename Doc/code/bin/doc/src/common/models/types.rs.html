@@ -71,8 +71,6 @@
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a>
 </pre><pre class="rust"><code><span class="kw">use </span>chrono::NaiveDate;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
@@ -131,9 +129,7 @@
 <span class="kw">impl </span>TeamResponse {
     <span class="kw">pub fn </span>validate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">let </span><span class="kw-2">mut </span>valid = <span class="bool-val">true</span>;
-        <span class="kw">let </span>min_size_three = |value: <span class="kw-2">&amp;</span>str| -&gt; bool {
-            value.trim().len() &gt;= <span class="number">3
-        </span>};
+        <span class="kw">let </span>min_size_three = |value: <span class="kw-2">&amp;</span>str| -&gt; bool { value.trim().len() &gt;= <span class="number">3 </span>};
 
         valid = min_size_three(<span class="kw-2">&amp;</span><span class="self">self</span>.understand_easy) &amp;&amp; valid;
         valid = min_size_three(<span class="kw-2">&amp;</span><span class="self">self</span>.understand_hard) &amp;&amp; valid;

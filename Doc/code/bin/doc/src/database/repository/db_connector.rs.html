@@ -90,57 +90,40 @@
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
 <a href="#92" id="92">92</a>
-</pre><pre class="rust"><code><span class="kw">use </span>chrono::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>common::models::status_report;
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+</pre><pre class="rust"><code><span class="comment">// use chrono::prelude::*;
+</span><span class="kw">use </span>common::models::status_report;
 <span class="kw">use </span>diesel::{QueryDsl, RunQueryDsl};
-<span class="kw">use </span>std::fmt::Error;
-<span class="kw">use </span>std::sync::{Arc, Mutex};
+<span class="comment">// use std::fmt::Error;
+// use std::sync::{Arc, Mutex};
+</span><span class="kw">use </span>log::info;
 
 <span class="kw">use </span><span class="kw">crate</span>::repository::db::establish_connection;
 <span class="kw">use </span><span class="kw">crate</span>::repository::models;
-<span class="kw">use </span>common::models::todo::Todo;
 
-<span class="kw">pub struct </span>Database {
-    <span class="kw">pub </span>sprints: Arc&lt;Mutex&lt;Vec&lt;Todo&gt;&gt;&gt;,
-}
+<span class="kw">pub struct </span>Database {}
 
 <span class="kw">impl </span>Database {
     <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>todos = Arc::new(Mutex::new(<span class="macro">vec!</span>[]));
-        Database { sprints: todos }
-    }
-
-    <span class="comment">/*all create section*/
-    </span><span class="kw">pub fn </span>create_todo(<span class="kw-2">&amp;</span><span class="self">self</span>, todo: Todo) -&gt; <span class="prelude-ty">Result</span>&lt;Todo, Error&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>todos = <span class="self">self</span>.sprints.lock().unwrap();
-        <span class="kw">let </span>id = uuid::Uuid::new_v4().to_string();
-        <span class="kw">let </span>created_at = Utc::now();
-        <span class="kw">let </span>updated_at = Utc::now();
-        <span class="kw">let </span>todo = Todo {
-            id: <span class="prelude-val">Some</span>(id),
-            created_at: <span class="prelude-val">Some</span>(created_at),
-            updated_at: <span class="prelude-val">Some</span>(updated_at),
-            ..todo
-        };
-        todos.push(todo.clone());
-        <span class="prelude-val">Ok</span>(todo)
-    }
-
-    <span class="kw">pub fn </span>get_todos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;Todo&gt; {
-        <span class="kw">let </span>todos = <span class="self">self</span>.sprints.lock().unwrap();
-        todos.clone()
-    }
-
-    <span class="kw">pub fn </span>get_todo_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;Todo&gt; {
-        <span class="kw">let </span>todos = <span class="self">self</span>.sprints.lock().unwrap();
-        todos
-            .iter()
-            .find(|todo| todo.id == <span class="prelude-val">Some</span>(id.to_string()))
-            .cloned()
+        Database {}
     }
     <span class="comment">/*all update section*/
 
-    </span><span class="kw">pub fn </span>update_team_report(team_in: status_report::TeamReport) {
+    </span><span class="doccomment">/// Updates the team report table with the given TeamReport struct.
+    </span><span class="kw">pub fn </span>update_team_report(<span class="kw-2">&amp;</span><span class="self">self</span>, team_in: status_report::TeamReport) {
         <span class="kw">use </span><span class="kw">crate</span>::repository::schema::team_reports::dsl::<span class="kw-2">*</span>;
         <span class="kw">let </span>team_update = models::TeamReport {
             teams: team_in.teams.clone(),
@@ -165,15 +148,60 @@
             .set(<span class="kw-2">&amp;</span>team_update)
             .execute(connection)
             .expect(<span class="string">&quot;Error in db_connector update_team_report&quot;</span>);
-        <span class="macro">println!</span>(<span class="string">&quot;Updated {} rows&quot;</span>, updated_row);
+        <span class="macro">info!</span>(<span class="string">&quot;Updated {} rows&quot;</span>, updated_row);
     }
 
-    <span class="kw">pub fn </span>delete_todo_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;Todo&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>todos = <span class="self">self</span>.sprints.lock().unwrap();
-        <span class="kw">let </span>index = todos
-            .iter()
-            .position(|todo| todo.id == <span class="prelude-val">Some</span>(id.to_string()))<span class="question-mark">?</span>;
-        <span class="prelude-val">Some</span>(todos.remove(index))
+    <span class="doccomment">/// Updates the users table with the given User struct.
+    </span><span class="kw">pub fn </span>update_users(<span class="kw-2">&amp;</span><span class="self">self</span>, user_in: status_report::User) {
+        <span class="kw">use </span><span class="kw">crate</span>::repository::schema::users::dsl::<span class="kw-2">*</span>;
+        <span class="kw">let </span>user_update = models::User {
+            email: user_in.email.clone(),
+            ouath_id: user_in.ouath_id,
+            is_teacher: user_in.is_teacher,
+            is_student: user_in.is_student,
+            is_admin: user_in.is_admin,
+            teams: user_in.teams,
+            class: user_in.class,
+            first_name: user_in.first_name,
+            last_name: user_in.last_name,
+        };
+
+        <span class="kw">let </span>connection = <span class="kw-2">&amp;mut </span>establish_connection();
+
+        <span class="comment">// DATABASE TARGET
+        </span><span class="kw">let </span>updated_row = diesel::update(users.find(user_in.email))
+            .set(<span class="kw-2">&amp;</span>user_update)
+            .execute(connection)
+            .expect(<span class="string">&quot;Error in db_connector update_user&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">&quot;Updated {} rows&quot;</span>, updated_row);
+    }
+
+
+    <span class="doccomment">/// Updates the IndividualReport table with the given IndividualReport struct.
+    </span><span class="kw">pub fn </span>update_individual_report(<span class="kw-2">&amp;</span><span class="self">self</span>, individual_in: status_report::IndividualReport) {
+        <span class="kw">use </span><span class="kw">crate</span>::repository::schema::individual_reports::dsl::<span class="kw-2">*</span>;
+        <span class="kw">let </span>individual_update = models::IndividualReport {
+            email: individual_in.email.clone(),
+            sprint_num: individual_in.sprint_num,
+            monday_time: individual_in.monday_time,
+            tuesday_time: individual_in.tuesday_time,
+            wednesday_time: individual_in.wednesday_time,
+            thursday_time: individual_in.thursday_time,
+            friday_time: individual_in.friday_time,
+            saturday_time: individual_in.saturday_time,
+            sunday_time: individual_in.sunday_time,
+            discrepancy: individual_in.discrepancy,
+            request: individual_in.request,
+        };
+
+        <span class="kw">let </span>connection = <span class="kw-2">&amp;mut </span>establish_connection();
+
+        <span class="comment">// DATABASE TARGET
+        </span><span class="kw">let </span>updated_row = diesel::update(individual_reports.find((individual_in.email, individual_in.sprint_num)))
+            .set(<span class="kw-2">&amp;</span>individual_update)
+            .execute(connection)
+            .expect(<span class="string">&quot;Error in db_connector update_individual_report&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">&quot;Updated {} rows&quot;</span>, updated_row);
     }
 }
 

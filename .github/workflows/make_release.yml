@@ -1,0 +1,58 @@
+name: Make Releases
+# Mostly from: https://kerkour.com/rust-github-actions-ci-cd
+# Also from: https://github.com/letsgetrusty/example_lib/blob/master/.github/workflows/rust.yml
+on:
+  push:
+    tags:
+      - "*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+  checks: write
+  id-token: write
+
+jobs:
+  build_rel:
+
+#    runs-on: ubuntu-latest
+    runs-on: self-hosted # Amazon linux with dev tool installed on
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v3
+
+
+#      - name: Update local toolchain (takes around 8 mins)
+#        run: |
+#          rustup update
+#          rustup component add clippy
+#          rustup target add wasm32-unknown-unknown
+#          if ! command -v trunk &> /dev/null ; then cargo install --locked trunk; fi
+
+      - name: Toolchain info
+        run: |
+          cargo --version --verbose
+          rustc --version
+          cargo clippy --version
+          trunk --version                 
+
+      - name: Build
+        run: |
+          sh ./helper_scripts/build.sh
+
+      - name: Package
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          sh ./helper_scripts/build.sh
+          sh ./helper_scripts/package.sh
+
+      # From: https://github.com/marketplace/actions/gh-release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            bin.tar.gz

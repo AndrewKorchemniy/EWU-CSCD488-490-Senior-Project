@@ -36,20 +36,27 @@ tar -xvzf bin.tar.gz
 ```
 - [ ] Copy server into user (`/home/status-reports/server`)
 ```shell
+echo "Make program folder"
 sudo su - status-reports -c "mkdir -p /home/status-reports/server"
+echo "Executables"
 sudo cp target/release/backend /home/status-reports/server/
 sudo cp target/release/dbcli /home/status-reports/server/
+echo "SQL setup files"
 sudo cp -r database/migrations /home/status-reports/server/
+echo "File to allow run in the background"
 sudo cp helper_scripts/srs-actix.service /home/status-reports/server/
 sudo cp helper_scripts/run.sh /home/status-reports/server
-sudo cp -r studentpage/dist /home/status-reports/server/studentpage/
-sudo cp -r adminpage/dist /home/status-reports/server/adminpage/
+echo "Static files"
+sudo cp -r studentpage/dist /home/status-reports/server/studentpage/dist
+sudo cp -r adminpage/dist /home/status-reports/server/adminpage/dist
 sudo cp -r res /home/status-reports/server/
+echo "Config files"
 # TODO: Wait for IT to config server
 sudo cp secret.config.toml /home/status-reports/server/
 sudo cp server.config.toml /home/status-reports/server/
-
+echo "Set file permissions"
 sudo chown -R status-reports:status-reports /home/status-reports/server/
+echo "Allow/link service"
 sudo systemctl link /home/status-reports/server/srs-actix.service
 ```
 - [ ] Copy SSL cert into user (`/home/status-reports/server`)
