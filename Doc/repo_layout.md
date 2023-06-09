@@ -44,3 +44,8 @@
 ### folder layout
 
 - **README.md** file: Starting page (often Table of contents)
+
+## From IDE's
+
+- [Jet Brains IDE's](../.idea)
+- [Visual Studio Code](../.vscode)
