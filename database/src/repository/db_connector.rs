@@ -70,7 +70,6 @@ impl Database {
         info!("Updated {} rows", updated_row);
     }
 
-
     /// Updates the IndividualReport table with the given IndividualReport struct.
     pub fn update_individual_report(&self, individual_in: status_report::IndividualReport) {
         use crate::repository::schema::individual_reports::dsl::*;
@@ -91,10 +90,12 @@ impl Database {
         let connection = &mut establish_connection();
 
         // DATABASE TARGET
-        let updated_row = diesel::update(individual_reports.find((individual_in.email, individual_in.sprint_num)))
-            .set(&individual_update)
-            .execute(connection)
-            .expect("Error in db_connector update_individual_report");
+        let updated_row = diesel::update(
+            individual_reports.find((individual_in.email, individual_in.sprint_num)),
+        )
+        .set(&individual_update)
+        .execute(connection)
+        .expect("Error in db_connector update_individual_report");
         info!("Updated {} rows", updated_row);
     }
 }

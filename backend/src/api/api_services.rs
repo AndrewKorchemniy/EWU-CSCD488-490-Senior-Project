@@ -41,8 +41,7 @@ pub async fn post_team(
             Err(error_message) => {
                 debug!(
                     "Bad Request: completion_percent is unable to be parse ({}) ({})",
-                    body.completion_percent,
-                    error_message
+                    body.completion_percent, error_message
                 );
                 return HttpResponse::BadRequest().body("completion_percent is unable to be parse");
             }
@@ -74,7 +73,9 @@ pub async fn post_team(
     );
     match email_out {
         Ok(message) => HttpResponse::Ok().body(format!("Done (Confirmation {})", message)),
-        Err(message) => HttpResponse::InternalServerError().body(format!("Done (Error {})", message)),
+        Err(message) => {
+            HttpResponse::InternalServerError().body(format!("Done (Error {})", message))
+        }
     }
     // debug!("body.client_meeting: {}", body.client_meeting);
     // HttpResponse::NotImplemented().body("Not Ready")

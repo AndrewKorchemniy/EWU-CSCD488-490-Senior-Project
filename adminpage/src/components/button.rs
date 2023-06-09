@@ -39,7 +39,7 @@ pub struct Props {
 }
 
 /// The [Button] component provides a styled button.
-/// See https://getbootstrap.com/docs/5.3/components/buttons/
+/// See <https://getbootstrap.com/docs/5.3/components/buttons/>
 #[function_component(Button)]
 pub fn button(props: &Props) -> Html {
     let get_variant = |variant: &ButtonVariant| match variant {
