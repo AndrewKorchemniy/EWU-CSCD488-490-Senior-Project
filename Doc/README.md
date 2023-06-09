@@ -9,8 +9,7 @@
 - [OldSystem](OldSystem/README.md): Info about the old system
 - [Requirements](Requirements)
   - [Essential Features/Requirements](Requirements/requirements.md)
-- [User Stories](UserStories)
+- [User Stories](UserStories/README.md): TOC
   - [User Stories](UserStories/userStory.md)
-- [VM](VM)
-  - OLD [Setup AWS](VM/Setup%20AWS.md)
+- [VM](VM/README.md): old
 - [Helper Scripts](../helper_scripts/README.md): NOTE: has how to set up many things

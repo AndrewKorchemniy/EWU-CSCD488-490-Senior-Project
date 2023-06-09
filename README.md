@@ -25,7 +25,10 @@ Instructor: Sanmeet Kaur skaur20@ewu.edu
 
 [Doc Table of Contents](Doc/README.md)
 
+[Repo Layout](Doc/repo_layout.md)
+
 [Software Requirements Specification(SRS) IEEE Format](https://docs.google.com/document/d/1MADWyNJccQMzPIYZZcg8AIDUssef73X3/edit?usp=sharing&ouid=100976514954926805141&rtpof=true&sd=true)
+
 
 ## TODO
 
