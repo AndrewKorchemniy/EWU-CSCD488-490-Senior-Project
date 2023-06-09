@@ -87,7 +87,10 @@ jobs:
           cargo check --verbose
           cargo test --all --verbose
 
-      - name: Lint
+      - name: Lint warnings
         run: |
-          cargo fmt -- --check
-          cargo clippy -- -D warnings
+          sh ./helper_scripts/lint_warnings.sh
+
+      - name: Lint No warnings
+        run: |
+          sh ./helper_scripts/lint.sh

@@ -56,6 +56,7 @@ pub struct TeamReportCommand {
     pub command: TeamReportSubcommand,
 }
 
+
 #[derive(Debug, Subcommand)]
 pub enum TeamReportSubcommand {
     /// Create a new TeamReports
