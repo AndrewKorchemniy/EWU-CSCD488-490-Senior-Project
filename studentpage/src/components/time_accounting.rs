@@ -83,7 +83,6 @@ pub fn time_accounting(props: &Props) -> Html {
                                 type="number"
                                 min="0"
                                 max="100"
-                                // value={ if store.saturday_hours.is_some() { store.saturday_hours.unwrap().to_string() } else { String::from("") } }
                                 value={ some_or_empty(store.saturday_hours) }
                                 onchange={ saturday_hours_onchange }
                                 style="width: 4rem" />

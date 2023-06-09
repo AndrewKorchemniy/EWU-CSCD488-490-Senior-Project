@@ -1,10 +1,8 @@
 /// # Main to project backend also know as the server
-
 // TODO: Login
 // TODO: Individual Report
 // TODO: Team Report
 // TODO: Email
-
 use actix_files::{Files, NamedFile};
 use actix_web::dev::{fn_service, ServiceRequest, ServiceResponse};
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder, Result};

@@ -1,6 +1,7 @@
 use yew::prelude::*;
 
 /// The [ActivityAccounting] component provides a table for activity accounting.
+/// See <https://getbootstrap.com/docs/5.3/content/tables/>
 #[function_component(ActivityAccounting)]
 pub fn acitvity_accounting() -> Html {
     html! {

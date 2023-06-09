@@ -25,12 +25,12 @@ pub fn individual_report() -> Html {
     });
     let _activity_state = use_state(|| CollapseValidation::Incomplete);
     let activity_state = _activity_state.clone();
-    // let activity_state_changes = Callback::from(move |value: CollapseValidation| {
+    // TODO: let activity_state_changes = Callback::from(move |value: CollapseValidation| {
     //     _activity_state.set(value);
     // });
     let _team_activity_state = use_state(|| CollapseValidation::Incomplete);
     let team_activity_state = _team_activity_state.clone();
-    // let team_activity_state_changes = Callback::from(move |value: CollapseValidation| {
+    // TODO: let team_activity_state_changes = Callback::from(move |value: CollapseValidation| {
     //     _team_activity_state.set(value);
     // });
 
@@ -56,7 +56,7 @@ pub fn individual_report() -> Html {
         event.prevent_default();
         cloned_time_validate.emit(event);
         //log!(validate_submit(store));
-        // TODO: submit to server
+        // TODO: submit to server, requires a new component for submission
     });
 
     html! {
@@ -81,6 +81,7 @@ pub fn individual_report() -> Html {
             <Collapsible id="activity-accounting">
                 { "Enter any new activities that you started during this sprint. They are assigned to you until at least the next sprint. There is no significance to the order, and activity codes may not be sequential. Choose a short, meaningful title that is a convenient, human-firnedly reference. The description should be a concise summary of on thing that is to be done. Break larger tasks into multiple activities, but do not get carried away. In subsequent sprints, you will need to account for the status of each until they are closed. Estimate how many sprints you expect the activity to take. Finally, associate this activity with any requirements that it addresses. Is is possible to have an activity without an explicit requirement (e.g., initially setting up the development server), but is unlikely once the project is going. Everything you are doing needs to be attributed to a reason from a source, which is primarily the requirements." }
 
+                // TODO: This component is not completed.
                 <ActivityAccounting />
             </Collapsible>
 
@@ -95,6 +96,7 @@ pub fn individual_report() -> Html {
                     label="Activity #1"
                     target="#activity1" />
                 <Collapsible id="activity1" is_open={ true }>
+                    // TODO: This component is not completed.
                     { ". . ." }
                 </Collapsible>
             </Collapsible>

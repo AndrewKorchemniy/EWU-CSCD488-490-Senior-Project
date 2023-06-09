@@ -1,2 +1,2 @@
-pub mod test;
 pub mod team;
+pub mod test;
