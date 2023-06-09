@@ -1,4 +1,8 @@
 
+By Nicolas Gainer
+
+[SQL DataBase Design](SQL_Design.md)
+
 to get started we need to install some components in a Ubuntu linux sub-system :
 
 ***mysql server***

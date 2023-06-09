@@ -1,7 +1,9 @@
 Database documentation
-by Jonathan 
+by Jonathan
 
 The database version 0.5 is built on the idea of the user well be verified through Ouath which is in the table of users and called ouath_id. Then the table email is used to navigate the rest of the tables. The reason of using the email as the primary what of traversing the database is that Ouath id will not be set until the user has login in for the first time.
+
+[Development Environment](Database_User_Guide.md)
 
 ![DB SCHEMA](https://i.imgur.com/UANnVbm.png)
 
@@ -45,3 +47,5 @@ Tables
 	- description: varchar(255):  This describes the requirement for the users projects 
 	- teams : varchar(50) :
 	- indexs : int : to allows different requirement for each team.
+
+
