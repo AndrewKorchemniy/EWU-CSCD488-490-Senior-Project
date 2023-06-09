@@ -139,8 +139,8 @@
 /// Each row within the calendar represents a sprint.
 </span><span class="attr">#[function_component(Sprint)]
 </span><span class="kw">pub fn </span>sprint(props: <span class="kw-2">&amp;</span>Props) -&gt; Html {
-    <span class="doccomment">/// Renders the appropriate icon given the report status.
-    </span><span class="kw">fn </span>get_status(status: <span class="kw-2">&amp;</span>ReportStatus) -&gt; Html {
+    <span class="comment">// Renders the appropriate icon given the report status.
+    </span><span class="kw">let </span>get_status = |status: <span class="kw-2">&amp;</span>ReportStatus| -&gt; Html {
         <span class="kw">match </span>status {
             ReportStatus::Submitted =&gt; <span class="macro">html! </span>{
                 &lt;td class=<span class="string">&quot;text-center&quot; </span>style=<span class="string">&quot;color: limegreen&quot;</span>&gt;
@@ -166,7 +166,7 @@
                 &lt;/td&gt;
             },
         }
-    }
+    };
 
     <span class="macro">html! </span>{
         &lt;tr&gt;

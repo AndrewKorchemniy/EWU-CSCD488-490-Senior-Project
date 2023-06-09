@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ReportStatus"],"fn":["get_status","sprint"],"struct":["Props","Sprint"]};
+window.SIDEBAR_ITEMS = {"enum":["ReportStatus"],"fn":["sprint"],"struct":["Props","Sprint"]};

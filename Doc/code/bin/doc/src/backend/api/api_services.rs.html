@@ -129,6 +129,19 @@
 <a href="#129" id="129">129</a>
 <a href="#130" id="130">130</a>
 <a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::api::token;
 <span class="kw">use </span><span class="kw">crate</span>::email;
 <span class="kw">use </span>actix_web::web;
@@ -144,7 +157,10 @@
 <span class="kw">use </span>log::debug;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
-<span class="attr">#[derive(Serialize, Deserialize, Debug, Clone)]
+<span class="doccomment">/// TODO: remove using for dev or require to be admin
+///
+/// TODO: if keep than move to common
+</span><span class="attr">#[derive(Serialize, Deserialize, Debug, Clone)]
 </span><span class="kw">pub struct </span>EmailInfo {
     <span class="kw">pub </span>email: String,
     <span class="kw">pub </span>name: String,
@@ -152,12 +168,18 @@
 
 <span class="comment">//https://actix.rs/docs/databases/
 
+</span><span class="doccomment">/// # get sprites from db
+///
+/// &gt; TODO: finish
 </span><span class="attr">#[get(<span class="string">&quot;/sprints&quot;</span>)]
 </span><span class="kw">pub async fn </span>get_sprints(_data: Data&lt;(Database, Config, Config)&gt;) -&gt; HttpResponse {
     HttpResponse::NotImplemented().body(<span class="string">&quot;Not Ready&quot;</span>)
 }
 
-<span class="attr">#[post(<span class="string">&quot;/submit/team&quot;</span>)]
+<span class="doccomment">/// # submit a team report to the db
+///
+/// &gt; TODO: finish
+</span><span class="attr">#[post(<span class="string">&quot;/submit/team&quot;</span>)]
 </span><span class="kw">pub async fn </span>post_team(
     data: Data&lt;(Database, Config, Config)&gt;,
     body: web::Json&lt;TeamResponse&gt;,
@@ -172,8 +194,7 @@
             <span class="prelude-val">Err</span>(error_message) =&gt; {
                 <span class="macro">debug!</span>(
                     <span class="string">&quot;Bad Request: completion_percent is unable to be parse ({}) ({})&quot;</span>,
-                    body.completion_percent,
-                    error_message
+                    body.completion_percent, error_message
                 );
                 <span class="kw">return </span>HttpResponse::BadRequest().body(<span class="string">&quot;completion_percent is unable to be parse&quot;</span>);
             }
@@ -205,13 +226,15 @@
     );
     <span class="kw">match </span>email_out {
         <span class="prelude-val">Ok</span>(message) =&gt; HttpResponse::Ok().body(<span class="macro">format!</span>(<span class="string">&quot;Done (Confirmation {})&quot;</span>, message)),
-        <span class="prelude-val">Err</span>(message) =&gt; HttpResponse::InternalServerError().body(<span class="macro">format!</span>(<span class="string">&quot;Done (Error {})&quot;</span>, message)),
+        <span class="prelude-val">Err</span>(message) =&gt; {
+            HttpResponse::InternalServerError().body(<span class="macro">format!</span>(<span class="string">&quot;Done (Error {})&quot;</span>, message))
+        }
     }
     <span class="comment">// debug!(&quot;body.client_meeting: {}&quot;, body.client_meeting);
     // HttpResponse::NotImplemented().body(&quot;Not Ready&quot;)
 </span>}
 
-<span class="comment">// TODO: remove using for dev
+<span class="doccomment">/// TODO: remove using for dev or require to be admin
 </span><span class="attr">#[get(<span class="string">&quot;/send_test_email&quot;</span>)]
 </span><span class="kw">pub async fn </span>send_email(data: Data&lt;(Database, Config, Config)&gt;) -&gt; HttpResponse {
     <span class="comment">// TODO: remove after dev or require to be admin
@@ -232,7 +255,7 @@
     }
 }
 
-<span class="comment">// TODO: remove using for dev
+<span class="doccomment">/// TODO: remove using for dev or require to be admin
 </span><span class="attr">#[post(<span class="string">&quot;/send_test_email&quot;</span>)]
 </span><span class="kw">pub async fn </span>send_email_to(
     data: Data&lt;(Database, Config, Config)&gt;,
@@ -250,7 +273,10 @@
     }
 }
 
-<span class="kw">pub fn </span>config(cfg: <span class="kw-2">&amp;mut </span>web::ServiceConfig) {
+<span class="doccomment">/// config api part of the actix service
+///
+/// &gt; NOTE: also run oauth actix config
+</span><span class="kw">pub fn </span>config(cfg: <span class="kw-2">&amp;mut </span>web::ServiceConfig) {
     cfg.service(
         web::scope(<span class="string">&quot;/api&quot;</span>)
             .configure(token::config)

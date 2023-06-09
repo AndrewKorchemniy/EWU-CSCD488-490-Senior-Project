@@ -98,16 +98,29 @@
 <a href="#98" id="98">98</a>
 <a href="#99" id="99">99</a>
 <a href="#100" id="100">100</a>
-</pre><pre class="rust"><code><span class="kw">use </span>config::Config;
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+</pre><pre class="rust"><code><span class="kw">use </span>common::models::status_report::TeamReport;
+<span class="kw">use </span>config::Config;
 <span class="kw">use </span>lettre::message::header::ContentType;
 <span class="kw">use </span>lettre::transport::smtp::authentication::Credentials;
 <span class="kw">use </span>lettre::{Message, SmtpTransport, Transport};
-<span class="kw">use </span>common::models::status_report::TeamReport;
-
 
 <span class="kw">use </span>log::{debug, error, info};
 
-<span class="kw">pub fn </span>send_confirmation_email(to_who: String, report_data: TeamReport, secret: <span class="kw-2">&amp;</span>Config, server: <span class="kw-2">&amp;</span>Config) -&gt; <span class="prelude-ty">Result</span>&lt;String, String&gt; {
+<span class="doccomment">/// Send a confirmation email for team report
+/// There is many todo&#39;s for this
+</span><span class="kw">pub fn </span>send_confirmation_email(
+    to_who: String,
+    report_data: TeamReport,
+    secret: <span class="kw-2">&amp;</span>Config,
+    server: <span class="kw-2">&amp;</span>Config,
+) -&gt; <span class="prelude-ty">Result</span>&lt;String, String&gt; {
     <span class="macro">info!</span>(<span class="string">&quot;Sending team report confirmation email {}&quot;</span>, to_who);
     <span class="kw">let </span>email_result = Message::builder()
         <span class="comment">// &quot;NoBody &lt;nobody@domain.tld&gt;&quot;
@@ -118,8 +131,8 @@
                     .get::&lt;String&gt;(<span class="string">&quot;smtp_email&quot;</span>)
                     .expect(<span class="string">&quot;Missing sender email&quot;</span>)
             )
-                .parse()
-                .unwrap(),
+            .parse()
+            .unwrap(),
         )
         .reply_to(
             <span class="macro">format!</span>(
@@ -128,8 +141,8 @@
                     .get::&lt;String&gt;(<span class="string">&quot;smtp_email&quot;</span>)
                     .expect(<span class="string">&quot;Missing sender email&quot;</span>)
             )
-                .parse()
-                .unwrap(),
+            .parse()
+            .unwrap(),
         )
         <span class="comment">// .to(format!(&quot;{} &lt;{}&gt;&quot;, to_who, server.get::&lt;String&gt;(&quot;admin_email&quot;).expect(&quot;Missing admin email&quot;)).parse().unwrap())
         </span>.to(to_who.parse().unwrap())
@@ -160,7 +173,8 @@
             report_data.evaluate_hardest,
             report_data.completion,
             report_data.contact,
-            report_data.comments)));
+            report_data.comments
+        )));
     <span class="kw">let </span>email = <span class="kw">match </span>email_result {
         <span class="prelude-val">Ok</span>(em) =&gt; em,
         <span class="prelude-val">Err</span>(e) =&gt; {

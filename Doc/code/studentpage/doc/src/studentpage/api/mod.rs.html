@@ -162,7 +162,58 @@
 <a href="#162" id="162">162</a>
 <a href="#163" id="163">163</a>
 <a href="#164" id="164">164</a>
-</pre><pre class="rust"><code><span class="kw">use </span>common::models::types::<span class="kw-2">*</span>;
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a>
+<a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+</pre><pre class="rust"><code><span class="kw">use </span>chrono::{Days, Local};
+<span class="kw">use </span>common::models::types::<span class="kw-2">*</span>;
 <span class="kw">use </span>reqwasm::http::Request;
 <span class="kw">use </span>reqwasm::Error;
 <span class="kw">use </span>serde_json::json;
@@ -192,21 +243,69 @@
 <span class="doccomment">/// Gets a list of all sprints in the database for a student.
 /// See APIDOC for more information.
 </span><span class="kw">pub async fn </span>api_get_sprints(token: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;SprintsResponse, Error&gt; {
-    <span class="kw">let </span>response = Request::get(<span class="string">&quot;/api/sprints&quot;</span>)
+    <span class="kw">let </span>_response = Request::get(<span class="string">&quot;/api/sprints&quot;</span>)
         .header(<span class="string">&quot;Authorization&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Bearer {}&quot;</span>, token))
         .send()
         .<span class="kw">await</span>;
 
-    <span class="kw">match </span>response {
-        <span class="prelude-val">Ok</span>(response) =&gt; {
-            <span class="kw">let </span>response = response.json::&lt;SprintsResponse&gt;().<span class="kw">await</span>;
-            <span class="kw">match </span>response {
-                <span class="prelude-val">Ok</span>(response) =&gt; <span class="prelude-val">Ok</span>(response),
-                <span class="prelude-val">Err</span>(err) =&gt; <span class="prelude-val">Err</span>(err),
-            }
-        }
-        <span class="prelude-val">Err</span>(err) =&gt; <span class="prelude-val">Err</span>(err),
-    }
+    <span class="comment">// match response {
+    //     Ok(response) =&gt; {
+    //         let response = response.json::&lt;SprintsResponse&gt;().await;
+    //         match response {
+    //             Ok(response) =&gt; Ok(response),
+    //             Err(err) =&gt; Err(err),
+    //         }
+    //     }
+    //     Err(err) =&gt; Err(err),
+    // }
+
+    // TODO: Uncomment the above code block and
+    // remove the following once the api is ready.
+    </span><span class="kw">let </span>sprint_1 = SprintResponse {
+        id: <span class="number">1</span>,
+        due_date: Local::now()
+            .naive_local()
+            .checked_sub_days(Days::new(<span class="number">14</span>))
+            .unwrap()
+            .date(),
+        is_individual_report_submitted: <span class="bool-val">true</span>,
+        is_team_report_submitted: <span class="bool-val">true</span>,
+    };
+
+    <span class="kw">let </span>sprint_2 = SprintResponse {
+        id: <span class="number">2</span>,
+        due_date: Local::now()
+            .naive_local()
+            .checked_sub_days(Days::new(<span class="number">7</span>))
+            .unwrap()
+            .date(),
+        is_individual_report_submitted: <span class="bool-val">false</span>,
+        is_team_report_submitted: <span class="bool-val">false</span>,
+    };
+
+    <span class="kw">let </span>sprint_3 = SprintResponse {
+        id: <span class="number">3</span>,
+        due_date: Local::now().naive_local().date(),
+        is_individual_report_submitted: <span class="bool-val">false</span>,
+        is_team_report_submitted: <span class="bool-val">false</span>,
+    };
+
+    <span class="kw">let </span>sprint_4 = SprintResponse {
+        id: <span class="number">4</span>,
+        due_date: Local::now()
+            .naive_local()
+            .checked_add_days(Days::new(<span class="number">7</span>))
+            .unwrap()
+            .date(),
+        is_individual_report_submitted: <span class="bool-val">false</span>,
+        is_team_report_submitted: <span class="bool-val">false</span>,
+    };
+
+    <span class="kw">let </span>sprints = SprintsResponse {
+        sprints: <span class="macro">vec!</span>[sprint_1, sprint_2, sprint_3, sprint_4],
+    };
+
+    <span class="prelude-val">Ok</span>(sprints)
 }
 
 <span class="doccomment">/// Posts a team report to the database for a team.
@@ -260,7 +359,8 @@
     //     Err(err) =&gt; Err(err),
     // }
 
-    // TODO: Remove this once the api is ready.
+    // TODO: Uncomment the above code block and
+    // remove the following once the api is ready.
     </span><span class="kw">let </span>testing = RequirementResponse {
         id: <span class="number">1</span>,
         title: String::from(<span class="string">&quot;Example One&quot;</span>),

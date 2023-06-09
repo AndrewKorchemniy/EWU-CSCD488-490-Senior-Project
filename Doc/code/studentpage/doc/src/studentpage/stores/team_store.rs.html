@@ -43,6 +43,7 @@
 <a href="#43" id="43">43</a>
 <a href="#44" id="44">44</a>
 <a href="#45" id="45">45</a>
+<a href="#46" id="46">46</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::text_area::TextAreaValidation;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>yew::prelude::<span class="kw-2">*</span>;
@@ -54,6 +55,7 @@
 // Local storage does not expire, so a custom method of clearing the data is required.
 // Especially since data should not persist between sprints.
 // One option is to store the date within the store itself.
+// And then clear the storage if the date changs.
 </span><span class="kw">pub struct </span>TeamStore {
     <span class="kw">pub </span>understand_easy: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="kw">pub </span>understand_hard: <span class="prelude-ty">Option</span>&lt;String&gt;,

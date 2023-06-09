@@ -104,6 +104,63 @@
 <a href="#104" id="104">104</a>
 <a href="#105" id="105">105</a>
 <a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
 </pre><pre class="rust"><code><span class="comment">// use chrono::prelude::*;
 </span><span class="kw">use </span>common::models::status_report;
 <span class="kw">use </span>diesel::{QueryDsl, RunQueryDsl};
@@ -136,6 +193,7 @@
             solve_hardest: team_in.solve_hardest,
             evaluate_easiest: team_in.evaluate_easiest,
             evaluate_hardest: team_in.evaluate_hardest,
+
             completion: team_in.completion,
             contact: team_in.contact,
             comments: team_in.comments,
@@ -151,59 +209,115 @@
         <span class="macro">info!</span>(<span class="string">&quot;Updated {} rows&quot;</span>, updated_row);
     }
 
-    <span class="doccomment">/// Updates the users table with the given User struct.
-    </span><span class="kw">pub fn </span>update_users(<span class="kw-2">&amp;</span><span class="self">self</span>, user_in: status_report::User) {
-        <span class="kw">use </span><span class="kw">crate</span>::repository::schema::users::dsl::<span class="kw-2">*</span>;
-        <span class="kw">let </span>user_update = models::User {
-            email: user_in.email.clone(),
-            ouath_id: user_in.ouath_id,
-            is_teacher: user_in.is_teacher,
-            is_student: user_in.is_student,
-            is_admin: user_in.is_admin,
-            teams: user_in.teams,
-            class: user_in.class,
-            first_name: user_in.first_name,
-            last_name: user_in.last_name,
-        };
-
-        <span class="kw">let </span>connection = <span class="kw-2">&amp;mut </span>establish_connection();
-
-        <span class="comment">// DATABASE TARGET
-        </span><span class="kw">let </span>updated_row = diesel::update(users.find(user_in.email))
-            .set(<span class="kw-2">&amp;</span>user_update)
-            .execute(connection)
-            .expect(<span class="string">&quot;Error in db_connector update_user&quot;</span>);
-        <span class="macro">info!</span>(<span class="string">&quot;Updated {} rows&quot;</span>, updated_row);
-    }
-
-
-    <span class="doccomment">/// Updates the IndividualReport table with the given IndividualReport struct.
-    </span><span class="kw">pub fn </span>update_individual_report(<span class="kw-2">&amp;</span><span class="self">self</span>, individual_in: status_report::IndividualReport) {
-        <span class="kw">use </span><span class="kw">crate</span>::repository::schema::individual_reports::dsl::<span class="kw-2">*</span>;
-        <span class="kw">let </span>individual_update = models::IndividualReport {
-            email: individual_in.email.clone(),
-            sprint_num: individual_in.sprint_num,
-            monday_time: individual_in.monday_time,
-            tuesday_time: individual_in.tuesday_time,
-            wednesday_time: individual_in.wednesday_time,
-            thursday_time: individual_in.thursday_time,
-            friday_time: individual_in.friday_time,
-            saturday_time: individual_in.saturday_time,
-            sunday_time: individual_in.sunday_time,
-            discrepancy: individual_in.discrepancy,
-            request: individual_in.request,
-        };
-
-        <span class="kw">let </span>connection = <span class="kw-2">&amp;mut </span>establish_connection();
-
-        <span class="comment">// DATABASE TARGET
-        </span><span class="kw">let </span>updated_row = diesel::update(individual_reports.find((individual_in.email, individual_in.sprint_num)))
-            .set(<span class="kw-2">&amp;</span>individual_update)
-            .execute(connection)
-            .expect(<span class="string">&quot;Error in db_connector update_individual_report&quot;</span>);
-        <span class="macro">info!</span>(<span class="string">&quot;Updated {} rows&quot;</span>, updated_row);
-    }
-}
+    <span class="comment">// /// Updates the users table with the given User struct.
+    // pub fn update_users(&amp;self, user_in: status_report::User) {
+    //     /// This helps pull the user in diesel SQL link
+    //     use crate::repository::schema::users::dsl::*;
+    //     /// This is the User model from database\repository\models\
+    //     let user_update = models::User {
+    //         /// here we take in the data from the user_in
+    //         /// and give it to the same variables in User
+    //         /// the reason for the email.clone is that it will
+    //         /// used in the filter and burrowing rules apply
+    //         email: user_in.email.clone(),
+    //         ouath_id: user_in.ouath_id,
+    //         is_teacher: user_in.is_teacher,
+    //         is_student: user_in.is_student,
+    //         is_admin: user_in.is_admin,
+    //         teams: user_in.teams,
+    //         class: user_in.class,
+    //         first_name: user_in.first_name,
+    //         last_name: user_in.last_name,
+    //     };
+    //
+    //     /// makes connection to be used to talk to the database.
+    //     let connection = &amp;mut establish_connection();
+    //
+    //     // DATABASE TARGET
+    //     /// this creates the update_row to be passed to diesel
+    //     let updated_row = diesel::update(
+    //         /// this is a filter/search for in the database
+    //         users.find(user_in.email))
+    //         ///once the right user has been selected it pass these values
+    //         .set(&amp;user_update)
+    //         /// where to excute the command
+    //         .execute(connection)
+    //         ///if the resultif the command fails
+    //         .expect(&quot;Error in db_connector update_user&quot;);
+    //     ///this is for debugging features
+    //     info!(&quot;Updated {} rows&quot;, updated_row);
+    // }
+    //
+    // /// Updates the IndividualReport table with the given IndividualReport struct.
+    // pub fn update_individual_report(&amp;self, individual_in: status_report::IndividualReport) {
+    //     use crate::repository::schema::individual_reports::dsl::*;
+    //     let individual_update = models::IndividualReport {
+    //         email: individual_in.email.clone(),
+    //         sprint_num: individual_in.sprint_num,
+    //         monday_time: individual_in.monday_time,
+    //         tuesday_time: individual_in.tuesday_time,
+    //         wednesday_time: individual_in.wednesday_time,
+    //         thursday_time: individual_in.thursday_time,
+    //         friday_time: individual_in.friday_time,
+    //         saturday_time: individual_in.saturday_time,
+    //         sunday_time: individual_in.sunday_time,
+    //         discrepancy: individual_in.discrepancy,
+    //         request: individual_in.request,
+    //     };
+    //
+    //     let connection = &amp;mut establish_connection();
+    //
+    //     // DATABASE TARGET
+    //     let updated_row = diesel::update(
+    //         individual_reports.find((individual_in.email, individual_in.sprint_num)),
+    //     )
+    //     .set(&amp;individual_update)
+    //     .execute(connection)
+    //     .expect(&quot;Error in db_connector update_individual_report&quot;);
+    //     info!(&quot;Updated {} rows&quot;, updated_row);
+    // }
+    //
+    // /// Updates the Requirement table with the given Requirement struct.
+    // pub fn update_requirement(&amp;self, requirement_in: status_report::Requirement) {
+    //     use crate::repository::schema::requirements::dsl::*;
+    //     let requirement_update = models::Requirement {
+    //         teams: requirement_in.teams.clone(),
+    //         indexs: requirement_in.indexs,
+    //         description: requirement_in.description,
+    //     };
+    //
+    //     let connection = &amp;mut establish_connection();
+    //
+    //     // DATABASE TARGET
+    //     let updated_row =
+    //         diesel::update(requirements.find((requirement_in.teams, requirement_in.indexs)))
+    //             .set(&amp;requirement_update)
+    //             .execute(connection)
+    //             .expect(&quot;Error in db_connector update_requirement&quot;);
+    //     info!(&quot;Updated {} rows&quot;, updated_row);
+    // }
+    //
+    // /// Insert the sprint_num_dates table with the given NewSprint struct.
+    // pub fn new_sprint_num_date(&amp;self, sprint_new: status_report::NewSprint) {
+    //
+    //     use crate::repository::schema::sprint_num_dates::dsl::*;
+    //
+    //     let sprint_create = models::NewSprint
+    //     {
+    //
+    //         sprint_num: sprint_new.sprint_num,
+    //         sprint_date: sprint_new.sprint_date,
+    //     };
+    //
+    //     let connection = &amp;mut establish_connection();
+    //
+    //     // DATABASE TARGET
+    //     diesel::insert_into(sprint_num_dates)
+    //         .values(&amp;sprint_create)
+    //         .execute(connection)
+    //         .expect(&quot;Error in db_connector new_sprint_num_date&quot;);
+    // }
+</span>}
 
 <span class="kw">impl </span>Default <span class="kw">for </span>Database {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
