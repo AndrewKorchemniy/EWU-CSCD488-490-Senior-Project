@@ -7,7 +7,7 @@ pub struct Props {
 }
 
 /// The [Card] component provides a styled boostrap card wrapper.
-/// See https://getbootstrap.com/docs/5.3/components/card/
+/// See <https://getbootstrap.com/docs/5.3/components/card/>
 #[function_component(Card)]
 pub fn card(props: &Props) -> Html {
     html! {

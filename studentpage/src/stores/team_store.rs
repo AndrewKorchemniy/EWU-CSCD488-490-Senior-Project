@@ -9,6 +9,7 @@ use yewdux::prelude::*;
 // Local storage does not expire, so a custom method of clearing the data is required.
 // Especially since data should not persist between sprints.
 // One option is to store the date within the store itself.
+// And then clear the storage if the date changs.
 pub struct TeamStore {
     pub understand_easy: Option<String>,
     pub understand_hard: Option<String>,
