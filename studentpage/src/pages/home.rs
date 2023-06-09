@@ -49,12 +49,12 @@ pub fn home() -> Html {
                                 due_date={sprint.due_date.format("%b %e").to_string()}
                                 team_report_status={ReportStatus::from(
                                     &sprint.is_team_report_submitted,
-                                    sprint.due_date.clone(),
+                                    sprint.due_date,
                                     Route::TeamReport
                                 )}
                                 individual_report_status={ReportStatus::from(
                                     &sprint.is_team_report_submitted,
-                                    sprint.due_date.clone(),
+                                    sprint.due_date,
                                     Route::IndividualReport
                                 )}>
                             </Sprint>

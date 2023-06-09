@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use crate::Route;
 use chrono::prelude::*;
 use yew::prelude::*;
@@ -19,12 +21,10 @@ impl ReportStatus {
             true => ReportStatus::Submitted,
             false => {
                 let now = Local::now().naive_local().date();
-                if now > due_date {
-                    ReportStatus::Missing
-                } else if now == due_date {
-                    ReportStatus::Active(route)
-                } else {
-                    ReportStatus::Upcoming
+                match now.cmp(&due_date) {
+                    Ordering::Greater => ReportStatus::Missing,
+                    Ordering::Equal => ReportStatus::Active(route),
+                    Ordering::Less => ReportStatus::Upcoming,
                 }
             }
         }

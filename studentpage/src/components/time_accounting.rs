@@ -60,8 +60,8 @@ pub fn time_accounting(props: &Props) -> Html {
 
     // Render empty value if None.
     let some_or_empty = |value: Option<i32>| -> String {
-        if value.is_some() {
-            value.unwrap().to_string()
+        if let Some(val) = value {
+            val.to_string()
         } else {
             String::from("")
         }
