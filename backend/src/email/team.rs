@@ -6,6 +6,8 @@ use lettre::{Message, SmtpTransport, Transport};
 
 use log::{debug, error, info};
 
+/// Send a confirmation email for team report
+/// There is many todo's for this
 pub fn send_confirmation_email(
     to_who: String,
     report_data: TeamReport,

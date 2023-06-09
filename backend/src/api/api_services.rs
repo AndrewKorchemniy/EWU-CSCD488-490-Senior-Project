@@ -13,6 +13,9 @@ use database::repository::db_connector::Database;
 use log::debug;
 use serde::{Deserialize, Serialize};
 
+/// TODO: remove using for dev or require to be admin
+///
+/// TODO: if keep than move to common
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct EmailInfo {
     pub email: String,
@@ -21,11 +24,17 @@ pub struct EmailInfo {
 
 //https://actix.rs/docs/databases/
 
+/// # get sprites from db
+///
+/// > TODO: finish
 #[get("/sprints")]
 pub async fn get_sprints(_data: Data<(Database, Config, Config)>) -> HttpResponse {
     HttpResponse::NotImplemented().body("Not Ready")
 }
 
+/// # submit a team report to the db
+///
+/// > TODO: finish
 #[post("/submit/team")]
 pub async fn post_team(
     data: Data<(Database, Config, Config)>,
@@ -81,7 +90,7 @@ pub async fn post_team(
     // HttpResponse::NotImplemented().body("Not Ready")
 }
 
-// TODO: remove using for dev
+/// TODO: remove using for dev or require to be admin
 #[get("/send_test_email")]
 pub async fn send_email(data: Data<(Database, Config, Config)>) -> HttpResponse {
     // TODO: remove after dev or require to be admin
@@ -102,7 +111,7 @@ pub async fn send_email(data: Data<(Database, Config, Config)>) -> HttpResponse 
     }
 }
 
-// TODO: remove using for dev
+/// TODO: remove using for dev or require to be admin
 #[post("/send_test_email")]
 pub async fn send_email_to(
     data: Data<(Database, Config, Config)>,
@@ -120,6 +129,9 @@ pub async fn send_email_to(
     }
 }
 
+/// config api part of the actix service
+///
+/// > NOTE: also run oauth actix config
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/api")
