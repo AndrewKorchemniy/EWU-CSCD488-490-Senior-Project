@@ -18,8 +18,14 @@ impl Database {
 
     /// Updates the team report table with the given TeamReport struct.
     pub fn update_team_report(&self, team_in: status_report::TeamReport) {
+        // This links to the team_reports model.
         use crate::repository::schema::team_reports::dsl::*;
+        // This is the TeamReport model from database\repository\models\
         let team_update = models::TeamReport {
+        // Here we take in the data from the team_in
+        // and give it to the same variables in TeamReport
+        // the reason for the teams.clone is that it will
+        // used in the filter and burrowing rules apply.
             teams: team_in.teams.clone(),
             sprint_num: team_in.sprint_num,
             understand_easiest: team_in.understand_easiest,
@@ -36,16 +42,22 @@ impl Database {
             comments: team_in.comments,
         };
 
+        /// Setup connection to the database.
         let connection = &mut establish_connection();
 
         // DATABASE TARGET
+        /// Creates the update_row to be passed to diesel.
         let updated_row = diesel::update(team_reports.find((team_in.teams, team_in.sprint_num)))
+            // This is a filter/search for in the database
             .set(&team_update)
+            // Once the right user has been selected it pass these values
             .execute(connection)
+            // Error handling
             .expect("Error in db_connector update_team_report");
+        // this is for debugging features
         info!("Updated {} rows", updated_row);
     }
-
+// TODO Below needs to be debugged, but it whats need to connect to the the database to the backend
     // /// Updates the users table with the given User struct.
     // pub fn update_users(&self, user_in: status_report::User) {
     //     /// This helps pull the user in diesel SQL link
