@@ -162,7 +162,6 @@
 <a href="#162" id="162">162</a>
 <a href="#163" id="163">163</a>
 <a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
 </pre><pre class="rust"><code><span class="kw">use </span>common::models::types::<span class="kw-2">*</span>;
 <span class="kw">use </span>reqwasm::http::Request;
 <span class="kw">use </span>reqwasm::Error;
@@ -194,7 +193,7 @@
 /// See APIDOC for more information.
 </span><span class="kw">pub async fn </span>api_get_sprints(token: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;SprintsResponse, Error&gt; {
     <span class="kw">let </span>response = Request::get(<span class="string">&quot;/api/sprints&quot;</span>)
-        .header(<span class="string">&quot;Authorization&quot;</span>, token)
+        .header(<span class="string">&quot;Authorization&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Bearer {}&quot;</span>, token))
         .send()
         .<span class="kw">await</span>;
 
@@ -210,11 +209,12 @@
     }
 }
 
-<span class="attr">#[allow(dead_code)]
-</span><span class="doccomment">/// Posts a team report to the database for a team.
+<span class="doccomment">/// Posts a team report to the database for a team.
+/// See APIDOC for more information.
 </span><span class="kw">pub async fn </span>api_post_team_report(token: <span class="kw-2">&amp;</span>str, body: TeamResponse) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
     <span class="kw">let </span>response = Request::post(<span class="string">&quot;/api/submit/team&quot;</span>)
-        .header(<span class="string">&quot;Authorization&quot;</span>, token)
+        .header(<span class="string">&quot;Authorization&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Bearer {}&quot;</span>, token))
+        .header(<span class="string">&quot;content-type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)
         .body(serde_json::to_string(<span class="kw-2">&amp;</span>body).unwrap())
         .send()
         .<span class="kw">await</span>;
@@ -245,7 +245,7 @@
 /// See APIDOC for more information.
 </span><span class="kw">pub async fn </span>api_get_requirements(token: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;RequirementsResponse, Error&gt; {
     <span class="kw">let </span>_response = Request::get(<span class="string">&quot;/api/requirements&quot;</span>)
-        .header(<span class="string">&quot;Authorization&quot;</span>, token)
+        .header(<span class="string">&quot;Authorization&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Bearer {}&quot;</span>, token))
         .send()
         .<span class="kw">await</span>;
 
@@ -276,7 +276,7 @@
         requirements: <span class="macro">vec!</span>[testing, testing2],
     };
 
-    <span class="kw">return </span><span class="prelude-val">Ok</span>(testing3);
+    <span class="prelude-val">Ok</span>(testing3)
 }
 
 <span class="doccomment">/// Posts a new team project requirement to the database.
@@ -288,7 +288,8 @@
         <span class="string">&quot;description&quot;</span>: description,
     });
     <span class="kw">let </span>_response = Request::post(<span class="string">&quot;/api/submit/new_requirement&quot;</span>)
-        .header(<span class="string">&quot;Authorization&quot;</span>, token)
+        .header(<span class="string">&quot;Authorization&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Bearer {}&quot;</span>, token))
+        .header(<span class="string">&quot;content-type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)
         .body(body.to_string())
         .send()
         .<span class="kw">await</span>;
@@ -296,24 +297,21 @@
 </span>}
 
 <span class="doccomment">/// Request a requirement to be deleted from the database.
-/// Returns the new list of requirements.
 /// See APIDOC for more information.
-</span><span class="kw">pub async fn </span>api_post_delete_requirement(
-    id: i32,
-    token: <span class="kw-2">&amp;</span>str,
-) -&gt; <span class="prelude-ty">Result</span>&lt;RequirementsResponse, Error&gt; {
+</span><span class="kw">pub async fn </span>api_post_delete_requirement(id: i32, token: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
     <span class="kw">let </span>body = <span class="macro">json!</span>({
         <span class="string">&quot;id&quot;</span>: id,
     });
     <span class="kw">let </span>response = Request::post(<span class="string">&quot;/api/submit/delete_requirement&quot;</span>)
         .header(<span class="string">&quot;Authorization&quot;</span>, token)
+        .header(<span class="string">&quot;content-type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)
         .body(body.to_string())
         .send()
         .<span class="kw">await</span>;
 
     <span class="kw">match </span>response {
         <span class="prelude-val">Ok</span>(response) =&gt; {
-            <span class="kw">let </span>response = response.json::&lt;RequirementsResponse&gt;().<span class="kw">await</span>;
+            <span class="kw">let </span>response = response.text().<span class="kw">await</span>;
             <span class="kw">match </span>response {
                 <span class="prelude-val">Ok</span>(response) =&gt; <span class="prelude-val">Ok</span>(response),
                 <span class="prelude-val">Err</span>(err) =&gt; <span class="prelude-val">Err</span>(err),

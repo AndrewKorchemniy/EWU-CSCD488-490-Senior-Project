@@ -135,6 +135,10 @@
 <a href="#135" id="135">135</a>
 <a href="#136" id="136">136</a>
 <a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
 </pre><pre class="rust"><code><span class="kw">use </span>reqwasm::Error;
 <span class="kw">use </span>yew::prelude::<span class="kw-2">*</span>;
 
@@ -161,8 +165,12 @@
             _sprints_state.set(<span class="prelude-val">Some</span>(sprints));
         });
 
+    <span class="comment">// The state for if the call was sent.
+    </span><span class="kw">let </span>called_sprints_state = use_state(|| <span class="bool-val">false</span>);
+    
     <span class="comment">// Fetch the sprints if they haven&#39;t been fetched yet.
-    </span><span class="kw">if </span>sprints_state.is_none() {
+    </span><span class="kw">if </span>!<span class="kw-2">*</span>called_sprints_state {
+        called_sprints_state.set(<span class="bool-val">true</span>);
         wasm_bindgen_futures::spawn_local(<span class="kw">async move </span>{
             <span class="kw">let </span>creds = credentials.unwrap();
             <span class="kw">let </span>token = creds.access_token().unwrap_or_default();

@@ -147,6 +147,10 @@
 <a href="#147" id="147">147</a>
 <a href="#148" id="148">148</a>
 <a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
 </pre><pre class="rust"><code><span class="kw">use </span>gloo::console::log;
 <span class="kw">use </span>stylist::Style;
 <span class="kw">use </span>yew::prelude::<span class="kw-2">*</span>;
@@ -260,8 +264,12 @@
         _config_state.set(<span class="prelude-val">Some</span>(config));
     });
 
+    <span class="comment">// The state for if the call was sent.
+    </span><span class="kw">let </span>called_config_state = use_state(|| <span class="bool-val">false</span>);
+
     <span class="comment">// Fetch the oauth config if it hasn&#39;t been fetched yet.
-    </span><span class="kw">if </span>config_state.is_none() {
+    </span><span class="kw">if </span>!<span class="kw-2">*</span>called_config_state {
+        called_config_state.set(<span class="bool-val">true</span>);
         wasm_bindgen_futures::spawn_local(<span class="kw">async move </span>{
             <span class="kw">let </span>result = api_get_auth_config().<span class="kw">await</span>;
             config_state_changes.emit(result);

@@ -129,19 +129,19 @@
 <a href="#129" id="129">129</a>
 <a href="#130" id="130">130</a>
 <a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::api::token;
-<span class="kw">use </span><span class="kw">crate</span>::email::test::send_test_email;
+<span class="kw">use </span><span class="kw">crate</span>::email;
 <span class="kw">use </span>actix_web::web;
 <span class="kw">use </span>actix_web::{
-    delete, get, post, put,
+    get, post,
     web::{Data, Json},
     HttpResponse,
 };
-<span class="kw">use </span>common::models::todo::Todo; <span class="comment">// TODO: remove todo example
-</span><span class="kw">use </span>config::Config;
+<span class="kw">use </span>common::models::status_report;
+<span class="kw">use </span>common::models::types::TeamResponse;
+<span class="kw">use </span>config::Config;
 <span class="kw">use </span>database::repository::db_connector::Database;
+<span class="kw">use </span>log::debug;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
 <span class="attr">#[derive(Serialize, Deserialize, Debug, Clone)]
@@ -152,71 +152,70 @@
 
 <span class="comment">//https://actix.rs/docs/databases/
 
-// TODO: remove todo example
-</span><span class="attr">#[post(<span class="string">&quot;/todos&quot;</span>)]
-</span><span class="kw">pub async fn </span>create_todo(
-    data: Data&lt;(Database, Config, Config)&gt;,
-    new_todo: Json&lt;Todo&gt;,
-) -&gt; HttpResponse {
-    <span class="kw">let </span>todo = data.get_ref().<span class="number">0</span>.create_todo(new_todo.into_inner());
-    <span class="kw">match </span>todo {
-        <span class="prelude-val">Ok</span>(todo) =&gt; HttpResponse::Ok().json(todo),
-        <span class="prelude-val">Err</span>(err) =&gt; HttpResponse::InternalServerError().body(err.to_string()),
-    }
+</span><span class="attr">#[get(<span class="string">&quot;/sprints&quot;</span>)]
+</span><span class="kw">pub async fn </span>get_sprints(_data: Data&lt;(Database, Config, Config)&gt;) -&gt; HttpResponse {
+    HttpResponse::NotImplemented().body(<span class="string">&quot;Not Ready&quot;</span>)
 }
 
-<span class="comment">// TODO: remove todo example
-</span><span class="attr">#[get(<span class="string">&quot;/todos&quot;</span>)]
-</span><span class="kw">pub async fn </span>get_todos(data: Data&lt;(Database, Config, Config)&gt;) -&gt; HttpResponse {
-    <span class="kw">let </span>todos = data.get_ref().<span class="number">0</span>.get_todos();
-    HttpResponse::Ok().json(todos)
-}
-
-<span class="comment">// TODO: remove todo example
-</span><span class="attr">#[get(<span class="string">&quot;/todos/{id}&quot;</span>)]
-</span><span class="kw">pub async fn </span>get_todo_by_id(
+<span class="attr">#[post(<span class="string">&quot;/submit/team&quot;</span>)]
+</span><span class="kw">pub async fn </span>post_team(
     data: Data&lt;(Database, Config, Config)&gt;,
-    id: web::Path&lt;String&gt;,
+    body: web::Json&lt;TeamResponse&gt;,
 ) -&gt; HttpResponse {
-    <span class="kw">let </span>todo = data.get_ref().<span class="number">0</span>.get_todo_by_id(<span class="kw-2">&amp;</span>id);
-    <span class="kw">match </span>todo {
-        <span class="prelude-val">Some</span>(todo) =&gt; HttpResponse::Ok().json(todo),
-        <span class="prelude-val">None </span>=&gt; HttpResponse::NotFound().body(<span class="string">&quot;Todo not found&quot;</span>),
+    <span class="kw">let </span>completion_value;
+    <span class="kw">if </span>body.completion_percent.is_empty() {
+        <span class="macro">debug!</span>(<span class="string">&quot;Bad Request: completion_percent is empty&quot;</span>);
+        completion_value = <span class="number">0</span>;
+    } <span class="kw">else </span>{
+        completion_value = <span class="kw">match </span>body.completion_percent.parse() {
+            <span class="prelude-val">Ok</span>(value) =&gt; value,
+            <span class="prelude-val">Err</span>(error_message) =&gt; {
+                <span class="macro">debug!</span>(
+                    <span class="string">&quot;Bad Request: completion_percent is unable to be parse ({}) ({})&quot;</span>,
+                    body.completion_percent,
+                    error_message
+                );
+                <span class="kw">return </span>HttpResponse::BadRequest().body(<span class="string">&quot;completion_percent is unable to be parse&quot;</span>);
+            }
+        }
     }
-}
-
-<span class="comment">// TODO: remove todo example
-</span><span class="attr">#[put(<span class="string">&quot;/todos/{id}&quot;</span>)]
-</span><span class="kw">pub async fn </span>update_todo_by_id(
-    data: Data&lt;(Database, Config, Config)&gt;,
-    id: web::Path&lt;String&gt;,
-    _updated_todo: web::Json&lt;Todo&gt;,
-) -&gt; HttpResponse {
-    <span class="kw">let </span>todo = data.get_ref().<span class="number">0</span>.delete_todo_by_id(<span class="kw-2">&amp;</span>id);
-    <span class="kw">match </span>todo {
-        <span class="prelude-val">Some</span>(todo) =&gt; HttpResponse::Ok().json(todo),
-        <span class="prelude-val">None </span>=&gt; HttpResponse::NotFound().body(<span class="string">&quot;Todo not found&quot;</span>),
+    <span class="kw">let </span>update_value = status_report::TeamReport {
+        teams: <span class="string">&quot;eagles&quot;</span>.to_string(), <span class="comment">// TODO: fix
+        </span>sprint_num: <span class="number">1</span>,
+        understand_easiest: body.understand_easy.clone(),
+        understand_hardest: body.understand_hard.clone(),
+        approach_easiest: body.approach_easy.clone(),
+        approach_hardest: body.approach_hard.clone(),
+        solve_easiest: body.solve_easy.clone(),
+        solve_hardest: body.solve_hard.clone(),
+        evaluate_easiest: body.evaluate_easy.clone(),
+        evaluate_hardest: body.evaluate_hard.clone(),
+        completion: completion_value,
+        <span class="comment">// TODO: pace_succeed?
+        </span>contact: <span class="string">&quot;student@ewu.edu&quot;</span>.to_string(), <span class="comment">// TODO: fix
+        </span>comments: body.issues_comments.clone(),
+    };
+    data.get_ref().<span class="number">0</span>.update_team_report(update_value.clone());
+    <span class="comment">// TODO: add email confirmation
+    </span><span class="kw">let </span>email_out = email::team::send_confirmation_email(
+        <span class="string">&quot;Not Stu &lt;nelof50340@soremap.com&gt;&quot;</span>.to_string(),
+        update_value,
+        <span class="kw-2">&amp;</span>data.get_ref().<span class="number">2</span>,
+        <span class="kw-2">&amp;</span>data.get_ref().<span class="number">1</span>,
+    );
+    <span class="kw">match </span>email_out {
+        <span class="prelude-val">Ok</span>(message) =&gt; HttpResponse::Ok().body(<span class="macro">format!</span>(<span class="string">&quot;Done (Confirmation {})&quot;</span>, message)),
+        <span class="prelude-val">Err</span>(message) =&gt; HttpResponse::InternalServerError().body(<span class="macro">format!</span>(<span class="string">&quot;Done (Error {})&quot;</span>, message)),
     }
-}
-
-<span class="comment">// TODO: remove todo example
-</span><span class="attr">#[delete(<span class="string">&quot;/todos/{id}&quot;</span>)]
-</span><span class="kw">pub async fn </span>delete_todo_by_id(
-    data: Data&lt;(Database, Config, Config)&gt;,
-    id: web::Path&lt;String&gt;,
-) -&gt; HttpResponse {
-    <span class="kw">let </span>todo = data.get_ref().<span class="number">0</span>.delete_todo_by_id(<span class="kw-2">&amp;</span>id);
-    <span class="kw">match </span>todo {
-        <span class="prelude-val">Some</span>(todo) =&gt; HttpResponse::Ok().json(todo),
-        <span class="prelude-val">None </span>=&gt; HttpResponse::NotFound().body(<span class="string">&quot;Todo not found&quot;</span>),
-    }
-}
+    <span class="comment">// debug!(&quot;body.client_meeting: {}&quot;, body.client_meeting);
+    // HttpResponse::NotImplemented().body(&quot;Not Ready&quot;)
+</span>}
 
 <span class="comment">// TODO: remove using for dev
 </span><span class="attr">#[get(<span class="string">&quot;/send_test_email&quot;</span>)]
 </span><span class="kw">pub async fn </span>send_email(data: Data&lt;(Database, Config, Config)&gt;) -&gt; HttpResponse {
     <span class="comment">// TODO: remove after dev or require to be admin
-    </span><span class="kw">let </span>email_out = send_test_email(
+    </span><span class="kw">let </span>email_out = email::test::send_test_email(
         <span class="macro">format!</span>(
             <span class="string">&quot;admin &lt;{}&gt;&quot;</span>,
             data.get_ref()
@@ -240,7 +239,7 @@
     email_info: Json&lt;EmailInfo&gt;,
 ) -&gt; HttpResponse {
     <span class="comment">// TODO: remove after dev or require to be admin
-    </span><span class="kw">let </span>email_out = send_test_email(
+    </span><span class="kw">let </span>email_out = email::test::send_test_email(
         <span class="macro">format!</span>(<span class="string">&quot;{} &lt;{}&gt;&quot;</span>, email_info.name, email_info.email),
         <span class="kw-2">&amp;</span>data.get_ref().<span class="number">2</span>,
         <span class="kw-2">&amp;</span>data.get_ref().<span class="number">1</span>,
@@ -257,12 +256,9 @@
             .configure(token::config)
             .service(send_email) <span class="comment">// TODO: remove after dev or require to be admin
             </span>.service(send_email_to) <span class="comment">// TODO: remove after dev or require to be admin
-            </span>.service(create_todo) <span class="comment">// TODO: remove todo example
-            </span>.service(get_todos) <span class="comment">// TODO: remove todo example
-            </span>.service(get_todo_by_id) <span class="comment">// TODO: remove todo example
-            </span>.service(update_todo_by_id) <span class="comment">// TODO: remove todo example
-            </span>.service(delete_todo_by_id), <span class="comment">// TODO: remove todo example
-    </span>);
+            </span>.service(get_sprints)
+            .service(post_team),
+    );
 }
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="backend" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
