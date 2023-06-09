@@ -48,8 +48,14 @@ impl Database {
 
     /// Updates the users table with the given User struct.
     pub fn update_users(&self, user_in: status_report::User) {
+        /// This helps pull the user in diesel SQL link
         use crate::repository::schema::users::dsl::*;
+        /// This is the User model from database\repository\models\
         let user_update = models::User {
+            /// here we take in the data from the user_in
+            /// and give it to the same variables in User
+            /// the reason for the email.clone is that it will
+            /// used in the filter and burrowing rules apply
             email: user_in.email.clone(),
             ouath_id: user_in.ouath_id,
             is_teacher: user_in.is_teacher,
@@ -61,13 +67,21 @@ impl Database {
             last_name: user_in.last_name,
         };
 
+        /// makes connection to be used to talk to the database.
         let connection = &mut establish_connection();
 
         // DATABASE TARGET
-        let updated_row = diesel::update(users.find(user_in.email))
+        /// this creates the update_row to be passed to diesel
+        let updated_row = diesel::update(
+            /// this is a filter/search for in the database
+            users.find(user_in.email))
+            ///once the right user has been selected it pass these values
             .set(&user_update)
+            /// where to excute the command
             .execute(connection)
+            ///if the resultif the command fails
             .expect("Error in db_connector update_user");
+        ///this is for debugging features
         info!("Updated {} rows", updated_row);
     }
 
@@ -122,8 +136,9 @@ impl Database {
 
     /// Insert the sprint_num_dates table with the given NewSprint struct.
     pub fn new_sprint_num_date(&self, sprint_new: status_report::NewSprint) {
-        //This helps pull the sprirnt
+
         use crate::repository::schema::sprint_num_dates::dsl::*;
+
         let sprint_create = models::NewSprint
         {
 
