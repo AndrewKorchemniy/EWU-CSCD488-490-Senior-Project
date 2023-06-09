@@ -30,6 +30,7 @@ impl Database {
             solve_hardest: team_in.solve_hardest,
             evaluate_easiest: team_in.evaluate_easiest,
             evaluate_hardest: team_in.evaluate_hardest,
+
             completion: team_in.completion,
             contact: team_in.contact,
             comments: team_in.comments,
@@ -70,7 +71,6 @@ impl Database {
         info!("Updated {} rows", updated_row);
     }
 
-
     /// Updates the IndividualReport table with the given IndividualReport struct.
     pub fn update_individual_report(&self, individual_in: status_report::IndividualReport) {
         use crate::repository::schema::individual_reports::dsl::*;
@@ -91,11 +91,53 @@ impl Database {
         let connection = &mut establish_connection();
 
         // DATABASE TARGET
-        let updated_row = diesel::update(individual_reports.find((individual_in.email, individual_in.sprint_num)))
-            .set(&individual_update)
-            .execute(connection)
-            .expect("Error in db_connector update_individual_report");
+        let updated_row = diesel::update(
+            individual_reports.find((individual_in.email, individual_in.sprint_num)),
+        )
+        .set(&individual_update)
+        .execute(connection)
+        .expect("Error in db_connector update_individual_report");
         info!("Updated {} rows", updated_row);
+    }
+
+    /// Updates the Requirement table with the given Requirement struct.
+    pub fn update_requirement(&self, requirement_in: status_report::Requirement) {
+        use crate::repository::schema::requirements::dsl::*;
+        let requirement_update = models::Requirement {
+            teams: requirement_in.teams.clone(),
+            indexs: requirement_in.indexs,
+            description: requirement_in.description,
+        };
+
+        let connection = &mut establish_connection();
+
+        // DATABASE TARGET
+        let updated_row =
+            diesel::update(requirements.find((requirement_in.teams, requirement_in.indexs)))
+                .set(&requirement_update)
+                .execute(connection)
+                .expect("Error in db_connector update_requirement");
+        info!("Updated {} rows", updated_row);
+    }
+
+    /// Insert the sprint_num_dates table with the given NewSprint struct.
+    pub fn new_sprint_num_date(&self, sprint_new: status_report::NewSprint) {
+        //This helps pull the sprirnt
+        use crate::repository::schema::sprint_num_dates::dsl::*;
+        let sprint_create = models::NewSprint
+        {
+
+            sprint_num: sprint_new.sprint_num,
+            sprint_date: sprint_new.sprint_date,
+        };
+
+        let connection = &mut establish_connection();
+
+        // DATABASE TARGET
+        diesel::insert_into(sprint_num_dates)
+            .values(&sprint_create)
+            .execute(connection)
+            .expect("Error in db_connector new_sprint_num_date");
     }
 }
 
