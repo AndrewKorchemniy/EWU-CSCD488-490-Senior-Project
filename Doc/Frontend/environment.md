@@ -5,66 +5,62 @@
 - The frontend development environment utilizes Ubuntu running on Windows Subsystem for Linux (WSL).
 - The following instructions are for setting up the development environment on Windows 10.
 
----
-
 ## Install Guide:
 
-### Install Ubuntu
+### Install Ubuntu:
 
 - Install Ubuntu from the Microsoft Store. Recommended version: Ubuntu 22.04.2 LTS
 - DO NOT use the root user for development. There are known issues with rust and cargo when using the root user.
 
-### Install Rust & Cargo
+### Install Rust & Cargo:
 
 `curl https://sh.rustup.rs -sSf | sh`
 
-### Reload .basrc
+### Reload .basrc:
 
 `source ~/.bashrc`
 
-### Install WebAssembly Target
+### Install WebAssembly Target:
 
 `rustup target add wasm32-unknown-unknown`
 
-### Install Trunk
+### Install Trunk:
 
 `cargo install --locked trunk`
 
-### Install libmysqlclient-dev (for linux & WSL)
+### Install libmysqlclient-dev (for linux & WSL):
 
 `sudo apt update`
 
 `sudo apt install libmysqlclient-dev`
 
-### Install diesel_cli (optional for frontend work, but recommended - for database migrations)
+### Install diesel_cli (optional for frontend work, but recommended - for database migrations):
 
 `cargo install diesel_cli --no-default-features --features mysql`
 
-### Install opensll
+### Install opensll:
 
 `sudo apt install openssl`
 
 `sudo apt install libssl-dev`
 
-### Install pkg-config
+### Install pkg-config:
 
 `sudo apt install pkg-config`
 
----
+## WSL & VSCode Setup Guide:
 
-## WSL & VSCode Setup Guide
-
-### Install Vscode on Windows (in a elevated windows shell)
+### Install Vscode on Windows (in a elevated windows shell):
 
 `winget source update`
 
 `winget install Microsoft.VisualStudioCode`
 
-### Install VSCode Server on WSL (in a Ubuntu-WSL shell)
+### Install VSCode Server on WSL (in a Ubuntu-WSL shell):
 
 `code`
 
-### Open VSCode From WSL
+### Open VSCode From WSL:
 
 Navigate into the project directory you wish to work on.
 For the frontend, navigate into either the studentpage or adminpage directory.
