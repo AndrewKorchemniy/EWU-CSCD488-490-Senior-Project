@@ -32,7 +32,7 @@ The assets directory should be expanded to include any images, icons, fonts, or 
 
 The `src/components/` directory contains all the Yew components used in the frontend.  
 Each component is defined in its own file and uses Bootstrap for styling and functionality.  
-See the [Code Docs](https://www.tftinker.tech/EWU-CSCD488-490-Senior-Project/Doc/code/) for more information on each component.  
+See the [code documentation](/Doc/code/) for more information on each component.  
 See the [Frameworks](/Doc/Frontend/frameworks.md) document for more information on how the components are created.
 
 ### `src/pages/`
@@ -40,7 +40,7 @@ See the [Frameworks](/Doc/Frontend/frameworks.md) document for more information 
 The `src/pages/` directory contains all the pages used in the frontend.  
 Since the frontend is a single page application, each page is defined as a component.  
 Each page is defined in its own file and uses Bootstrap for styling and functionality.  
-See the [Code Docs](https://www.tftinker.tech/EWU-CSCD488-490-Senior-Project/Doc/code/) for more information on each page.
+See the [code documentation](https://www.tftinker.tech/EWU-CSCD488-490-Senior-Project/Doc/code/) for more information on each page.
 
 ### `src/stores/`
 
@@ -54,3 +54,5 @@ Since this is a single page application, the frontend uses a router to handle ro
 The frontend uses the [yew_router](https://docs.rs/yew-router/0.17.0/yew_router/) crate to handle routing.  
 All routes are defined within the `src/lib.rs` file.  
 Each route maps a path to a page component.
+
+For more on what each page does, see the [code documentation](/Doc/code/).
