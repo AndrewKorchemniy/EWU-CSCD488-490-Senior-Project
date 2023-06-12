@@ -2,7 +2,7 @@
 
 The following is a user guide for how admins can use the application.
 
-## `Signing In`
+## Signing In
 
 The first step is to log in to the application.  
 The login is handled by OAuth2 and is currently configured to use GitHub as the OAuth2 provider.  
@@ -11,7 +11,7 @@ The OAuth2 provider can be changed in the future.
 
 ![Gif of signing in with GitHub](./assets/sign_in.gif)
 
-## `Home Page`
+## Home Page
 
 The home page contains an admin panel for managing the classes, students, teams, and sprints.  
 This page is currently incomplete and cannot be used.  
