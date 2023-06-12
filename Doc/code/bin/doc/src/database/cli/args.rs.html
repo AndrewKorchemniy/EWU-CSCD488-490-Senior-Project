@@ -222,6 +222,7 @@
 <a href="#222" id="222">222</a>
 <a href="#223" id="223">223</a>
 <a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
 </pre><pre class="rust"><code><span class="kw">use </span>chrono::NaiveDate;
 <span class="kw">use </span>clap::{Args, Parser, Subcommand};
 
@@ -279,6 +280,7 @@
     <span class="attr">#[clap(subcommand)]
     </span><span class="kw">pub </span>command: TeamReportSubcommand,
 }
+
 
 <span class="attr">#[derive(Debug, Subcommand)]
 </span><span class="kw">pub enum </span>TeamReportSubcommand {
@@ -429,9 +431,9 @@
 </span><span class="kw">pub struct </span>CreateUser {
     <span class="kw">pub </span>email: String,
     <span class="kw">pub </span>ouath_id: String,
-    <span class="kw">pub </span>is_admin: bool,
     <span class="kw">pub </span>first_name: String,
     <span class="kw">pub </span>last_name: String,
+    <span class="kw">pub </span>teams: String,
 }
 
 <span class="attr">#[derive(Debug, Args)]

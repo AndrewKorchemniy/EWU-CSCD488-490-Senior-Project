@@ -29,6 +29,7 @@ pub struct Props {
 }
 
 /// The [MsgBox] component provides a styled message box with four variants.
+/// See <https://getbootstrap.com/docs/5.3/components/card/>
 #[function_component(MsgBox)]
 pub fn msg(props: &Props) -> Html {
     let get_variant = |variant: &MsgBoxVariant| match variant {

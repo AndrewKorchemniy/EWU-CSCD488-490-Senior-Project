@@ -109,6 +109,18 @@
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
 </pre><pre class="rust"><code><span class="kw">use </span>reqwasm::Error;
 <span class="kw">use </span>yew::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>yew_oauth2::prelude::OAuth2Context;
@@ -120,7 +132,15 @@
 <span class="kw">use </span><span class="kw">crate</span>::stores::team_store::TeamStore;
 <span class="kw">use </span>common::models::types::TeamResponse;
 
-<span class="attr">#[function_component(SubmitTeamReport)]
+<span class="comment">// TODO: This approach to submitting the team report use a new page.
+// Although it works, it&#39;s better to just create another modal component
+// for displaying the result of the API call. A bootstrap modal
+// can switch to displaying another modal.
+// See https://getbootstrap.com/docs/5.3/components/modal/
+
+</span><span class="doccomment">/// The [SubmitTeamReport] page sends the team report form
+/// data to the API endpoint and displays the result.
+</span><span class="attr">#[function_component(SubmitTeamReport)]
 </span><span class="kw">pub fn </span>submit_team_report() -&gt; Html {
     <span class="comment">// Get the OAuth2Context to get the access token.
     </span><span class="kw">let </span>credentials = use_context::&lt;OAuth2Context&gt;();
@@ -191,7 +211,11 @@
         _submit_state.set(<span class="prelude-val">Some</span>(response));
     });
 
-    <span class="kw">if </span>submit_state.is_none() {
+    <span class="comment">// The state for if the call was sent.
+    </span><span class="kw">let </span>called_submit_state = use_state(|| <span class="bool-val">false</span>);
+
+    <span class="kw">if </span>!<span class="kw-2">*</span>called_submit_state {
+        called_submit_state.set(<span class="bool-val">true</span>);
         wasm_bindgen_futures::spawn_local(<span class="kw">async move </span>{
             <span class="kw">let </span>creds = credentials.unwrap();
             <span class="kw">let </span>token = creds.access_token().unwrap_or_default();

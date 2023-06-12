@@ -5,6 +5,9 @@ use lettre::{Message, SmtpTransport, Transport};
 
 use log::{debug, error, info};
 
+/// Send a test email
+/// 
+/// used for testing and guide to making emails
 pub fn send_test_email(to_who: String, secret: &Config, server: &Config) -> Result<String, String> {
     info!("Sending test email");
     let email_result = Message::builder()

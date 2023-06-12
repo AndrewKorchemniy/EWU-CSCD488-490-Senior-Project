@@ -26,7 +26,7 @@ pub struct Props {
 
 /// The [Collapse] component provides a styled collapse button.
 /// Collapses the element with the given id when clicked.
-/// See https://getbootstrap.com/docs/5.3/components/collapse/
+/// See <https://getbootstrap.com/docs/5.3/components/collapse/>
 #[function_component(Collapse)]
 pub fn collapse(props: &Props) -> Html {
     let get_btn_variant = |variant: &CollapseValidation| match variant {

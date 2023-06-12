@@ -1,2 +1,3 @@
-pub mod test;
+/// For sending emails
 pub mod team;
+pub mod test;

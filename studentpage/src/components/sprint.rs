@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use crate::Route;
 use chrono::prelude::*;
 use yew::prelude::*;
@@ -19,12 +21,10 @@ impl ReportStatus {
             true => ReportStatus::Submitted,
             false => {
                 let now = Local::now().naive_local().date();
-                if now > due_date {
-                    ReportStatus::Missing
-                } else if now == due_date {
-                    ReportStatus::Active(route)
-                } else {
-                    ReportStatus::Upcoming
+                match now.cmp(&due_date) {
+                    Ordering::Greater => ReportStatus::Missing,
+                    Ordering::Equal => ReportStatus::Active(route),
+                    Ordering::Less => ReportStatus::Upcoming,
                 }
             }
         }
@@ -49,8 +49,8 @@ pub struct Props {
 /// Each row within the calendar represents a sprint.
 #[function_component(Sprint)]
 pub fn sprint(props: &Props) -> Html {
-    /// Renders the appropriate icon given the report status.
-    fn get_status(status: &ReportStatus) -> Html {
+    // Renders the appropriate icon given the report status.
+    let get_status = |status: &ReportStatus| -> Html {
         match status {
             ReportStatus::Submitted => html! {
                 <td class="text-center" style="color: limegreen">
@@ -76,7 +76,7 @@ pub fn sprint(props: &Props) -> Html {
                 </td>
             },
         }
-    }
+    };
 
     html! {
         <tr>

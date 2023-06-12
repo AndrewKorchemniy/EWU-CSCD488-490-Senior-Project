@@ -60,8 +60,8 @@ pub fn time_accounting(props: &Props) -> Html {
 
     // Render empty value if None.
     let some_or_empty = |value: Option<i32>| -> String {
-        if value.is_some() {
-            value.unwrap().to_string()
+        if let Some(val) = value {
+            val.to_string()
         } else {
             String::from("")
         }
@@ -83,7 +83,6 @@ pub fn time_accounting(props: &Props) -> Html {
                                 type="number"
                                 min="0"
                                 max="100"
-                                // value={ if store.saturday_hours.is_some() { store.saturday_hours.unwrap().to_string() } else { String::from("") } }
                                 value={ some_or_empty(store.saturday_hours) }
                                 onchange={ saturday_hours_onchange }
                                 style="width: 4rem" />

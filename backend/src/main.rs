@@ -1,8 +1,8 @@
+/// # Main to project backend also know as the server
 // TODO: Login
 // TODO: Individual Report
 // TODO: Team Report
 // TODO: Email
-
 use actix_files::{Files, NamedFile};
 use actix_web::dev::{fn_service, ServiceRequest, ServiceResponse};
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder, Result};
@@ -18,19 +18,48 @@ use database::repository;
 mod api;
 mod email;
 
+/// ## simple response struct
+///
+/// Make it easy to send json for a message instead of text
+///
+/// > TODO: move to common
 #[derive(Serialize)]
 pub struct Response {
     pub message: String,
 }
 
+/// ## health api (get)
+///
+/// easy way to see if the server is healthy
+///
+/// ### TODO:
+///
+///  - check on config files
+///  - check on database
+///  - check on email server
+///  - check on logging
+///  - any other parts of the server
+///
 #[get("/health")]
 async fn healthcheck() -> impl Responder {
+    // TODO: check on config files
+    // TODO: check on database
+    // TODO: check on email server
+    // TODO: check on logging
+    // TODO: any other parts of the server
     let response = Response {
         message: "Everything is working fine".to_string(),
     };
     HttpResponse::Ok().json(response)
 }
 
+/// ## shutdown api (get)
+///
+/// > TODO: remove or admin only allow to call
+///
+/// Run a kill command to current actix thread.
+///
+/// NOTE: when any of the actix thread are killed then actix will shutdown
 #[get("/shutdown")]
 async fn shutdown_server() -> impl Responder {
     // TODO: check if admin
@@ -53,6 +82,9 @@ async fn shutdown_server() -> impl Responder {
     }
 }
 
+/// ## Not found (404)
+///
+/// Make a result in json for when the page is not found (http 404 code)
 async fn not_found() -> Result<HttpResponse> {
     error!("Invalid page load");
     let response = Response {
@@ -61,15 +93,30 @@ async fn not_found() -> Result<HttpResponse> {
     Ok(HttpResponse::NotFound().json(response))
 }
 
+/// ## Start of backend code
+///
+/// Run the backend of the project.
+/// Used to server the pages and
+/// provide a rest API to verify info and save/get info from database.
+///
+/// ### Parts of the code
+///
+/// - Get the config files (server.config, secret.config)
+/// - Setup Logger
+/// - Call setup db
+/// - Setup SSL
+/// - Setup actix HTTP server
+/// - Start actix server
+///
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     // config file
     let server_config = Config::builder()
-        .add_source(config::File::with_name("server.config.toml"))
+        .add_source(config::File::with_name("server.config"))
         .build()
         .expect("Missing Server Config File");
     let secret_config = Config::builder()
-        .add_source(config::File::with_name("secret.config.toml"))
+        .add_source(config::File::with_name("secret.config"))
         .build()
         .expect("Missing Secret Config File");
 
@@ -79,11 +126,12 @@ async fn main() -> std::io::Result<()> {
         std::env::set_var("RUST_LOG", "info");
         // std::env::set_var("RUST_LOG", "debug");
     }
+    // TODO: add log file (Look like we need to change what logger we use)
     env_logger::init();
 
     info!("Start of web server");
 
-    // TODO: database
+    // database
     let todo_db = repository::db_connector::Database::new();
     let app_data = web::Data::new((todo_db, server_config.clone(), secret_config.clone()));
 

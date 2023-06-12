@@ -94,33 +94,17 @@
 <a href="#94" id="94">94</a>
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
-<a href="#97" id="97">97</a>
-<a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a>
-<a href="#104" id="104">104</a>
-<a href="#105" id="105">105</a>
-<a href="#106" id="106">106</a>
-<a href="#107" id="107">107</a>
-<a href="#108" id="108">108</a>
-<a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a>
-<a href="#112" id="112">112</a>
-</pre><pre class="rust"><code><span class="kw">use </span>reqwasm::Error;
-<span class="kw">use </span>web_sys::HtmlButtonElement;
+</pre><pre class="rust"><code><span class="kw">use </span>gloo_utils::window;
+<span class="kw">use </span>reqwasm::Error;
 <span class="kw">use </span>yew::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>yew_oauth2::prelude::OAuth2Context;
 <span class="kw">use </span>yew_router::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span><span class="kw">crate</span>::api::{api_get_requirements, api_post_delete_requirement};
+<span class="kw">use </span><span class="kw">crate</span>::api::api_get_requirements;
 <span class="kw">use </span><span class="kw">crate</span>::components::button::{Button, ButtonVariant};
 <span class="kw">use </span><span class="kw">crate</span>::components::card::Card;
-<span class="kw">use </span><span class="kw">crate</span>::components::modal::Modal;
 <span class="kw">use </span><span class="kw">crate</span>::components::msgbox::{MsgBox, MsgBoxVariant};
+<span class="kw">use </span><span class="kw">crate</span>::components::requirement::Requirement;
 <span class="kw">use </span><span class="kw">crate</span>::components::spinner::SpinnerInset;
 <span class="kw">use </span><span class="kw">crate</span>::Route;
 
@@ -140,8 +124,12 @@
         },
     );
 
+    <span class="comment">// The state for if the call was sent.
+    </span><span class="kw">let </span>called_requirements_state = use_state(|| <span class="bool-val">false</span>);
+
     <span class="comment">// Fetch the requirements if they haven&#39;t been fetched yet.
-    </span><span class="kw">if </span>requirements_state.is_none() {
+    </span><span class="kw">if </span>!<span class="kw-2">*</span>called_requirements_state {
+        called_requirements_state.set(<span class="bool-val">true</span>);
         <span class="kw">let </span>cloned_credentials: <span class="prelude-ty">Option</span>&lt;OAuth2Context&gt; = credentials.clone();
         <span class="kw">let </span>cloned_requirements_state_changes = requirements_state_changes.clone();
         wasm_bindgen_futures::spawn_local(<span class="kw">async move </span>{
@@ -152,19 +140,15 @@
         });
     }
 
-    <span class="comment">// The callback to delete a requirement.
-    </span><span class="kw">let </span>delete_requirement = Callback::from(<span class="kw">move </span>|event: MouseEvent| {
-        <span class="kw">let </span>cloned_requirements_state_changes = requirements_state_changes.clone();
-        <span class="kw">let </span>cloned_credentials = credentials.clone();
-        <span class="kw">let </span>target: HtmlButtonElement = event.target_unchecked_into();
-        <span class="kw">let </span>requirement_id = target.id().parse::&lt;i32&gt;().unwrap_or_default();
-        wasm_bindgen_futures::spawn_local(<span class="kw">async move </span>{
-            <span class="kw">let </span>creds = cloned_credentials.unwrap();
-            <span class="kw">let </span>token = creds.access_token().unwrap_or_default();
-            <span class="kw">let </span>result = api_post_delete_requirement(requirement_id, token).<span class="kw">await</span>;
-            cloned_requirements_state_changes.emit(result);
-        });
-    });
+    <span class="comment">// The state for if a delete call was sent.
+    </span><span class="kw">let </span>called_delete_state = use_state(|| <span class="bool-val">false</span>);
+    <span class="kw">let </span>cloned_called_delete_state = called_delete_state.clone();
+
+    <span class="comment">// Reload the page if delete was called.
+    </span><span class="kw">if </span><span class="kw-2">*</span>called_delete_state {
+        <span class="kw">let </span>document = window();
+        <span class="kw">_ </span>= document.location().reload();
+    }
 
     <span class="macro">html! </span>{
         <span class="kw">if </span>requirements_state.is_some() {
@@ -172,27 +156,11 @@
                 &lt;Card&gt;
                     { <span class="kw">for </span>requirements_state.as_ref().unwrap().as_ref().unwrap().requirements.iter().map(|requirement| {
                         <span class="macro">html! </span>{
-                            &lt;MsgBox
-                                class=<span class="string">&quot;mt-3 col-12 col-xl-6&quot;
-                                </span>variant={ MsgBoxVariant::Secondary }
-                                title={ <span class="macro">format!</span>(<span class="string">&quot;{}: {}&quot;</span>,
-                                    requirement.id,
-                                    requirement.title.clone()) }
-                                text={ requirement.description.clone() }&gt;
-                                &lt;Button
-                                    variant={ ButtonVariant::Danger }
-                                    label=<span class="string">&quot;Delete&quot;
-                                    </span>class=<span class="string">&quot;col-auto&quot;
-                                    </span>data_bs_toggle=<span class="string">&quot;modal&quot;
-                                    </span>data_bs_target={ <span class="macro">format!</span>(<span class="string">&quot;#r{}&quot;</span>, requirement.id) } /&gt;
-                                &lt;Modal
-                                    id={ <span class="macro">format!</span>(<span class="string">&quot;r{}&quot;</span>, requirement.id) }
-                                    title=<span class="string">&quot;Are you sure?&quot;
-                                    </span>body=<span class="string">&quot;This action is irriversible.&quot;
-                                    </span>onclick={ <span class="kw-2">&amp;</span>delete_requirement }
-                                    action_id={ requirement.id.to_string() }
-                                    action_label=<span class="string">&quot;Delete&quot; </span>/&gt;
-                            &lt;/MsgBox&gt;
+                            &lt;Requirement 
+                                id={ requirement.id }
+                                title={ requirement.title.clone() }
+                                description={ requirement.description.clone() }
+                                deleted={ cloned_called_delete_state.clone() } /&gt;
                         }
                     })}
                     &lt;Link&lt;Route&gt; to={ Route::Home }&gt;

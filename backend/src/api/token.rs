@@ -15,6 +15,9 @@ use database::repository::db_connector::Database;
 use log::{error, info};
 use serde::{Deserialize, Serialize};
 
+/// TODO: look into this
+///
+/// From example online
 #[derive(Debug, Deserialize, Serialize)]
 pub struct TokenBody {
     grant_type: String,
@@ -23,6 +26,11 @@ pub struct TokenBody {
     redirect_uri: String,
 }
 
+/// ## OAuth Public Config response struct
+///
+/// Make it easy to send json
+///
+/// > TODO: move to common
 #[derive(Serialize)]
 pub struct OAuthClientConfig {
     client_id: String,
@@ -30,6 +38,11 @@ pub struct OAuthClientConfig {
     token_url: String,
 }
 
+/// ## simple response struct
+///
+/// Make it easy to send json for a message instead of text
+///
+/// > TODO: move to common
 #[derive(Serialize)]
 pub struct Response {
     message: String,
@@ -37,6 +50,7 @@ pub struct Response {
 
 // TODO: setup login
 
+/// config oauth api part of the actix
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("oauth")
@@ -49,6 +63,7 @@ pub fn config(cfg: &mut web::ServiceConfig) {
     );
 }
 
+/// give public parts of the oauth config in json format for http request
 #[get("/config")]
 pub async fn give_config(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let client_id_results: Result<String, _> = app_data.get_ref().1.get("OAUTH_CLIENT_ID");
@@ -83,6 +98,7 @@ pub async fn give_config(app_data: Data<(Database, Config, Config)>) -> HttpResp
     }
 }
 
+/// give oauth token url in json message for http request
 #[get("/tokenurl")]
 pub async fn give_token_url(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let token_url: Result<String, _> = app_data.get_ref().1.get("OAUTH_TOKEN_URL");
@@ -95,6 +111,7 @@ pub async fn give_token_url(app_data: Data<(Database, Config, Config)>) -> HttpR
     }
 }
 
+/// give oauth auth url in json message for http request
 #[get("/authurl")]
 pub async fn give_auth_url(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let auth_url: Result<String, _> = app_data.get_ref().1.get("OAUTH_AUTH_URL");
@@ -107,6 +124,7 @@ pub async fn give_auth_url(app_data: Data<(Database, Config, Config)>) -> HttpRe
     }
 }
 
+/// give oauth client id in json message for http request
 #[get("/clientid")]
 pub async fn give_client_id(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     let client_id: Result<String, _> = app_data.get_ref().1.get("OAUTH_CLIENT_ID");
@@ -166,6 +184,9 @@ pub async fn login(app_data: Data<(Database, Config, Config)>) -> HttpResponse {
     HttpResponse::Ok().json(aru)
 }
 
+/// TODO: what is this used for
+///
+/// From example online
 #[post("/token")]
 pub async fn token(
     app_data: Data<(Database, Config, Config)>,
@@ -199,6 +220,7 @@ pub async fn token(
     }
 }
 
+/// Helper to make a client that often used in this file
 fn make_client(
     app_data: Data<(Database, Config, Config)>,
 ) -> Client<

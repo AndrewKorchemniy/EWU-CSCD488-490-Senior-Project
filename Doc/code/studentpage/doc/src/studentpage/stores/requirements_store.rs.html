@@ -10,16 +10,14 @@
 <a href="#10" id="10">10</a>
 <a href="#11" id="11">11</a>
 <a href="#12" id="12">12</a>
-<a href="#13" id="13">13</a>
 </pre><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>yewdux::prelude::<span class="kw-2">*</span>;
 
 <span class="attr">#[derive(Store, Default, PartialEq, Clone, Serialize, Deserialize)]
 #[store(storage = <span class="string">&quot;session&quot;</span>)]
-</span><span class="comment">// TODO: use local storage instead, so that the data persists across sessions.
-// Local storage does not expire, so a custom method of clearing the data is required.
-// Especially since data should not persist between sprints.
-// One option is to store the date within the store itself.
+</span><span class="comment">// TODO: The create requirement feature probably does not need to
+// use session storage at all. Simple use a use_state for the text
+// input / area values instead.
 </span><span class="kw">pub struct </span>RequirementsStore {
     <span class="kw">pub </span>title: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="kw">pub </span>description: <span class="prelude-ty">Option</span>&lt;String&gt;,

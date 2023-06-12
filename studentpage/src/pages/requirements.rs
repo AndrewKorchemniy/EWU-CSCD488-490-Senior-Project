@@ -34,10 +34,9 @@ pub fn requirements() -> Html {
     // Fetch the requirements if they haven't been fetched yet.
     if !*called_requirements_state {
         called_requirements_state.set(true);
-        let cloned_credentials: Option<OAuth2Context> = credentials.clone();
         let cloned_requirements_state_changes = requirements_state_changes.clone();
+        let creds = credentials.clone().unwrap();
         wasm_bindgen_futures::spawn_local(async move {
-            let creds = cloned_credentials.unwrap();
             let token = creds.access_token().unwrap_or_default();
             let result = api_get_requirements(token).await;
             cloned_requirements_state_changes.emit(result);
@@ -60,7 +59,7 @@ pub fn requirements() -> Html {
                 <Card>
                     { for requirements_state.as_ref().unwrap().as_ref().unwrap().requirements.iter().map(|requirement| {
                         html! {
-                            <Requirement 
+                            <Requirement
                                 id={ requirement.id }
                                 title={ requirement.title.clone() }
                                 description={ requirement.description.clone() }

@@ -8,7 +8,8 @@ pub struct Props {
 
 /// The [Calendar] component provides a styled table of sprints.
 /// Each sprint has an associated due date, team report, and individual report.
-/// See https://getbootstrap.com/docs/5.3/content/tables/
+/// See <https://getbootstrap.com/docs/5.3/content/tables/> and
+/// <https://getbootstrap.com/docs/5.3/utilities/colors/>
 #[function_component(Calendar)]
 pub fn calendar(props: &Props) -> Html {
     html! {

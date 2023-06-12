@@ -1,13 +1,19 @@
+use common::models::status_report::TeamReport;
 use config::Config;
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{Message, SmtpTransport, Transport};
-use common::models::status_report::TeamReport;
-
 
 use log::{debug, error, info};
 
-pub fn send_confirmation_email(to_who: String, report_data: TeamReport, secret: &Config, server: &Config) -> Result<String, String> {
+/// Send a confirmation email for team report
+/// There is many todo's for this
+pub fn send_confirmation_email(
+    to_who: String,
+    report_data: TeamReport,
+    secret: &Config,
+    server: &Config,
+) -> Result<String, String> {
     info!("Sending team report confirmation email {}", to_who);
     let email_result = Message::builder()
         // "NoBody <nobody@domain.tld>"
@@ -18,8 +24,8 @@ pub fn send_confirmation_email(to_who: String, report_data: TeamReport, secret: 
                     .get::<String>("smtp_email")
                     .expect("Missing sender email")
             )
-                .parse()
-                .unwrap(),
+            .parse()
+            .unwrap(),
         )
         .reply_to(
             format!(
@@ -28,8 +34,8 @@ pub fn send_confirmation_email(to_who: String, report_data: TeamReport, secret: 
                     .get::<String>("smtp_email")
                     .expect("Missing sender email")
             )
-                .parse()
-                .unwrap(),
+            .parse()
+            .unwrap(),
         )
         // .to(format!("{} <{}>", to_who, server.get::<String>("admin_email").expect("Missing admin email")).parse().unwrap())
         .to(to_who.parse().unwrap())
@@ -60,7 +66,8 @@ pub fn send_confirmation_email(to_who: String, report_data: TeamReport, secret: 
             report_data.evaluate_hardest,
             report_data.completion,
             report_data.contact,
-            report_data.comments)));
+            report_data.comments
+        )));
     let email = match email_result {
         Ok(em) => em,
         Err(e) => {

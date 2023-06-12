@@ -2,6 +2,7 @@
 
 - On Linux
   - Moved to cloud vm
+  - Amazon Linux 2 AMI
 
 - Using MySQL and Java
   - Reuse MySQL server

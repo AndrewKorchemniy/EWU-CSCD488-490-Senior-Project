@@ -71,6 +71,9 @@
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a>
 </pre><pre class="rust"><code><span class="kw">use </span>config::Config;
 <span class="kw">use </span>lettre::message::header::ContentType;
 <span class="kw">use </span>lettre::transport::smtp::authentication::Credentials;
@@ -78,7 +81,10 @@
 
 <span class="kw">use </span>log::{debug, error, info};
 
-<span class="kw">pub fn </span>send_test_email(to_who: String, secret: <span class="kw-2">&amp;</span>Config, server: <span class="kw-2">&amp;</span>Config) -&gt; <span class="prelude-ty">Result</span>&lt;String, String&gt; {
+<span class="doccomment">/// Send a test email
+/// 
+/// used for testing and guide to making emails
+</span><span class="kw">pub fn </span>send_test_email(to_who: String, secret: <span class="kw-2">&amp;</span>Config, server: <span class="kw-2">&amp;</span>Config) -&gt; <span class="prelude-ty">Result</span>&lt;String, String&gt; {
     <span class="macro">info!</span>(<span class="string">&quot;Sending test email&quot;</span>);
     <span class="kw">let </span>email_result = Message::builder()
         <span class="comment">// &quot;NoBody &lt;nobody@domain.tld&gt;&quot;

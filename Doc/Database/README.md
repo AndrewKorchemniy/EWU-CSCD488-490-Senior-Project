@@ -1,47 +1,300 @@
-Database documentation
-by Jonathan 
+# Database User Guide 
+By Nicolas Gainer
 
-The database version 0.5 is built on the idea of the user well be verified through Ouath which is in the table of users and called ouath_id. Then the table email is used to navigate the rest of the tables. The reason of using the email as the primary what of traversing the database is that Ouath id will not be set until the user has login in for the first time.
+[SQL DataBase Design](SQL_Design.md)
 
-![DB SCHEMA](https://i.imgur.com/UANnVbm.png)
+to get started we need to install some components in a Ubuntu linux sub-system :
 
-Tables 
-- users purpose: is to store the users, link them to their reports, teams, login to the correct user, and receive emails.
-	- ouath_id: is varchar (255): This hold the token return when a person logins in the the website.(in the database but feature is not for this is not implemented)
-	- is_theacher: is a boolean: that allows the user to gain access to teacher privileges. Also help in the sending of emails to the correct teacher. (in the database but feature is not for this is not implemented)
-	- is_student: is a boolean: that allows the user to gain access to student privileges. Also help the server in querying the reports for the students. (in the database but feature is not for this is not implemented)
-	- is_admin: is a boolean: that allows the user to gain access to is_admin privileges. (in the database but feature is not for this is not implemented)
-	- teams: is a varchar(50): that allows a user to be added to a team. 
-	- class: is a varchar(50): places the user in a class. This helps with the server being able to email the correct teacher..
-	- email: varchar(255): allows the user to be emailed and to navigate the database 
+***mysql server***
+```
+sudo apt-get install libmysqlclient-dev
+```
+you need to have the libmysqlclient-dev installed before you download the diesel_cli
+
+***diesel*** 
+```
+cargo install diesel_cli --no-default-features --features mysql
+```
+
+the easy way to connect to your deisel to the database is with the .env file which you can create with this line of code in command line(make sure you are in the location you want the file at)which the best location is in the database folder.
+***database mysql connection file***
+```
+echo DATABASE_URL=mysql://username:password@localhost/diesel_demo > .env
+```
+the db.rs file is the connection file setup which uses this .env file 
+
+this command line will create the database and create an empty migrations directory. (if the database exist and you have the miegrations directory don't worry about this command)
+```
+diesel setup
+```
+
+this will create the migration folder for up and down
+which is your create tables and drop tables.
+if migration folder exist with up.sql and down.sql dont worry about this line of code.
+```
+diesel migration generate create_posts
+```
+
+when you run this command it will run the up.sql file and any sql will create the tables for the database that you have setup, using sql code. this comannd also creates or updates the scheme.rs
+```
+diesel migration run
+```
+this line will fail if you have any tables in the database so you might have to manuilly drop the tables before running.
 
 
-- spirit_num_dates: has two purpose to keeping all the reports for a week link to each other, and it allows the server to know when to unlock and lock the reports
-	- spirit_num: is an int: that allows the induvial report, team report, and requirements  to be linked together and on the same time.
-	- spirit_dates: is an int: allows the spirit_num to be linked to a date.
-	
-- individual_reports: allows the user to make weekly reports for themselves.
-	  the following variables are part of the individual reports as the data fields of the report.
-	- monday_time, tuesday_time, wedensday_time, thursday_time, friday_time, saturday_time, sunday_time, discrepancy, request
-	
-	- email: varchar(255): is present to allow the user to reach this table.
-	- spirit_num: is an int: does two things it allows for a unique entry for each report and allows the server to know which report to save to.
+example of the sql code in the up.sql
+```sql
+create table users  
+(  
+email varchar(255) not null primary key,  
+ouath_id varchar(255) null,  
+is_teacher bool null,  
+is_student bool null,  
+is_admin bool null,  
+teams varchar(50) null,  
+class varchar(50) null,  
+first_name varchar(30) null,  
+last_name varchar(30) null,  
+index idx_teams(teams)  
+);
+```
 
-- team_activities:  was to allow users to comment on teammates  however this hase been determined to not be adequate.
-	- spirit_num: is an int: allows the the correct team report to 
-	- activity_index: is an auto-indexing int: to provide a unique number per activaties
-	- answer: is a varchar(255): the respond to a teammates stated activates 
-	- teams: is an varchar(50): that links the team to the correct activity
-	-  email: varchar(255): is present to allow the user to reach this table.
+diesel generated schema.rs code example
+```rust
+diesel::table! {  
+users (email) {  
+email -> Varchar,  
+ouath_id -> Nullable<Varchar>,  
+is_teacher -> Nullable<Bool>,  
+is_student -> Nullable<Bool>,  
+is_admin -> Nullable<Bool>,  
+teams -> Nullable<Varchar>,  
+class -> Nullable<Varchar>,  
+first_name -> Nullable<Varchar>,  
+last_name -> Nullable<Varchar>,  
+}  
+}
+```
+If your table has Floats, the diesel type equivalent is f32 and for doubles its f64.(we never got diesel to like doubles)
 
-- team_reports: allows the user to make weekly reports for team
-	   the following variables are part of the team reports as the data fields of the report.
-	-  understand_easiest, understand_hardest, approach_easiest, approach_hardest, solve_easiest, solve_hardest, evaluate_easiest, evaluate_hardest, completion, contact, comments
-	
-	- teams: varchar(50): this ensure the right team/members connects to this report.
-	- spirit_num: int: to link to the correct spirit this week.
+```rust
+#[derive(Debug, Queryable, AsChangeset,Clone)]  
+pub struct User {  
+pub email: String,  
+pub ouath_id: String,  
+pub is_teacher: bool,  
+pub is_student: bool,  
+pub is_admin: bool,  
+pub teams: String,  
+pub class: String,  
+pub first_name: String,  
+pub last_name: String,  
+}
+```
+this is in the model.rs which is the model struct used to connect to the schema. (will explain more in the creating models portion.)
 
-- requirements: this table hold the requirements for the teams project however this hase been determined to not be adequate.
-	- description: varchar(255):  This describes the requirement for the users projects 
-	- teams : varchar(50) :
-	- indexs : int : to allows different requirement for each team.
+
+the redo command does a rollback by reverting the changes made by the last excuted migration which executes the down migration script associated with the last migration, then the up script reapplies the tables from the up.sql. 
+```
+diesel migration redo
+```
+the order of your tables in up matters with the primary key connection points and foregn keys and the down table needs to reverse the up table order.
+
+
+
+for models you will need two table, one to create a table for  and a table for updating.
+
+This table is used if you want to update tables or just want to see whats on the table.
+
+#[derive(Debug, Queryable, AsChangeset, Clone)] these are a set of functions added to the struct. 
+
+Debug: trait provides a default string representation of a type, primarily intended for debugging purposes. and used like this "println!("{:?}", my_struct)" when used for a struct
+
+Queryable: trait enables mapping database query results to Rust structs
+
+AsChangeset: provides a convenient way to define changes to be applied to a database record based on the fields of a struct
+
+Clone: allows you to create a copy of a value, providing a convenient way to clone objects
+```rust
+#[derive(Debug, Queryable, AsChangeset, Clone)]  
+pub struct User {  
+pub email: String,  
+pub ouath_id: String,  
+pub is_teacher: bool,  
+pub is_student: bool,  
+pub is_admin: bool,  
+pub teams: String,  
+pub class: String,  
+pub first_name: String,  
+pub last_name: String,  
+}
+```
+
+
+This table is used only for when you want to add a new row to your table. 
+
+the "#[diesel(table_name = users)]" line is the connection name to the scheme. these fields are the ones you want to make sure those are the fields needed at creation time.
+
+#[derive(Insertable,Clone)] these are a set of functions added to the struct. 
+
+insertable: is when you want to insert sql
+
+Clone: allows ease of copying one object into another
+```rust
+#[derive(Insertable,Clone)]  
+#[diesel(table_name = users)]  
+pub struct NewUser<'a> {  
+pub email: &'a str,  
+pub ouath_id: &'a str,  
+pub is_admin: bool,  
+pub first_name: &'a str,  
+pub last_name: &'a str,  
+}
+```
+
+
+
+
+here you have the argument struct for creating the user which is located in the *args.rs file which is the sub command used from the cli User Create.
+```rust
+#[derive(Debug, Args)]  
+pub struct CreateUser {  
+pub email: String,  
+pub ouath_id: String,  
+pub first_name: String,  
+pub last_name: String,  
+pub teams: String,  
+}
+```
+
+the same thing for the update struct but has all the fields in the table.
+```rust
+#[derive(Debug, Args)]  
+pub struct UpdateUser {  
+pub email: String,  
+pub ouath_id: String,  
+pub is_teacher: bool,  
+pub is_student: bool,  
+pub is_admin: bool,  
+pub teams: String,  
+pub class: String,  
+pub first_name: String,  
+pub last_name: String,  
+}
+```
+
+
+in the *main.rs* file this takes the Command you got from args and sends it to the operation for the spacific table you called.
+```rust
+EntityType::User(user) => handle_user_command(user)
+```
+
+in the match command for *handle_user_command* this will see the Create user command and send it to the create_user function. 
+```rust
+UserSubcommand::Create(user_cmd) => {  
+create_user(user_cmd);  
+}
+```
+
+
+from here you make gran the scheme tables made by diesel to connect to the databse. then you make a connection through the *db.rs* file which has your connection point code. from there you make a *new_user* object with the *NewUser* table from models. Then from there you use the **diesel::insert_into** function with the NewUser Object and the connection to the database.
+```rust
+pub fn create_user(user_cmd: CreateUser) {  
+println!("creating thee user: {:?}", user_cmd);  
+use crate::repository::schema::users::dsl::*;  
+  
+let connection = &mut establish_connection();  
+let new_user = NewUser {  
+email: &user_cmd.email,  
+ouath_id: &user_cmd.ouath_id,  
+first_name: &user_cmd.first_name,  
+last_name: &user_cmd.last_name,  
+teams: &user_cmd.teams,  
+};  
+// DATABASE TARGET  
+diesel::insert_into(users)  
+.values(&new_user)  
+.execute(connection)  
+.expect("Error saving new user");  
+}
+```
+
+the update is very similar but the main differnce is the way you use **diesel::update**. it takes the *scheme table users* with the **find()** function to find the primary key in that table with the command data.  
+```rust
+pub fn update_user(user_cmd: UpdateUser) {  
+println!("updating the requirement: {:?}", user_cmd);  
+use crate::repository::schema::users::dsl::*;  
+  
+let connection = &mut establish_connection();  
+let new_user = User {  
+email: user_cmd.email.clone(),  
+ouath_id: user_cmd.ouath_id,  
+is_teacher: user_cmd.is_teacher,  
+is_student: user_cmd.is_student,  
+is_admin: user_cmd.is_admin,  
+teams: user_cmd.teams,  
+class: user_cmd.class,  
+first_name: user_cmd.first_name,  
+last_name: user_cmd.last_name,  
+};  
+  
+let updated_row = diesel::update(users.find(user_cmd.email))  
+.set(&new_user)  
+.execute(connection)  
+.expect("Error updating requirement");  
+println!("Updated {} rows", updated_row);  
+}
+```
+
+
+you have to make sure that the **find()** matches the **primary key** for the table you are updating. and if there are 2 or more it has to be added as a tuple. example:  ***(team_report_cmd.teams, team_report_cmd.sprint_num)*** 
+```rust
+let updated_row =  
+diesel::update(team_reports.find((team_report_cmd.teams, team_report_cmd.sprint_num)))  
+	.set(&new_team_report)  
+	.execute(connection)  
+	.expect("Error updating teamReport");
+println!("Updated {} rows", updated_row);
+```
+
+
+***USER GUIDE TO DIESEL CLI***
+
+for the most part it is self guiding all you really need to know is to make sure to compile the code and make the call.
+
+make sure to run the build script from the main file so make sure you are in the EWU-CSCD488-490-Senior-Project directory when running this code.
+```
+helper_scripts/build.sh
+```
+it will build the exacuables
+
+then run this to excute the help for the cli
+```
+./target/release/dbcli --help
+```
+
+this should be the output.
+```
+Commands:
+  sprint         Create, Show
+  team-report    Create, Update
+  individual     Create, Update
+  requirements   Create, Update
+  team-activity  Create, Update
+  user           Create, Update
+  help           Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+```
+
+
+the sites on helping set up the diesel database code:
+https://diesel.rs/guides/getting-started
+	this site was missing libmysqlclient-dev information but besides that it was a good helper.
+
+https://www.youtube.com/watch?v=tRC4EIKhMzw&ab_channel=CodetotheMoon
+	this was the video that helped explain more, but I wish they explained a bit more of each connection piece. though there github repo for the setup they have was beautiful. and is what I followed for the setup on our database on the command line interface. 
+	https://github.com/Me163/youtube/tree/main/Rustflix
+

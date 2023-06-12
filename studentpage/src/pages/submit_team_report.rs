@@ -9,6 +9,14 @@ use crate::components::spinner::SpinnerInset;
 use crate::stores::team_store::TeamStore;
 use common::models::types::TeamResponse;
 
+// TODO: This approach to submitting the team report use a new page.
+// Although it works, it's better to just create another modal component
+// for displaying the result of the API call. A bootstrap modal
+// can switch to displaying another modal.
+// See https://getbootstrap.com/docs/5.3/components/modal/
+
+/// The [SubmitTeamReport] page sends the team report form
+/// data to the API endpoint and displays the result.
 #[function_component(SubmitTeamReport)]
 pub fn submit_team_report() -> Html {
     // Get the OAuth2Context to get the access token.
