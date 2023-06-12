@@ -40,7 +40,7 @@ See the [Frameworks](/Doc/Frontend/frameworks.md) document for more information 
 The `src/pages/` directory contains all the pages used in the frontend.  
 Since the frontend is a single page application, each page is defined as a component.  
 Each page is defined in its own file and uses Bootstrap for styling and functionality.  
-See the [code documentation](https://www.tftinker.tech/EWU-CSCD488-490-Senior-Project/Doc/code/) for more information on each page.
+See the [code documentation](/Doc/code/) for more information on each page.
 
 ### `src/stores/`
 
