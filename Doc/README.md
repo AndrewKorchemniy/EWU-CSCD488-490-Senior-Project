@@ -1,14 +1,19 @@
 # Table of contents
 
-- [directory(repo) structure](repo_layout.md)
+- [Directory (repository) Structure](repo_layout.md)
 
-Docs
+Documentation:
 
 - [API](API): Application Programming Interface (REST API)
   - [APIDOC](API/APIDOC.md)
 - [code](code/README.md): Docs generated from code comments using cargo doc
 - [Database](Database/README.md)
 - [Frontend](Frontend/README.md)
+  - [Architectural Overview](Frontend/architecture.md)
+  - [Development Environment](Frontend/environment.md)
+  - [Frameworks](Frontend/frameworks.md)
+  - [User Guide: Admin](Frontend/user_guide_admin.md)
+  - [User Guide: Students](Frontend/user_guide_student.md)
 - [git](git/README.md)
 - [OldSystem](OldSystem/README.md): Info about the old system
 - [Requirements](Requirements)

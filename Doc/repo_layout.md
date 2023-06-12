@@ -14,7 +14,9 @@
     - [student page (web)](../studentpage)
     - [admin page (web)](../adminpage)
 
-### folder layout
+> For more details on the **pages** see the frontend [architectural overview](./Frontend/architecture.md).
+
+### Folder Layout
 
 - **src** folder (all): where the source file are
   - Note: **tests** are in the same src files for rust
