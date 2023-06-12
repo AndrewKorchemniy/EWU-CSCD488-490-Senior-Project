@@ -9,7 +9,7 @@ The login is handled by OAuth2 and is currently configured to use GitHub as the 
 Use will be redirected to GitHub to sign in and be redirected back to the application.
 The provider may be changed in the future.  
 
-![Signing in with GitHub](/Docs/Frontend/assets/signing_in.webp)
+![Signing in with GitHub](./assets/sign_in.gif)
 
 ## `Home Page`
 
