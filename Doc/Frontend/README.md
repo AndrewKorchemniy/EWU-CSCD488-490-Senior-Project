@@ -6,7 +6,9 @@
 
 ## [Architectural Overview](./architecture.md)
 
-## [User Guide](./user_guide.md)
+## [User Guide: Students](./user_guide_student.md)
+
+## [User Guide: Admin](./user_guide_admin.md)
 
 ## Recommended Reading:
 
