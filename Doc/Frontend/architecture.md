@@ -12,7 +12,7 @@ For more information on the frontend frameworks used, see the [Frameworks](/Doc/
 
 The `src/` directory contains all the source code for the frontend.  
 Since the frontend compiles to WebAssembly, there exists an entry point for the application - located in `src/main.rs`.  
-The first rendered component of the frontend that is the `App` component, which is defined in `src/lib.rs`.
+The first rendered component of the frontend that is the `App` component, which is defined in `src/lib.rs`.  
 All dependencies are defined in `src/Cargo.toml`.
 
 ### `src/api/`

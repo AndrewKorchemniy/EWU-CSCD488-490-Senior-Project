@@ -3,7 +3,7 @@
 ## Windows Subsystem for Linux - Ubuntu
 
 The frontend development environment utilizes Ubuntu running on Windows Subsystem for Linux (WSL).  
-The following instructions are for setting up the development environment on Windows 10.
+The following instructions are for setting up the development environment on Windows.
 
 ## Install Guide:
 
