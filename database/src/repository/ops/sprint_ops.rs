@@ -3,6 +3,7 @@ use crate::repository::db::establish_connection;
 use crate::repository::models::{NewSprint, SprintNumDate};
 use diesel::prelude::*;
 
+///command got from main and then sends the next command here to the function called.
 pub fn handle_sprint_command(sprintcmd: SprintCommand) {
     let command = sprintcmd.command;
     match command {
@@ -15,6 +16,8 @@ pub fn handle_sprint_command(sprintcmd: SprintCommand) {
     }
 }
 
+/// takes in the command, targets the table you want to add to it, establishes a connection to the database,
+/// makes a object with the create struct, and injects the object into the database
 pub fn create_sprint(sprintcmd: CreateSprint) {
     println!("creating the sprint: {:?}", sprintcmd);
     use crate::repository::schema::sprint_num_dates::dsl::*;
@@ -30,7 +33,8 @@ pub fn create_sprint(sprintcmd: CreateSprint) {
         .execute(connection)
         .expect("Error saving new sprint");
 }
-
+/// takes in the command, targets the table you want to view, establishes a connection to the database,
+/// prints the targeted table to the command line.
 pub fn show() {
     use crate::repository::schema::sprint_num_dates::dsl::*;
 

@@ -26,12 +26,12 @@ https://crates.io/crates/diesel_migrations
 https://docs.rs/diesel_migrations/latest/diesel_migrations/
 https://docs.rs/crate/diesel_migrations/latest/features
  */
-
+///this is the middle man that connects the arguments to the operations
 fn main() {
     let args = DatabaseArgs::parse();
 
+    /// if "this" matches "that" and sends it to the called operation
     match args.entity_type {
-        // if "this" matches "that"
         EntityType::Sprint(sprint) => handle_sprint_command(sprint),
         EntityType::TeamReport(team_report) => handle_team_report_command(team_report),
         EntityType::Individual(individual_report) => {
