@@ -1,3 +1,4 @@
+#!/bin/sh
 
 ./target/release/dbcli user create 'student@ewu.edu' '123456' 'stu' 'steiner' 'eagles'
 
