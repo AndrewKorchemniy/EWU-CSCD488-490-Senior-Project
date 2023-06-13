@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["page_not_found"],"struct":["PageNotFound"]};
+window.SIDEBAR_ITEMS = {"struct":[["PageNotFound",""]]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["validate"],"struct":["TeamStore"]};
+window.SIDEBAR_ITEMS = {"fn":[["validate","Perform validation on the value and emit the result to the state. Returns true if the value is valid, false otherwise."]],"struct":[["TeamStore",""]]};

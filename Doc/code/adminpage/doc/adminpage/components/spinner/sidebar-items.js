@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["spinner","spinner_inset"],"struct":["Spinner","SpinnerInset"]};
+window.SIDEBAR_ITEMS = {"struct":[["Spinner","The [Spinner] component provides a bootstrap spinner. This variant is meant to be used to fill the entire screen when nothing renders. See https://getbootstrap.com/docs/5.3/components/spinners/"],["SpinnerInset","The [SpinnerInset] component provides a bootstrap spinner. The inset variant is meant to be used on a loaded page. See https://getbootstrap.com/docs/5.3/components/spinners/"]]};

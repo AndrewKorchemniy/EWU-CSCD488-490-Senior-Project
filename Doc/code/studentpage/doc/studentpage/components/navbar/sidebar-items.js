@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["navbar"],"struct":["Navbar","Props"]};
+window.SIDEBAR_ITEMS = {"struct":[["Navbar","The [Navbar] component provides a styled navbar for the application. See https://getbootstrap.com/docs/5.3/components/navbar/"],["Props","Properties for [NavBar]."]]};

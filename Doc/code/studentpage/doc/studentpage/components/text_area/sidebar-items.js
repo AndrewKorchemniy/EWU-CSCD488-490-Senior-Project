@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["TextAreaValidation","TextAreaVariant"],"fn":["text_area"],"struct":["Props","TextArea"]};
+window.SIDEBAR_ITEMS = {"enum":[["TextAreaValidation",""],["TextAreaVariant","Variants of the [TextArea]"]],"struct":[["Props","Properties for [TextArea]"],["TextArea","The [TextArea] component provides a styled text area with two variants. The Wide variant is a single text area that spans the entire width of the screen. The Split variant scales depending on the viewport size."]]};

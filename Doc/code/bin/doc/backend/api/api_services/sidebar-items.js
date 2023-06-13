@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["config","get_sprints","post_team","send_email","send_email_to"],"struct":["EmailInfo","get_sprints","post_team","send_email","send_email_to"]};
+window.SIDEBAR_ITEMS = {"fn":[["config","config api part of the actix service"]],"struct":[["EmailInfo","TODO: remove using for dev or require to be admin"],["get_sprints","get sprites from db"],["post_team","submit a team report to the db"],["send_email","TODO: remove using for dev or require to be admin"],["send_email_to","TODO: remove using for dev or require to be admin"]]};

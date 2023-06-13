@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["add"],"mod":["models"]};
+window.SIDEBAR_ITEMS = {"fn":[["add",""]],"mod":[["models",""]]};

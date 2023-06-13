@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["team","test"]};
+window.SIDEBAR_ITEMS = {"mod":[["team","For sending emails"],["test",""]]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["range"],"struct":["Props","Range"]};
+window.SIDEBAR_ITEMS = {"struct":[["Props","Properties for [Range]"],["Range","The [Range] component provides a styled range input. The value of the range input is emitted to the callback as a string."]]};

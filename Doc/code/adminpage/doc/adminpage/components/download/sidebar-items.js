@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["download"],"struct":["Download"]};
+window.SIDEBAR_ITEMS = {"struct":[["Download","The [Download] component provides a way to download class sprint submissions."]]};

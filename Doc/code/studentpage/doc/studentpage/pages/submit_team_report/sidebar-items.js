@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["submit_team_report"],"struct":["SubmitTeamReport"]};
+window.SIDEBAR_ITEMS = {"struct":[["SubmitTeamReport","The [SubmitTeamReport] page sends the team report form data to the API endpoint and displays the result."]]};

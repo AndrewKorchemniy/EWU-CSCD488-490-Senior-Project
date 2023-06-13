@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["FROM_CLAUSE"],"struct":["class","email","first_name","is_admin","is_student","is_teacher","last_name","ouath_id","star","teams"]};
+window.SIDEBAR_ITEMS = {"struct":[["class",""],["email",""],["first_name",""],["is_admin",""],["is_student",""],["is_teacher",""],["last_name",""],["ouath_id",""],["star","Represents `table_name.*`, which is sometimes needed for efficient count queries. It cannot be used in place of `all_columns`, and has a `SqlType` of `()` to prevent it being used that way"],["teams",""]]};

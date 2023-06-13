@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["CollapseValidation"],"fn":["collapse"],"struct":["Collapse","Props"]};
+window.SIDEBAR_ITEMS = {"enum":[["CollapseValidation","Variants for [Collapse]"]],"struct":[["Collapse","The [Collapse] component provides a styled collapse button. Collapses the element with the given id when clicked. See https://getbootstrap.com/docs/5.3/components/collapse/"],["Props","Properties for [Collapse]   "]]};

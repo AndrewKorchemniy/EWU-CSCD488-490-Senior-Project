@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["requirements"],"struct":["Requirements"]};
+window.SIDEBAR_ITEMS = {"struct":[["Requirements",""]]};

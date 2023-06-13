@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["send_test_email"]};
+window.SIDEBAR_ITEMS = {"fn":[["send_test_email","Send a test email"]]};

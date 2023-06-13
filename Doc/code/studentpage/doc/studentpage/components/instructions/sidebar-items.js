@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["instructions"],"struct":["Instructions","Props"]};
+window.SIDEBAR_ITEMS = {"struct":[["Instructions","The [Instructions] component provides a styled wrapper for instructions in forms."],["Props","Properties for [Instructions] component."]]};

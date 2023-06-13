@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["card"],"struct":["Card","Props"]};
+window.SIDEBAR_ITEMS = {"struct":[["Card","The [Card] component provides a styled boostrap card wrapper. See https://getbootstrap.com/docs/5.3/components/card/"],["Props","Properties for [Card]"]]};

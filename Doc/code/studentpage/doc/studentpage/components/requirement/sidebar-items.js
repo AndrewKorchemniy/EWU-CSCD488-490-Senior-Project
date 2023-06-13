@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["reuirement"],"struct":["Props","Requirement"]};
+window.SIDEBAR_ITEMS = {"struct":[["Props","Properties for [Requirement]"],["Requirement","The [Requirement] component provides a styled MsgBox for displaying requirements. When the requirement is deleted, is sets the deleted state to true within the parent component."]]};

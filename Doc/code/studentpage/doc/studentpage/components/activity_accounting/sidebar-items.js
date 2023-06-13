@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["acitvity_accounting"],"struct":["ActivityAccounting"]};
+window.SIDEBAR_ITEMS = {"struct":[["ActivityAccounting","The [ActivityAccounting] component provides a table for activity accounting. See https://getbootstrap.com/docs/5.3/content/tables/"]]};

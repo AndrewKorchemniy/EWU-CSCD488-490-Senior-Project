@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ReportStatus"],"fn":["sprint"],"struct":["Props","Sprint"]};
+window.SIDEBAR_ITEMS = {"enum":[["ReportStatus","The status of a report entry for [Sprint]"]],"struct":[["Props","Properties for [Sprint]"],["Sprint","The [Sprint] component provides a row for the Calendar table. It takes in the sprint number, due date, and status of the team and individual reports. Each row within the calendar represents a sprint."]]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["form"],"struct":["Form","Props"]};
+window.SIDEBAR_ITEMS = {"struct":[["Form","The [Form] component provides a styled form wrapper. This uses a bootstrap card. See https://getbootstrap.com/docs/5.3/components/card/"],["Props","Properties for [Form]"]]};

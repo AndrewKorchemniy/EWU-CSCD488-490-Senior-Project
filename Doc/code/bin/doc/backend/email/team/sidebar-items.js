@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["send_confirmation_email"]};
+window.SIDEBAR_ITEMS = {"fn":[["send_confirmation_email","Send a confirmation email for team report There is many todo’s for this"]]};

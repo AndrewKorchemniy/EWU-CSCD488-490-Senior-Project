@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["time_accounting"],"struct":["Props","TimeAccounting"]};
+window.SIDEBAR_ITEMS = {"struct":[["Props","The properties for the [TimeAccounting] component."],["TimeAccounting","The [TimeAccounting] component provides a table for time accounting. All changes are stored into the provided store."]]};

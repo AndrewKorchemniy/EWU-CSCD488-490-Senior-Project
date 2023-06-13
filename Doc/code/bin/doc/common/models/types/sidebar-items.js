@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["OAuthClientConfigResponse","RequirementResponse","RequirementsResponse","SprintResponse","SprintsResponse","TeamResponse"]};
+window.SIDEBAR_ITEMS = {"struct":[["OAuthClientConfigResponse","Used for “/api/oauth/config” endpoint."],["RequirementResponse","Used for “api/requirements” endpoint."],["RequirementsResponse",""],["SprintResponse","Used for “/api/sprints” endpoint."],["SprintsResponse",""],["TeamResponse","Used for “api/submit/team” endpoint."]]};

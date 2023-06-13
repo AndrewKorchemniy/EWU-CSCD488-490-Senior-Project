@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["cli","repository"]};
+window.SIDEBAR_ITEMS = {"mod":[["cli",""],["repository",""]]};

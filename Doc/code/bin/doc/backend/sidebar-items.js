@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["healthcheck","main","not_found","shutdown_server"],"mod":["api","email"],"struct":["Response","healthcheck","shutdown_server"]};
+window.SIDEBAR_ITEMS = {"fn":[["main","Start of backend code"],["not_found","Not found (404)"]],"mod":[["api",""],["email",""]],"struct":[["Response","simple response struct"],["healthcheck","health api (get)"],["shutdown_server","shutdown api (get)"]]};

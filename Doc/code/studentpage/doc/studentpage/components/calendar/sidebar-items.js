@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["calendar"],"struct":["Calendar","Props"]};
+window.SIDEBAR_ITEMS = {"struct":[["Calendar","The [Calendar] component provides a styled table of sprints. Each sprint has an associated due date, team report, and individual report. See https://getbootstrap.com/docs/5.3/content/tables/ and https://getbootstrap.com/docs/5.3/utilities/colors/"],["Props","Properties for [Calendar]"]]};

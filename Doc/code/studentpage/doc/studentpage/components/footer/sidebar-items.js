@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["footer"],"struct":["Footer"]};
+window.SIDEBAR_ITEMS = {"struct":[["Footer","The [Footer] component provides a styled footer."]]};

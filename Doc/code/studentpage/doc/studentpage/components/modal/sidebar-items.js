@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["modal"],"struct":["Modal","Props"]};
+window.SIDEBAR_ITEMS = {"struct":[["Modal","The [Modal] component provides styled bootstrap modal (a dialog popup). See https://getbootstrap.com/docs/5.3/components/modal/"],["Props","Properties for [Modal]   "]]};

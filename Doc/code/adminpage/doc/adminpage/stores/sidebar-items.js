@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["admin_store"]};
+window.SIDEBAR_ITEMS = {"mod":[["admin_store",""]]};

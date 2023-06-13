@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ButtonVariant"],"fn":["button"],"struct":["Button","Props"]};
+window.SIDEBAR_ITEMS = {"enum":[["ButtonVariant","Variants of the [Button]"]],"struct":[["Button","The [Button] component provides a styled button. See https://getbootstrap.com/docs/5.3/components/buttons/"],["Props","Properties for [Button]"]]};
